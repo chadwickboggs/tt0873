@@ -57,7 +57,7 @@ public class ToolType implements Serializable {
         if (obj.getClass() != getClass()) {
             return false;
         }
-        com.tiffanytimbric.rentool.core.model.ToolType rhs = (com.tiffanytimbric.rentool.core.model.ToolType) obj;
+        ToolType rhs = (ToolType) obj;
         return new EqualsBuilder()
                 .append(this.name, rhs.name)
                 .isEquals();

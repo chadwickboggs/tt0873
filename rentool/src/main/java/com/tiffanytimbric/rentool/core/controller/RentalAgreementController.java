@@ -6,14 +6,15 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
-@PreAuthorize("hasRole('USER')")
+//@PreAuthorize("hasRole('USER')")
 public class RentalAgreementController {
 
     private final RentalAgreementRepository rentalAgreementRepository;
@@ -34,6 +35,14 @@ public class RentalAgreementController {
         }
 
         return rentalAgreementRepository.existsById(id);
+    }
+
+    @GetMapping("/rentalAgreement")
+    @NonNull
+    public ResponseEntity<List<RentalAgreement>> readAllRentalAgreements() {
+        return ResponseEntity.ofNullable(
+                rentalAgreementRepository.findAll()
+        );
     }
 
     @GetMapping("/rentalAgreement/{id}")

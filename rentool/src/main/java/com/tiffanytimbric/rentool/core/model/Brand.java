@@ -57,7 +57,7 @@ public class Brand implements Serializable {
         if (obj.getClass() != getClass()) {
             return false;
         }
-        com.tiffanytimbric.rentool.core.model.Brand rhs = (com.tiffanytimbric.rentool.core.model.Brand) obj;
+        Brand rhs = (Brand) obj;
         return new EqualsBuilder()
                 .append(this.name, rhs.name)
                 .isEquals();

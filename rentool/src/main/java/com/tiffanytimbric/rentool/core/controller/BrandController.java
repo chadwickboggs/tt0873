@@ -1,19 +1,20 @@
 package com.tiffanytimbric.rentool.core.controller;
 
+import com.tiffanytimbric.rentool.core.model.Brand;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @RestController
-@PreAuthorize("hasRole('USER')")
+//@PreAuthorize("hasRole('USER')")
 public class BrandController {
 
     private final com.tiffanytimbric.rentool.core.repository.BrandRepository brandRepository;
@@ -36,9 +37,17 @@ public class BrandController {
         return brandRepository.existsById(name);
     }
 
+    @GetMapping("/brand")
+    @NonNull
+    public ResponseEntity<List<Brand>> readAllBrands() {
+        return ResponseEntity.ofNullable(
+                brandRepository.findAll()
+        );
+    }
+
     @GetMapping("/brand/{name}")
     @NonNull
-    public ResponseEntity<com.tiffanytimbric.rentool.core.model.Brand> readBrand(
+    public ResponseEntity<Brand> readBrand(
             @PathVariable @Nullable final String name
     ) {
         if (isBlank(name)) {
@@ -52,8 +61,8 @@ public class BrandController {
 
     @PostMapping("/brand")
     @NonNull
-    public ResponseEntity<com.tiffanytimbric.rentool.core.model.Brand> createBrand(
-            @RequestBody @Nullable final com.tiffanytimbric.rentool.core.model.Brand brand
+    public ResponseEntity<Brand> createBrand(
+            @RequestBody @Nullable final Brand brand
     ) {
         if (brand == null) {
             return ResponseEntity.of(Optional.empty());
@@ -66,8 +75,8 @@ public class BrandController {
 
     @PutMapping("/brand")
     @NonNull
-    public ResponseEntity<com.tiffanytimbric.rentool.core.model.Brand> updateBrand(
-            @RequestBody @Nullable final com.tiffanytimbric.rentool.core.model.Brand brand
+    public ResponseEntity<Brand> updateBrand(
+            @RequestBody @Nullable final Brand brand
     ) {
         if (brand == null) {
             return ResponseEntity.of(Optional.empty());
@@ -80,8 +89,8 @@ public class BrandController {
 
     @PatchMapping("/brand")
     @NonNull
-    public ResponseEntity<com.tiffanytimbric.rentool.core.model.Brand> patchBrand(
-            @RequestBody @Nullable final com.tiffanytimbric.rentool.core.model.Brand brand
+    public ResponseEntity<Brand> patchBrand(
+            @RequestBody @Nullable final Brand brand
     ) {
         if (brand == null) {
             return ResponseEntity.of(Optional.empty());
@@ -95,14 +104,14 @@ public class BrandController {
 
     @DeleteMapping("/brand/{name}")
     @NonNull
-    public ResponseEntity<com.tiffanytimbric.rentool.core.model.Brand> deleteBrand(
+    public ResponseEntity<Brand> deleteBrand(
             @PathVariable @Nullable final String name
     ) {
         if (isBlank(name)) {
             return ResponseEntity.of(Optional.empty());
         }
 
-        final Optional<com.tiffanytimbric.rentool.core.model.Brand> brandOpt = brandRepository.findById(name);
+        final Optional<Brand> brandOpt = brandRepository.findById(name);
         if (brandOpt.isEmpty()) {
             ResponseEntity.of(Optional.empty());
         }

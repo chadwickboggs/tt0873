@@ -38,10 +38,11 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                         authorizationManagerRequestMatcherRegistry
-                                .requestMatchers("/**").hasAnyRole("ADMIN")
-                                .requestMatchers("/**").hasAnyRole("USER", "ADMIN")
-                                .requestMatchers("/login/**").permitAll()
-                                .requestMatchers("/logout/**").permitAll()
+                                .requestMatchers("/**").permitAll()
+//                                .requestMatchers("/**").hasAnyRole("ADMIN")
+//                                .requestMatchers("/**").hasAnyRole("USER", "ADMIN")
+//                                .requestMatchers("/login/**").permitAll()
+//                                .requestMatchers("/logout/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())

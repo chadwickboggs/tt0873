@@ -4,5 +4,5 @@
 
 curl \
   --silent \
-  --location 'http://localhost:8080/tool' \
+  --location 'http://localhost:8080/brand' \
   --header 'Content-Type: application/json'

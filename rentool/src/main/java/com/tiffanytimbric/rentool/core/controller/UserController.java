@@ -6,15 +6,15 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@PreAuthorize("hasRole('USER')")
+//@PreAuthorize("hasRole('USER')")
 public class UserController {
 
     private final UserRepository userRepository;
@@ -35,6 +35,14 @@ public class UserController {
         }
 
         return userRepository.existsById(id);
+    }
+
+    @GetMapping("/user")
+    @NonNull
+    public ResponseEntity<List<User>> readAllUsers() {
+        return ResponseEntity.ofNullable(
+                userRepository.findAll()
+        );
     }
 
     @GetMapping("/user/{id}")

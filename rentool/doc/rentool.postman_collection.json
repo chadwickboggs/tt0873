@@ -24,7 +24,7 @@
 									}
 								],
 								"url": {
-									"raw": "http://{{host}}:{{port}}/brandExist/red",
+									"raw": "http://{{host}}:{{port}}/brandExist/Ridgid",
 									"protocol": "http",
 									"host": [
 										"{{host}}"
@@ -32,7 +32,7 @@
 									"port": "{{port}}",
 									"path": [
 										"brandExist",
-										"red"
+										"Ridgid"
 									]
 								}
 							},
@@ -60,7 +60,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"name\": \"black\"\n}",
+									"raw": "{\n\t\"name\": \"Milwaukee\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -108,6 +108,30 @@
 							"response": []
 						},
 						{
+							"name": "Read All",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://{{host}}:{{port}}/brand",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"brand"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Update",
 							"event": [
 								{
@@ -129,7 +153,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"name\": \"red\"\n}",
+									"raw": "{\n\t\"name\": \"Milwaukee\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -163,7 +187,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"red\"\n}"
+									"raw": "{\n    \"name\": \"Milwaukee\"\n}"
 								},
 								"url": {
 									"raw": "http://{{host}}:{{port}}/brand",
@@ -209,7 +233,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{host}}:{{port}}/brand/Stihl",
+									"raw": "http://{{host}}:{{port}}/brand/Makita",
 									"protocol": "http",
 									"host": [
 										"{{host}}"
@@ -217,7 +241,252 @@
 									"port": "{{port}}",
 									"path": [
 										"brand",
-										"Stihl"
+										"Makita"
+									]
+								},
+								"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Tool Type",
+			"item": [
+				{
+					"name": "CRUD",
+					"item": [
+						{
+							"name": "Does Exist",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://{{host}}:{{port}}/toolTypeExist/Chainsaw",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"toolTypeExist",
+										"Chainsaw"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful POST request\", function () {",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"Hammer\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/toolType",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"toolType"
+									]
+								},
+								"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+							},
+							"response": []
+						},
+						{
+							"name": "Read",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://{{host}}:{{port}}/toolType/Hammer",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"toolType",
+										"Hammer"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Read All",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://{{host}}:{{port}}/toolType",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"toolType"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful PUT request\", function () {",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"Hammer\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/toolType",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"toolType"
+									]
+								},
+								"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
+							},
+							"response": []
+						},
+						{
+							"name": "Patch",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Hammer\"\n}"
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/toolType",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"toolType"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful DELETE request\", function () {",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/toolType/Chain",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"toolType",
+										"Chain"
 									]
 								},
 								"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
@@ -256,7 +525,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"name\": \"tiffanytimbric\",\n    \"balance\": 70\n}",
+									"raw": "{\n\t\"name\": \"tiffanytimbric\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -289,7 +558,7 @@
 									}
 								],
 								"url": {
-									"raw": "http://{{host}}:{{port}}/user/2abc1027-9383-48d4-a090-7c0e5a529e11",
+									"raw": "http://{{host}}:{{port}}/user/04a7bf6a-f317-4eea-9311-fa4d711f860f",
 									"protocol": "http",
 									"host": [
 										"{{host}}"
@@ -297,7 +566,31 @@
 									"port": "{{port}}",
 									"path": [
 										"user",
-										"2abc1027-9383-48d4-a090-7c0e5a529e11"
+										"04a7bf6a-f317-4eea-9311-fa4d711f860f"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Read All",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://{{host}}:{{port}}/user",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"user"
 									]
 								}
 							},
@@ -314,7 +607,7 @@
 									}
 								],
 								"url": {
-									"raw": "http://{{host}}:{{port}}/userByName/Tiffany",
+									"raw": "http://{{host}}:{{port}}/userByName/tiffanytimbric",
 									"protocol": "http",
 									"host": [
 										"{{host}}"
@@ -322,7 +615,7 @@
 									"port": "{{port}}",
 									"path": [
 										"userByName",
-										"Tiffany"
+										"tiffanytimbric"
 									]
 								}
 							},
@@ -350,7 +643,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"name\": \"tiffany\",\n    \"balance\": 22\n}",
+									"raw": "{\n\t\"name\": \"tiffanytimbric\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -384,7 +677,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"name\": \"tiffany\",\n    \"balance\": 25\n}"
+									"raw": "{\n\t\"name\": \"tiffanytimbric\"\n}"
 								},
 								"url": {
 									"raw": "http://{{host}}:{{port}}/item",
@@ -430,7 +723,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{host}}:{{port}}/user/1",
+									"raw": "http://{{host}}:{{port}}/user/04a7bf6a-f317-4eea-9311-fa4d711f860f",
 									"protocol": "http",
 									"host": [
 										"{{host}}"
@@ -438,7 +731,7 @@
 									"port": "{{port}}",
 									"path": [
 										"user",
-										"1"
+										"04a7bf6a-f317-4eea-9311-fa4d711f860f"
 									]
 								},
 								"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
@@ -456,7 +749,7 @@
 									}
 								],
 								"url": {
-									"raw": "http://{{host}}:{{port}}/userExist/1",
+									"raw": "http://{{host}}:{{port}}/userExist/04a7bf6a-f317-4eea-9311-fa4d711f860f",
 									"protocol": "http",
 									"host": [
 										"{{host}}"
@@ -464,7 +757,7 @@
 									"port": "{{port}}",
 									"path": [
 										"userExist",
-										"1"
+										"04a7bf6a-f317-4eea-9311-fa4d711f860f"
 									]
 								}
 							},
@@ -491,7 +784,7 @@
 									}
 								],
 								"url": {
-									"raw": "http://{{host}}:{{port}}/toolExist/cc9b92ae-873f-440e-884e-6d07300b45d8",
+									"raw": "http://{{host}}:{{port}}/toolExist/1233ba9c-8403-492e-9f4c-5b3b5464c3a1",
 									"protocol": "http",
 									"host": [
 										"{{host}}"
@@ -499,7 +792,7 @@
 									"port": "{{port}}",
 									"path": [
 										"toolExist",
-										"cc9b92ae-873f-440e-884e-6d07300b45d8"
+										"1233ba9c-8403-492e-9f4c-5b3b5464c3a1"
 									]
 								}
 							},
@@ -527,7 +820,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"name\": \"Samsung Galaxy Phone\",\n    \"description\": \"A Samsung Android OS mobile phone.\",\n    \"photoUrl\": null,\n    \"type\": {\n        \"name\": \"phone\"\n    },\n    \"owner\": \"1233ba9c-8403-492e-9f4c-5b3b5464c3af\",\n    \"tags\": [\n        {\n            \"name\": \"pink\"\n        }\n    ],\n    \"price\": \"50\"\n}",
+									"raw": "{\n\t\"code\": \"CHNS\",\n    \"type\": {\n        \"name\": \"Chainsaw\"\n    },\n    \"brand\": [\n        {\n            \"name\": \"Stihl\"\n        }\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -560,7 +853,7 @@
 									}
 								],
 								"url": {
-									"raw": "http://{{host}}:{{port}}/tool/cc9b92ae-873f-440e-884e-6d07300b45d8",
+									"raw": "http://{{host}}:{{port}}/tool/1233ba9c-8403-492e-9f4c-5b3b5464c3a1",
 									"protocol": "http",
 									"host": [
 										"{{host}}"
@@ -568,7 +861,31 @@
 									"port": "{{port}}",
 									"path": [
 										"tool",
-										"cc9b92ae-873f-440e-884e-6d07300b45d8"
+										"1233ba9c-8403-492e-9f4c-5b3b5464c3a1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Read All",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://{{host}}:{{port}}/tool",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"tool"
 									]
 								}
 							},
@@ -621,7 +938,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"id\": 1,\n\t\"name\": \"paint\",\n    \"description\": \"Red interior wall paint.\",\n    \"owner\": 1,\n    \"tags\": [\n        {\n            \"name\": \"red\"\n        }\n    ],\n    \"price\": \"42\"\n}",
+									"raw": "{\n\t\"code\": \"CHNS\",\n    \"type\": {\n        \"name\": \"Chainsaw\"\n    },\n    \"brand\": [\n        {\n            \"name\": \"Stihl\"\n        }\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -655,7 +972,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"name\": \"paint\",\n    \"description\": \"Red interior wall paint.\",\n    \"owner\": 1,\n    \"price\": \"45\"\n}"
+									"raw": "{\n\t\"code\": \"CHNS\",\n    \"type\": {\n        \"name\": \"Chainsaw\"\n    },\n    \"brand\": [\n        {\n            \"name\": \"Stihl\"\n        }\n    ]\n}"
 								},
 								"url": {
 									"raw": "http://{{host}}:{{port}}/tool",
@@ -701,7 +1018,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{host}}:{{port}}/tool/13",
+									"raw": "http://{{host}}:{{port}}/tool/1233ba9c-8403-492e-9f4c-5b3b5464c3a1",
 									"protocol": "http",
 									"host": [
 										"{{host}}"
@@ -709,7 +1026,7 @@
 									"port": "{{port}}",
 									"path": [
 										"tool",
-										"13"
+										"1233ba9c-8403-492e-9f4c-5b3b5464c3a1"
 									]
 								},
 								"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
@@ -737,7 +1054,7 @@
 									}
 								],
 								"url": {
-									"raw": "http://{{host}}:{{port}}/rentalAgreementExist/1",
+									"raw": "http://{{host}}:{{port}}/rentalAgreementExist/6bee68e7-f572-478f-ae83-0e8d9802a321",
 									"protocol": "http",
 									"host": [
 										"{{host}}"
@@ -745,7 +1062,7 @@
 									"port": "{{port}}",
 									"path": [
 										"rentalAgreementExist",
-										"1"
+										"6bee68e7-f572-478f-ae83-0e8d9802a321"
 									]
 								}
 							},
@@ -815,6 +1132,30 @@
 									"path": [
 										"rentalAgreement",
 										"6bee68e7-f572-478f-ae83-0e8d9802a321"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Read All",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://{{host}}:{{port}}/rentalAgreement",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"rentalAgreement"
 									]
 								}
 							},
@@ -922,7 +1263,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{host}}:{{port}}/rentalAgreement/1",
+									"raw": "http://{{host}}:{{port}}/rentalAgreement/6bee68e7-f572-478f-ae83-0e8d9802a321",
 									"protocol": "http",
 									"host": [
 										"{{host}}"
@@ -930,7 +1271,7 @@
 									"port": "{{port}}",
 									"path": [
 										"rentalAgreement",
-										"1"
+										"6bee68e7-f572-478f-ae83-0e8d9802a321"
 									]
 								},
 								"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."

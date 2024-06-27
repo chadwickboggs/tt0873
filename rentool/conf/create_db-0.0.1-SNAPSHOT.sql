@@ -9,9 +9,7 @@ USE rentool;
 CREATE TABLE IF NOT EXISTS user
 (
     id        UUID PRIMARY KEY,
-    name      VARCHAR(64) NOT NULL UNIQUE,
-    photo_url VARCHAR(128),
-    balance   INT         NOT NULL DEFAULT 0
+    name      VARCHAR(64) NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS brand

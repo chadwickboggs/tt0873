@@ -1,19 +1,20 @@
 package com.tiffanytimbric.rentool.core.controller;
 
+import com.tiffanytimbric.rentool.core.model.ToolType;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @RestController
-@PreAuthorize("hasRole('USER')")
+//@PreAuthorize("hasRole('USER')")
 public class ToolTypeController {
 
     private final com.tiffanytimbric.rentool.core.repository.ToolTypeRepository toolTypeRepository;
@@ -36,9 +37,17 @@ public class ToolTypeController {
         return toolTypeRepository.existsById(name);
     }
 
+    @GetMapping("/toolType")
+    @NonNull
+    public ResponseEntity<List<ToolType>> readAllToolTypes() {
+        return ResponseEntity.ofNullable(
+                toolTypeRepository.findAll()
+        );
+    }
+
     @GetMapping("/toolType/{name}")
     @NonNull
-    public ResponseEntity<com.tiffanytimbric.rentool.core.model.ToolType> readToolType(
+    public ResponseEntity<ToolType> readToolType(
             @PathVariable @Nullable final String name
     ) {
         if (isBlank(name)) {
@@ -52,8 +61,8 @@ public class ToolTypeController {
 
     @PostMapping("/toolType")
     @NonNull
-    public ResponseEntity<com.tiffanytimbric.rentool.core.model.ToolType> createToolType(
-            @RequestBody @Nullable final com.tiffanytimbric.rentool.core.model.ToolType toolType
+    public ResponseEntity<ToolType> createToolType(
+            @RequestBody @Nullable final ToolType toolType
     ) {
         if (toolType == null) {
             return ResponseEntity.of(Optional.empty());
@@ -66,8 +75,8 @@ public class ToolTypeController {
 
     @PutMapping("/toolType")
     @NonNull
-    public ResponseEntity<com.tiffanytimbric.rentool.core.model.ToolType> updateToolType(
-            @RequestBody @Nullable final com.tiffanytimbric.rentool.core.model.ToolType toolType
+    public ResponseEntity<ToolType> updateToolType(
+            @RequestBody @Nullable final ToolType toolType
     ) {
         if (toolType == null) {
             return ResponseEntity.of(Optional.empty());
@@ -80,8 +89,8 @@ public class ToolTypeController {
 
     @PatchMapping("/toolType")
     @NonNull
-    public ResponseEntity<com.tiffanytimbric.rentool.core.model.ToolType> patchToolType(
-            @RequestBody @Nullable final com.tiffanytimbric.rentool.core.model.ToolType toolType
+    public ResponseEntity<ToolType> patchToolType(
+            @RequestBody @Nullable final ToolType toolType
     ) {
         if (toolType == null) {
             return ResponseEntity.of(Optional.empty());
@@ -95,14 +104,14 @@ public class ToolTypeController {
 
     @DeleteMapping("/toolType/{name}")
     @NonNull
-    public ResponseEntity<com.tiffanytimbric.rentool.core.model.ToolType> deleteToolType(
+    public ResponseEntity<ToolType> deleteToolType(
             @PathVariable @Nullable final String name
     ) {
         if (isBlank(name)) {
             return ResponseEntity.of(Optional.empty());
         }
 
-        final Optional<com.tiffanytimbric.rentool.core.model.ToolType> toolTypeOpt = toolTypeRepository.findById(name);
+        final Optional<ToolType> toolTypeOpt = toolTypeRepository.findById(name);
         if (toolTypeOpt.isEmpty()) {
             ResponseEntity.of(Optional.empty());
         }

@@ -1,10 +1,10 @@
 package com.tiffanytimbric.rentool.core.repository;
 
+import com.tiffanytimbric.rentool.core.model.Brand;
 import org.springframework.data.repository.ListCrudRepository;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@PreAuthorize("hasRole('USER')")
-public interface BrandRepository extends ListCrudRepository<com.tiffanytimbric.rentool.core.model.Brand, String> {
+//@PreAuthorize("hasRole('USER')")
+public interface BrandRepository extends ListCrudRepository<Brand, String> {
 }
