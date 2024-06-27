@@ -1,4 +1,10 @@
+#
+# This file may be used to create the database and its tables [DDL - Data Definition Language].
+#
+
 CREATE DATABASE IF NOT EXISTS rentool;
+
+USE rentool;
 
 CREATE TABLE IF NOT EXISTS user
 (
@@ -36,15 +42,6 @@ CREATE TABLE IF NOT EXISTS tool_brand_xref
     PRIMARY KEY (brand_name, tool_id),
     FOREIGN KEY (brand_name) REFERENCES brand (name),
     FOREIGN KEY (tool_id) REFERENCES tool (id)
-);
-
-CREATE TABLE IF NOT EXISTS want_brand_xref
-(
-    brand_name VARCHAR(64) NOT NULL,
-    want_id    UUID        NOT NULL,
-    PRIMARY KEY (brand_name, want_id),
-    FOREIGN KEY (brand_name) REFERENCES brand (name),
-    FOREIGN KEY (want_id) REFERENCES tool (id)
 );
 
 CREATE TABLE IF NOT EXISTS rental_agrmnt

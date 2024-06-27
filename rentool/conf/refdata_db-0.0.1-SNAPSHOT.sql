@@ -1,33 +1,3 @@
-INSERT INTO user
-    (id, name, photo_url, balance)
-VALUES
-    ('1233ba9c-8403-492e-9f4c-5b3b5464c3af', 'arielhenry', null, 80),
-    ('04a7bf6a-f317-4eea-9311-fa4d711f860f', 'tiffanytimbric', null, 70),
-    ('04a7bf6a-f317-4eea-9311-fa4d711f860d', 'chadwickboggs', null, 90)
-;
-
-INSERT INTO brand
-    (name)
-VALUES
-    ('Stihl'),
-    ('Werner'),
-    ('DeWalt'),
-    ('Ridgid')
-;
-
-INSERT INTO tool_type
-    (name)
-VALUES
-    ('Chainsaw'),
-    ('Ladder'),
-    ('Jackhammer')
-;
-
-INSERT INTO tool
-    (id, code, type, brand)
-VALUES
-    ('1233ba9c-8403-492e-9f4c-5b3b5464c3a1', 'CHNS', 'Chainsaw', 'Stihl'),
-    ('1233ba9c-8403-492e-9f4c-5b3b5464c3a2', 'LADW', 'Ladder', 'Werner'),
-    ('1233ba9c-8403-492e-9f4c-5b3b5464c3a3', 'JAKD', 'Jackhammer', 'DeWalt'),
-    ('1233ba9c-8403-492e-9f4c-5b3b5464c3a4', 'JAKR', 'Jackhammer', 'Ridgid')
-;
+#
+# This file may be used to insert reference data into the database [DML - Data Manipulation Language].
+#
