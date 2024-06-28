@@ -2,6 +2,7 @@ package com.tiffanytimbric.rentool.core.controller;
 
 import com.tiffanytimbric.rentool.core.model.RentalAgreement;
 import com.tiffanytimbric.rentool.core.repository.RentalAgreementRepository;
+import com.tiffanytimbric.rentool.core.service.RentalAgreementService;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
@@ -17,11 +18,20 @@ import java.util.UUID;
 //@PreAuthorize("hasRole('USER')")
 public class RentalAgreementController {
 
+    public static final String ACTION_ACCEPT = "Accept";
+    public static final String ACTION_CANCEL = "Cancel";
+    public static final String ACTION_PICK_UP = "PickUp";
+    public static final String ACTION_FAIL = "Fail";
+    public static final String ACTION_RETURN = "Return";
+
+    private final RentalAgreementService rentalAgreementService;
     private final RentalAgreementRepository rentalAgreementRepository;
 
     public RentalAgreementController(
+            @NonNull final RentalAgreementService rentalAgreementService,
             @NonNull final RentalAgreementRepository rentalAgreementRepository
     ) {
+        this.rentalAgreementService = rentalAgreementService;
         this.rentalAgreementRepository = rentalAgreementRepository;
     }
 
@@ -35,6 +45,71 @@ public class RentalAgreementController {
         }
 
         return rentalAgreementRepository.existsById(id);
+    }
+
+    @GetMapping("/rentalAgreementAccept/{rentalAgreementId}/{userId}")
+    @NonNull
+    public ResponseEntity<RentalAgreement> actionAcceptRentalAgreement(
+            @PathVariable final UUID rentalAgreementId,
+            @PathVariable final UUID userId
+    ) {
+        final Optional<RentalAgreement> rentalAgreementOpt = rentalAgreementService.handleRentalAgreementEvent(
+                ACTION_ACCEPT, rentalAgreementId, userId
+        );
+
+        return ResponseEntity.of(rentalAgreementOpt);
+    }
+
+    @GetMapping("/rentalAgreementCancel/{rentalAgreementId}/{userId}")
+    @NonNull
+    public ResponseEntity<RentalAgreement> actionCancelRentalAgreement(
+            @PathVariable final UUID rentalAgreementId,
+            @PathVariable final UUID userId
+    ) {
+        final Optional<RentalAgreement> rentalAgreementOpt = rentalAgreementService.handleRentalAgreementEvent(
+                ACTION_CANCEL, rentalAgreementId, userId
+        );
+
+        return ResponseEntity.of(rentalAgreementOpt);
+    }
+
+    @GetMapping("/rentalAgreementPickUp/{rentalAgreementId}/{userId}")
+    @NonNull
+    public ResponseEntity<RentalAgreement> actionPickUpRentalAgreement(
+            @PathVariable final UUID rentalAgreementId,
+            @PathVariable final UUID userId
+    ) {
+        final Optional<RentalAgreement> rentalAgreementOpt = rentalAgreementService.handleRentalAgreementEvent(
+                ACTION_PICK_UP, rentalAgreementId, userId
+        );
+
+        return ResponseEntity.of(rentalAgreementOpt);
+    }
+
+    @GetMapping("/rentalAgreementFail/{rentalAgreementId}/{userId}")
+    @NonNull
+    public ResponseEntity<RentalAgreement> actionFailRentalAgreement(
+            @PathVariable final UUID rentalAgreementId,
+            @PathVariable final UUID userId
+    ) {
+        final Optional<RentalAgreement> rentalAgreementOpt = rentalAgreementService.handleRentalAgreementEvent(
+                ACTION_FAIL, rentalAgreementId, userId
+        );
+
+        return ResponseEntity.of(rentalAgreementOpt);
+    }
+
+    @GetMapping("/rentalAgreementReturn/{rentalAgreementId}/{userId}")
+    @NonNull
+    public ResponseEntity<RentalAgreement> actionReturnRentalAgreement(
+            @PathVariable final UUID rentalAgreementId,
+            @PathVariable final UUID userId
+    ) {
+        final Optional<RentalAgreement> rentalAgreementOpt = rentalAgreementService.handleRentalAgreementEvent(
+                ACTION_RETURN, rentalAgreementId, userId
+        );
+
+        return ResponseEntity.of(rentalAgreementOpt);
     }
 
     @GetMapping("/rentalAgreement")

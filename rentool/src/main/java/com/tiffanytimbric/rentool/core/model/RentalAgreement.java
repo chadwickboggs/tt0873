@@ -1,6 +1,5 @@
 package com.tiffanytimbric.rentool.core.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -13,7 +12,7 @@ import org.springframework.lang.Nullable;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -33,10 +32,9 @@ public class RentalAgreement implements Serializable, Cloneable {
             nullable = false,
             referencedColumnName = "id"
     )
-    @JsonProperty("tool_id")
-    private UUID toolId;
+    private String toolId;
     private Integer rentalDays;
-    private LocalDate checkoutDate;
+    private Date checkoutDate;
 //    private LocalDate dueDate;  // TODO: Add method which calculates this value.
     private Float dailyRentalCharge;
 //    private Integer chargeDays;  // TODO: Add method which calculates this value.
@@ -52,9 +50,9 @@ public class RentalAgreement implements Serializable, Cloneable {
 
     public RentalAgreement(
             @NonNull final UUID id,
-            @NonNull final UUID toolId,
+            @NonNull final String toolId,
             @NonNull final Integer rentalDays,
-            @NonNull final LocalDate checkoutDate,
+            @NonNull final Date checkoutDate,
             @NonNull final Float dailyRentalCharge,
             @NonNull final Float discountPercent
     ) {
@@ -77,16 +75,16 @@ public class RentalAgreement implements Serializable, Cloneable {
     }
 
     @Nullable
-    public UUID getToolId() {
+    public String getToolId() {
         return toolId;
     }
 
     @NonNull
-    public Optional<UUID> toolIdOpt() {
+    public Optional<String> toolIdOpt() {
         return Optional.ofNullable(toolId);
     }
 
-    public void setToolId(@NonNull final UUID toolOneId) {
+    public void setToolId(@NonNull final String toolOneId) {
         this.toolId = toolOneId;
     }
 
@@ -116,17 +114,17 @@ public class RentalAgreement implements Serializable, Cloneable {
     }
 
     @Nullable
-    public LocalDate getCheckoutDate() {
+    public Date getCheckoutDate() {
         return checkoutDate;
     }
 
     @NonNull
-    public Optional<LocalDate> checkoutDateOpt() {
+    public Optional<Date> checkoutDateOpt() {
         return Optional.ofNullable(checkoutDate);
     }
 
     public void setCheckoutDate(
-            @Nullable final LocalDate checkoutDate
+            @Nullable final Date checkoutDate
     ) {
         this.checkoutDate = checkoutDate;
     }
