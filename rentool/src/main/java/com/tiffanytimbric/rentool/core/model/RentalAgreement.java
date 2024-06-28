@@ -17,6 +17,8 @@ import java.time.LocalDate;
 import java.util.Optional;
 import java.util.UUID;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 @Entity
 @Table(name = "rental_agrmnt")
 public class RentalAgreement implements Serializable, Cloneable {
@@ -42,6 +44,8 @@ public class RentalAgreement implements Serializable, Cloneable {
     private Float discountPercent;
 //    private Float discountAmount;  // TODO: Add method which calculates this value.
 //    private Float finalCharge;  // TODO: Add method which calculates this value.
+    private String state = "Proposed";
+    private String dataItem;
 
     public RentalAgreement() {
     }
@@ -159,6 +163,46 @@ public class RentalAgreement implements Serializable, Cloneable {
         this.discountPercent = discountPercent;
     }
 
+    @NonNull
+    public String getState() {
+        return state;
+    }
+
+    @NonNull
+    public Optional<String> stateOpt() {
+        if (isBlank(state)) {
+            return Optional.empty();
+        }
+
+        return Optional.of(state);
+    }
+
+    public void setState(
+            @Nullable final String state
+    ) {
+        this.state = state;
+    }
+
+    @Nullable
+    public String getDataItem() {
+        return dataItem;
+    }
+
+    @NonNull
+    public Optional<String> dataItemOpt() {
+        if (isBlank(dataItem)) {
+            return Optional.empty();
+        }
+
+        return Optional.of(dataItem);
+    }
+
+    public void setDataItem(
+            @Nullable final String dataItem
+    ) {
+        this.dataItem = dataItem;
+    }
+
     @Override
     public Object clone() {
         try {
@@ -188,6 +232,8 @@ public class RentalAgreement implements Serializable, Cloneable {
                 .append(this.checkoutDate, rhs.checkoutDate)
                 .append(this.dailyRentalCharge, rhs.dailyRentalCharge)
                 .append(this.discountPercent, rhs.discountPercent)
+                .append(this.state, rhs.state)
+                .append(this.dataItem, rhs.dataItem)
                 .isEquals();
     }
 
@@ -207,6 +253,8 @@ public class RentalAgreement implements Serializable, Cloneable {
                 .append("checkoutDate", checkoutDate)
                 .append("dailyRentalCharge", dailyRentalCharge)
                 .append("discountPercent", discountPercent)
+                .append("state", state)
+                .append("dataItem", dataItem)
                 .toString();
     }
 }
