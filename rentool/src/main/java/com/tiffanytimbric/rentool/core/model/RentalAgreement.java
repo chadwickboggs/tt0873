@@ -1,6 +1,5 @@
 package com.tiffanytimbric.rentool.core.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -13,9 +12,11 @@ import org.springframework.lang.Nullable;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
+
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @Entity
 @Table(name = "rental_agrmnt")
@@ -31,10 +32,9 @@ public class RentalAgreement implements Serializable, Cloneable {
             nullable = false,
             referencedColumnName = "id"
     )
-    @JsonProperty("tool_id")
-    private UUID toolId;
+    private String toolId;
     private Integer rentalDays;
-    private LocalDate checkoutDate;
+    private Date checkoutDate;
 //    private LocalDate dueDate;  // TODO: Add method which calculates this value.
     private Float dailyRentalCharge;
 //    private Integer chargeDays;  // TODO: Add method which calculates this value.
@@ -42,15 +42,17 @@ public class RentalAgreement implements Serializable, Cloneable {
     private Float discountPercent;
 //    private Float discountAmount;  // TODO: Add method which calculates this value.
 //    private Float finalCharge;  // TODO: Add method which calculates this value.
+    private String state = "Proposed";
+    private String dataItem;
 
     public RentalAgreement() {
     }
 
     public RentalAgreement(
             @NonNull final UUID id,
-            @NonNull final UUID toolId,
+            @NonNull final String toolId,
             @NonNull final Integer rentalDays,
-            @NonNull final LocalDate checkoutDate,
+            @NonNull final Date checkoutDate,
             @NonNull final Float dailyRentalCharge,
             @NonNull final Float discountPercent
     ) {
@@ -73,16 +75,16 @@ public class RentalAgreement implements Serializable, Cloneable {
     }
 
     @Nullable
-    public UUID getToolId() {
+    public String getToolId() {
         return toolId;
     }
 
     @NonNull
-    public Optional<UUID> toolIdOpt() {
+    public Optional<String> toolIdOpt() {
         return Optional.ofNullable(toolId);
     }
 
-    public void setToolId(@NonNull final UUID toolOneId) {
+    public void setToolId(@NonNull final String toolOneId) {
         this.toolId = toolOneId;
     }
 
@@ -112,17 +114,17 @@ public class RentalAgreement implements Serializable, Cloneable {
     }
 
     @Nullable
-    public LocalDate getCheckoutDate() {
+    public Date getCheckoutDate() {
         return checkoutDate;
     }
 
     @NonNull
-    public Optional<LocalDate> checkoutDateOpt() {
+    public Optional<Date> checkoutDateOpt() {
         return Optional.ofNullable(checkoutDate);
     }
 
     public void setCheckoutDate(
-            @Nullable final LocalDate checkoutDate
+            @Nullable final Date checkoutDate
     ) {
         this.checkoutDate = checkoutDate;
     }
@@ -159,6 +161,46 @@ public class RentalAgreement implements Serializable, Cloneable {
         this.discountPercent = discountPercent;
     }
 
+    @NonNull
+    public String getState() {
+        return state;
+    }
+
+    @NonNull
+    public Optional<String> stateOpt() {
+        if (isBlank(state)) {
+            return Optional.empty();
+        }
+
+        return Optional.of(state);
+    }
+
+    public void setState(
+            @Nullable final String state
+    ) {
+        this.state = state;
+    }
+
+    @Nullable
+    public String getDataItem() {
+        return dataItem;
+    }
+
+    @NonNull
+    public Optional<String> dataItemOpt() {
+        if (isBlank(dataItem)) {
+            return Optional.empty();
+        }
+
+        return Optional.of(dataItem);
+    }
+
+    public void setDataItem(
+            @Nullable final String dataItem
+    ) {
+        this.dataItem = dataItem;
+    }
+
     @Override
     public Object clone() {
         try {
@@ -188,6 +230,8 @@ public class RentalAgreement implements Serializable, Cloneable {
                 .append(this.checkoutDate, rhs.checkoutDate)
                 .append(this.dailyRentalCharge, rhs.dailyRentalCharge)
                 .append(this.discountPercent, rhs.discountPercent)
+                .append(this.state, rhs.state)
+                .append(this.dataItem, rhs.dataItem)
                 .isEquals();
     }
 
@@ -207,6 +251,8 @@ public class RentalAgreement implements Serializable, Cloneable {
                 .append("checkoutDate", checkoutDate)
                 .append("dailyRentalCharge", dailyRentalCharge)
                 .append("discountPercent", discountPercent)
+                .append("state", state)
+                .append("dataItem", dataItem)
                 .toString();
     }
 }

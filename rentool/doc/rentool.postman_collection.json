@@ -1054,7 +1054,7 @@
 									}
 								],
 								"url": {
-									"raw": "http://{{host}}:{{port}}/rentalAgreementExist/6bee68e7-f572-478f-ae83-0e8d9802a321",
+									"raw": "http://{{host}}:{{port}}/rentalAgreementExist/c1264407-4abb-4ddc-a812-826e7271477c",
 									"protocol": "http",
 									"host": [
 										"{{host}}"
@@ -1062,7 +1062,7 @@
 									"port": "{{port}}",
 									"path": [
 										"rentalAgreementExist",
-										"6bee68e7-f572-478f-ae83-0e8d9802a321"
+										"c1264407-4abb-4ddc-a812-826e7271477c"
 									]
 								}
 							},
@@ -1090,7 +1090,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"item_one_id\": \"86c18c6f-8f8d-4281-b7c9-d831ff1a2888\",\n    \"item_two_id\": \"2d001d9d-7acf-4880-b082-7a925f27a3a5\"\n}",
+									"raw": "{\n    \"toolId\": \"1233ba9c-8403-492e-9f4c-5b3b5464c3a1\",\n    \"rentalDays\": 2,\n    \"checkoutDate\": \"2024-06-27\",\n    \"dailyRentalCharge\": \"10.15\",\n    \"discountPercent\": \"0.0\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1123,7 +1123,7 @@
 									}
 								],
 								"url": {
-									"raw": "http://{{host}}:{{port}}/rentalAgreement/6bee68e7-f572-478f-ae83-0e8d9802a321",
+									"raw": "http://{{host}}:{{port}}/rentalAgreement/1233ba9c-8403-492e-9f4c-5b3b5464c3a1",
 									"protocol": "http",
 									"host": [
 										"{{host}}"
@@ -1131,7 +1131,7 @@
 									"port": "{{port}}",
 									"path": [
 										"rentalAgreement",
-										"6bee68e7-f572-478f-ae83-0e8d9802a321"
+										"1233ba9c-8403-492e-9f4c-5b3b5464c3a1"
 									]
 								}
 							},
@@ -1183,7 +1183,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"item_one_id\": 1,\n    \"item_two_id\": 2\n}",
+									"raw": "{\n    \"id\": \"1233ba9c-8403-492e-9f4c-5b3b5464c3a1\",\n    \"toolId\": \"1233ba9c-8403-492e-9f4c-5b3b5464c3a1\",\n    \"rentalDays\": 2,\n    \"checkoutDate\": \"2024-06-27\",\n    \"dailyRentalCharge\": \"10.15\",\n    \"discountPercent\": \"0.0\",\n    \"state\": \"Proposed\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1217,7 +1217,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"item_one_id\": 1,\n    \"item_two_id\": 2\n}"
+									"raw": "{\n    \"toolId\": \"1233ba9c-8403-492e-9f4c-5b3b5464c3a1\",\n    \"rentalDays\": 2,\n    \"checkoutDate\": \"2024-06-27\",\n    \"dailyRentalCharge\": \"10.15\",\n    \"discountPercent\": \"0.0\"\n}"
 								},
 								"url": {
 									"raw": "http://{{host}}:{{port}}/rentalAgreement",
@@ -1263,7 +1263,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{host}}:{{port}}/rentalAgreement/6bee68e7-f572-478f-ae83-0e8d9802a321",
+									"raw": "http://{{host}}:{{port}}/rentalAgreement/5f67e7ee-061f-4d38-b4a9-f5a6e2f4aa43",
 									"protocol": "http",
 									"host": [
 										"{{host}}"
@@ -1271,10 +1271,145 @@
 									"port": "{{port}}",
 									"path": [
 										"rentalAgreement",
-										"6bee68e7-f572-478f-ae83-0e8d9802a321"
+										"5f67e7ee-061f-4d38-b4a9-f5a6e2f4aa43"
 									]
 								},
 								"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Action",
+					"item": [
+						{
+							"name": "Accept",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://{{host}}:{{port}}/rentalAgreementAccept/1233ba9c-8403-492e-9f4c-5b3b5464c3a1/04a7bf6a-f317-4eea-9311-fa4d711f860f",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"rentalAgreementAccept",
+										"1233ba9c-8403-492e-9f4c-5b3b5464c3a1",
+										"04a7bf6a-f317-4eea-9311-fa4d711f860f"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cancel",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://{{host}}:{{port}}/rentalAgreementCancel/c1264407-4abb-4ddc-a812-826e7271477c/04a7bf6a-f317-4eea-9311-fa4d711f860f",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"rentalAgreementCancel",
+										"c1264407-4abb-4ddc-a812-826e7271477c",
+										"04a7bf6a-f317-4eea-9311-fa4d711f860f"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Pick-Up",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://{{host}}:{{port}}/rentalAgreementPickUp/1233ba9c-8403-492e-9f4c-5b3b5464c3a1/04a7bf6a-f317-4eea-9311-fa4d711f860f",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"rentalAgreementPickUp",
+										"1233ba9c-8403-492e-9f4c-5b3b5464c3a1",
+										"04a7bf6a-f317-4eea-9311-fa4d711f860f"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Fail",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://{{host}}:{{port}}/rentalAgreementFail/1233ba9c-8403-492e-9f4c-5b3b5464c3a1/04a7bf6a-f317-4eea-9311-fa4d711f860f",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"rentalAgreementFail",
+										"1233ba9c-8403-492e-9f4c-5b3b5464c3a1",
+										"04a7bf6a-f317-4eea-9311-fa4d711f860f"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Return",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://{{host}}:{{port}}/rentalAgreementReturn/1233ba9c-8403-492e-9f4c-5b3b5464c3a1/04a7bf6a-f317-4eea-9311-fa4d711f860f",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"rentalAgreementReturn",
+										"1233ba9c-8403-492e-9f4c-5b3b5464c3a1",
+										"04a7bf6a-f317-4eea-9311-fa4d711f860f"
+									]
+								}
 							},
 							"response": []
 						}

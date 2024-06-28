@@ -45,10 +45,12 @@ CREATE TABLE IF NOT EXISTS tool_brand_xref
 CREATE TABLE IF NOT EXISTS rental_agrmnt
 (
     id                  UUID PRIMARY KEY,
-    tool_id             UUID    NOT NULL,
-    rental_days         DECIMAL NOT NULL,
-    checkout_date       DATE    NOT NULL,
-    daily_rental_charge FLOAT   NOT NULL,
-    discount_percent    FLOAT   NOT NULL,
+    tool_id             UUID                           NOT NULL,
+    rental_days         DECIMAL                        NOT NULL,
+    checkout_date       DATE                           NOT NULL,
+    daily_rental_charge FLOAT                          NOT NULL,
+    discount_percent    FLOAT                          NOT NULL,
+    state               VARCHAR(32) DEFAULT 'Proposed' NOT NULL,
+    data_item           TEXT,
     FOREIGN KEY (tool_id) REFERENCES tool (id)
 );
