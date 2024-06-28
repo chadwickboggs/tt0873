@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 USAGE="USAGE: \n\n
-  $ $0 [Tool_Name] \n
+  $ $0 [Tool_Type_Name] \n
 "
 
 if [[ $1 = '-h' || $1 = '--help' || $1 = '-u' || $1 = '--usage' ]]; then
@@ -12,7 +12,7 @@ fi
 comm_protocol='http'
 hostname='localhost'
 network_port='8080'
-location="${comm_protocol}://${hostname}:${network_port}/tool"
+location="${comm_protocol}://${hostname}:${network_port}/toolTypes"
 
 [[ $# -gt 0 ]] && location=${location}/$1
 

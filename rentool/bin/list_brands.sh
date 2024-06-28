@@ -1,8 +1,23 @@
 #!/usr/bin/env bash
 
-# TODO: Implement.
+USAGE="USAGE: \n\n
+  $ $0 [Brand_Name] \n
+"
+
+if [[ $1 = '-h' || $1 = '--help' || $1 = '-u' || $1 = '--usage' ]]; then
+  echo -e ${USAGE}
+  exit 1
+fi
+
+comm_protocol='http'
+hostname='localhost'
+network_port='8080'
+location="${comm_protocol}://${hostname}:${network_port}/brand"
+
+[[ $# -gt 0 ]] && location=${location}/$1
 
 curl \
   --silent \
-  --location 'http://localhost:8080/brand' \
+  --request GET \
+  --location ${location} \
   --header 'Content-Type: application/json'

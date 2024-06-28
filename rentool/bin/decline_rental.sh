@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 USAGE="USAGE: \n\n
-  $ $0 [Tool_Name] \n
+  $ $0 <Rental_Agreement_ID> <User_Name> \n
 "
 
-if [[ $1 = '-h' || $1 = '--help' || $1 = '-u' || $1 = '--usage' ]]; then
+if [[ $# -ne 2 || $1 = '-h' || $1 = '--help' || $1 = '-u' || $1 = '--usage' ]]; then
   echo -e ${USAGE}
   exit 1
 fi
@@ -12,9 +12,7 @@ fi
 comm_protocol='http'
 hostname='localhost'
 network_port='8080'
-location="${comm_protocol}://${hostname}:${network_port}/tool"
-
-[[ $# -gt 0 ]] && location=${location}/$1
+location="${comm_protocol}://${hostname}:${network_port}/declineRentalAgreement/$1/$2"
 
 curl \
   --silent \
