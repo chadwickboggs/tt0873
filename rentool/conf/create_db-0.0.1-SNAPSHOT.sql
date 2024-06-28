@@ -8,8 +8,8 @@ USE rentool;
 
 CREATE TABLE IF NOT EXISTS user
 (
-    id        UUID PRIMARY KEY,
-    name      VARCHAR(64) NOT NULL UNIQUE
+    id   UUID PRIMARY KEY,
+    name VARCHAR(64) NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS brand
@@ -44,7 +44,11 @@ CREATE TABLE IF NOT EXISTS tool_brand_xref
 
 CREATE TABLE IF NOT EXISTS rental_agrmnt
 (
-    id      UUID PRIMARY KEY,
-    tool_id UUID NOT NULL,
+    id                  UUID PRIMARY KEY,
+    tool_id             UUID    NOT NULL,
+    rental_days         DECIMAL NOT NULL,
+    checkout_date       DATE    NOT NULL,
+    daily_rental_charge FLOAT   NOT NULL,
+    discount_percent    FLOAT   NOT NULL,
     FOREIGN KEY (tool_id) REFERENCES tool (id)
 );
