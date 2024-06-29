@@ -3,6 +3,7 @@ package com.tiffanytimbric.rentool.core.controller;
 import com.tiffanytimbric.rentool.core.model.RentalAgreement;
 import com.tiffanytimbric.rentool.core.model.User;
 import com.tiffanytimbric.rentool.core.repository.RentalAgreementRepository;
+import com.tiffanytimbric.rentool.core.repository.ToolRepository;
 import com.tiffanytimbric.rentool.core.repository.UserRepository;
 import com.tiffanytimbric.rentool.core.service.RentalAgreementService;
 import org.springframework.http.HttpStatusCode;
@@ -136,9 +137,11 @@ public class RentalAgreementController {
             return ResponseEntity.of(Optional.empty());
         }
 
-        return ResponseEntity.of(
-                rentalAgreementRepository.findById(id)
-        );
+        final Optional<RentalAgreement> rentalAgreementOpt = rentalAgreementRepository.findById(id)
+                .map(rentalAgreementService::setToolCode)
+                .map(rentalAgreementService::setRenterName);
+
+        return ResponseEntity.of(rentalAgreementOpt);
     }
 
     @GetMapping("/rentalAgreementByUserName/{name}")
@@ -174,6 +177,27 @@ public class RentalAgreementController {
         if (rentalAgreement.idOpt().isEmpty()) {
             rentalAgreement.setId(UUID.randomUUID());
         }
+
+        return ResponseEntity.of(
+                Optional.of(rentalAgreementRepository.save(rentalAgreement))
+        );
+    }
+
+    @PostMapping("/rentalAgreementByName")
+    @NonNull
+    public ResponseEntity<RentalAgreement> createByNameRentalAgreement(
+            @RequestBody @Nullable final RentalAgreement rentalAgreement
+    ) {
+        if (rentalAgreement == null) {
+            return ResponseEntity.of(Optional.empty());
+        }
+
+        if (rentalAgreement.idOpt().isEmpty()) {
+            rentalAgreement.setId(UUID.randomUUID());
+        }
+
+        rentalAgreementService.setToolId(rentalAgreement);
+        rentalAgreementService.setRenterId(rentalAgreement);
 
         return ResponseEntity.of(
                 Optional.of(rentalAgreementRepository.save(rentalAgreement))

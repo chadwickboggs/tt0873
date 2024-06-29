@@ -16,7 +16,7 @@ else
 fi
 
 input_json_data_file=$(mktemp)
-"$(dirname $0)"/collect_data_for_rental.sh ${input_json_data_file}
+"$(dirname $0)"/collect_data_for_rental_by_id.sh ${input_json_data_file}
 
 "$(dirname $0)"/create_rental.sh ${input_json_data_file} > ${output_json_data_file}
 rm ${input_json_data_file}
@@ -28,7 +28,7 @@ echo -n ${created_rental_agreement_id} ${renter_id} \
   | xargs "$(dirname $0)"/accept_rental.sh > ${output_json_data_file}
 
 # TODO: Retrieve tool code instead of tool ID.
-tool_code=$(jq '.toolCode' ${output_json_data_file})
+tool_id=$(jq '.toolId' ${output_json_data_file})
 # TODO: Retrieve tool type.
 # TODO: Calculate final charge.
 # TODO: Calculate discount amount.
@@ -38,7 +38,7 @@ discount_percent=$(jq '.discountPercent' ${output_json_data_file})
 [[ $# -eq 0 ]] && rm ${output_json_data_file}
 
 echo
-echo -e "Tool Code: ${tool_code}
+echo -e "Tool ID: ${tool_id}
 Tool type: TODO
 Rental days: ${rental_days}
 Discount percent: ${discount_percent}

@@ -14,11 +14,11 @@ hostname='localhost'
 network_port='8080'
 location="${comm_protocol}://${hostname}:${network_port}/rentalAgreement"
 
-echo -n "What is the Code of the tool you wish to rent? "
-read tool_code
+echo -n "What is the ID of the tool you wish to rent? "
+read tool_id
 
-echo -n "What is your User Name? "
-read user_name
+echo -n "What is your User ID? "
+read user_id
 
 echo -n "For how many days do you wish to rent this tool? "
 read rental_days
@@ -33,8 +33,8 @@ echo -n "What is the discount percentage for this rental? "
 read discount_percent
 
 rental_agreement="{
-  \"toolCode\": \"${tool_code}\",
-  \"renterName\": \"${user_name}\",
+  \"toolId\":\"${tool_id}\",
+  \"renterId\":\"${user_id}\",
   \"rentalDays\": ${rental_days},
   \"checkoutDate\": \"${checkout_date}\",
   \"dailyRentalCharge\": \"${daily_rental_charge}\",

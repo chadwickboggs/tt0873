@@ -3,7 +3,11 @@ package com.tiffanytimbric.rentool.core.service;
 import com.tiffanytimbric.fsm.FiniteStateMachine;
 import com.tiffanytimbric.fsm.State;
 import com.tiffanytimbric.rentool.core.model.RentalAgreement;
+import com.tiffanytimbric.rentool.core.model.Tool;
+import com.tiffanytimbric.rentool.core.model.User;
 import com.tiffanytimbric.rentool.core.repository.RentalAgreementRepository;
+import com.tiffanytimbric.rentool.core.repository.ToolRepository;
+import com.tiffanytimbric.rentool.core.repository.UserRepository;
 import com.tiffanytimbric.rentool.core.util.RentalAgreementUtil;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -19,11 +23,17 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 public class RentalAgreementService {
 
     private RentalAgreementRepository rentalAgreementRepository;
+    private UserRepository userRepository;
+    private ToolRepository toolRepository;
 
     public RentalAgreementService(
-            @NonNull final RentalAgreementRepository rentalAgreementRepository
+            @NonNull final RentalAgreementRepository rentalAgreementRepository,
+            @NonNull final UserRepository userRepository,
+            @NonNull final ToolRepository toolRepository
     ) {
         this.rentalAgreementRepository = rentalAgreementRepository;
+        this.userRepository = userRepository;
+        this.toolRepository = toolRepository;
     }
 
     @Nullable
@@ -40,6 +50,34 @@ public class RentalAgreementService {
             @Nullable final RentalAgreementRepository rentalAgreementRepository
     ) {
         this.rentalAgreementRepository = rentalAgreementRepository;
+    }
+
+    @Nullable
+    public UserRepository getUserRepository() {
+        return userRepository;
+    }
+
+    @NonNull
+    public Optional<UserRepository> userRepositoryOpt() {
+        return Optional.ofNullable(userRepository);
+    }
+
+    public void setUserRepository(@NonNull final UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @Nullable
+    public ToolRepository getToolRepository() {
+        return toolRepository;
+    }
+
+    @NonNull
+    public Optional<ToolRepository> toolRepositoryOpt() {
+        return Optional.ofNullable(toolRepository);
+    }
+
+    public void setToolRepository(@NonNull final ToolRepository toolRepository) {
+        this.toolRepository = toolRepository;
     }
 
     @NonNull
@@ -111,4 +149,67 @@ public class RentalAgreementService {
         return fsm;
     }
 
+    @NonNull
+    public RentalAgreement setToolCode(
+            @NonNull final RentalAgreement rentalAgreement
+    ) {
+        toolRepository.findById(
+                        UUID.fromString(rentalAgreement.getToolId())
+                ).stream()
+                .map(Tool::getCode)
+                .findFirst()
+                .ifPresent(rentalAgreement::setToolCode);
+
+        return rentalAgreement;
+    }
+
+    @NonNull
+    public RentalAgreement setRenterName(
+            @NonNull final RentalAgreement rentalAgreement
+    ) {
+        userRepository.findById(
+                        UUID.fromString(rentalAgreement.getRenterId())
+                ).stream()
+                .map(User::getName)
+                .findFirst()
+                .ifPresent(rentalAgreement::setRenterName);
+
+        return rentalAgreement;
+    }
+
+    public void setRenterId(
+            @Nullable final RentalAgreement rentalAgreement
+    ) {
+        if (rentalAgreement == null) {
+            return;
+        }
+
+        rentalAgreement.renterNameOpt()
+                .flatMap(renterName ->
+                        userRepository.findByName(renterName).stream().findFirst()
+                )
+                .ifPresent(renter ->
+                        rentalAgreement.setRenterId(
+                                renter.getId().toString()
+                        )
+                );
+    }
+
+    public void setToolId(
+            @Nullable final RentalAgreement rentalAgreement
+    ) {
+        if (rentalAgreement == null) {
+            return;
+        }
+
+        rentalAgreement.toolCodeOpt()
+                .flatMap(toolCode ->
+                        toolRepository.findByCode(toolCode).stream().findFirst()
+                )
+                .ifPresent(tool ->
+                        rentalAgreement.setToolId(
+                                tool.getId().toString()
+                        )
+                );
+    }
 }

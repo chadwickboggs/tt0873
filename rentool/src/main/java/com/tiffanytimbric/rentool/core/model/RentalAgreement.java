@@ -31,6 +31,8 @@ public class RentalAgreement implements Serializable, Cloneable {
             nullable = false
     )
     private String toolId;
+    @Transient
+    private String toolCode;
     @JoinColumn(
             table = "User",
             name = "renter_id",
@@ -38,6 +40,8 @@ public class RentalAgreement implements Serializable, Cloneable {
             nullable = false
     )
     private String renterId;
+    @Transient
+    private String renterName;
     private Integer rentalDays;
     private Date checkoutDate;
 //    private LocalDate dueDate;  // TODO: Add method which calculates this value.
@@ -56,6 +60,24 @@ public class RentalAgreement implements Serializable, Cloneable {
     public RentalAgreement(
             @NonNull final UUID id,
             @NonNull final String toolId,
+            @NonNull final String renterId,
+            @NonNull final Integer rentalDays,
+            @NonNull final Date checkoutDate,
+            @NonNull final Float dailyRentalCharge,
+            @NonNull final Float discountPercent
+    ) {
+        this(
+                id, toolId, null, renterId, null,
+                rentalDays, checkoutDate, dailyRentalCharge, discountPercent
+        );
+    }
+
+    public RentalAgreement(
+            @NonNull final UUID id,
+            @NonNull final String toolId,
+            @NonNull final String toolCode,
+            @NonNull final String renterId,
+            @NonNull final String renterName,
             @NonNull final Integer rentalDays,
             @NonNull final Date checkoutDate,
             @NonNull final Float dailyRentalCharge,
@@ -63,6 +85,9 @@ public class RentalAgreement implements Serializable, Cloneable {
     ) {
         this.id = id;
         this.toolId = toolId;
+        this.toolCode = toolCode;
+        this.renterId = renterId;
+        this.renterName = renterName;
         this.rentalDays = rentalDays;
         this.checkoutDate = checkoutDate;
         this.dailyRentalCharge = dailyRentalCharge;
@@ -249,6 +274,9 @@ public class RentalAgreement implements Serializable, Cloneable {
         return new EqualsBuilder()
                 .append(this.id, rhs.id)
                 .append(this.toolId, rhs.toolId)
+                .append(this.toolCode, rhs.toolCode)
+                .append(this.renterId, rhs.renterId)
+                .append(this.renterName, rhs.renterName)
                 .append(this.rentalDays, rhs.rentalDays)
                 .append(this.checkoutDate, rhs.checkoutDate)
                 .append(this.dailyRentalCharge, rhs.dailyRentalCharge)
@@ -270,6 +298,9 @@ public class RentalAgreement implements Serializable, Cloneable {
         return new ToStringBuilder(this)
                 .append("id", id)
                 .append("toolId", toolId)
+                .append("toolCode", toolCode)
+                .append("renterId", renterId)
+                .append("renterName", renterName)
                 .append("rentalDays", rentalDays)
                 .append("checkoutDate", checkoutDate)
                 .append("dailyRentalCharge", dailyRentalCharge)
@@ -277,5 +308,41 @@ public class RentalAgreement implements Serializable, Cloneable {
                 .append("state", state)
                 .append("dataItem", dataItem)
                 .toString();
+    }
+
+    @Nullable
+    public String getToolCode() {
+        return toolCode;
+    }
+
+    @NonNull
+    public Optional<String> toolCodeOpt() {
+        if (isBlank(toolCode)) {
+            return Optional.empty();
+        }
+
+        return Optional.of(toolCode);
+    }
+
+    public void setToolCode(@NonNull final String toolCode) {
+        this.toolCode = toolCode;
+    }
+
+    @Nullable
+    public String getRenterName() {
+        return renterName;
+    }
+
+    @NonNull
+    public Optional<String> renterNameOpt() {
+        if (isBlank(renterName)) {
+            return Optional.empty();
+        }
+
+        return Optional.of(renterName);
+    }
+
+    public void setRenterName(@NonNull final String renterName) {
+        this.renterName = renterName;
     }
 }
