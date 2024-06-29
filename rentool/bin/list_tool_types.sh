@@ -9,9 +9,8 @@ if [[ $1 = '-h' || $1 = '--help' || $1 = '-u' || $1 = '--usage' ]]; then
   exit 1
 fi
 
-comm_protocol='http'
-hostname='localhost'
-network_port='8080'
+source "$(dirname $0)"/config.sh
+
 location="${comm_protocol}://${hostname}:${network_port}/toolTypes"
 
 [[ $# -gt 0 ]] && location=${location}/$1
