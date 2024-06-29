@@ -36,6 +36,10 @@ public class Tool implements Serializable {
             nullable = false
     )
     private String brand;
+    private Float dailyCharge;
+    private Boolean weekdaysFree;
+    private Boolean weekendsFree;
+    private Boolean holidaysFree;
 
     public Tool() {
     }
@@ -44,12 +48,20 @@ public class Tool implements Serializable {
             @NonNull final UUID id,
             @NonNull final String code,
             @NonNull final String type,
-            @NonNull final String brand
+            @NonNull final String brand,
+            @NonNull final Float dailyCharge,
+            @NonNull final Boolean weekdaysFree,
+            @NonNull final Boolean weekendsFree,
+            @NonNull final Boolean holidaysFree
     ) {
         this.id = id;
         this.code = code;
         this.type = type;
         this.brand = brand;
+        this.dailyCharge = dailyCharge;
+        this.weekdaysFree = weekdaysFree;
+        this.weekendsFree = weekendsFree;
+        this.holidaysFree = holidaysFree;
     }
 
     @Nullable
@@ -108,6 +120,62 @@ public class Tool implements Serializable {
         this.brand = brand;
     }
 
+    @Nullable
+    public Float getDailyCharge() {
+        return dailyCharge;
+    }
+
+    @NonNull
+    public Optional<Float> dailyChargeOpt() {
+        return Optional.ofNullable(dailyCharge);
+    }
+
+    public void setDailyCharge(@NonNull final Float dailyCharge) {
+        this.dailyCharge = dailyCharge;
+    }
+
+    @Nullable
+    public Boolean getWeekdaysFree() {
+        return weekdaysFree;
+    }
+
+    @NonNull
+    public Optional<Boolean> weekdaysFreeOpt() {
+        return Optional.ofNullable(weekdaysFree);
+    }
+
+    public void setWeekdaysFree(@NonNull final Boolean weekdayssFree) {
+        this.weekdaysFree = weekdayssFree;
+    }
+
+    @Nullable
+    public Boolean getWeekendsFree() {
+        return weekendsFree;
+    }
+
+    @NonNull
+    public Optional<Boolean> weekendsFreeOpt() {
+        return Optional.ofNullable(weekendsFree);
+    }
+
+    public void setWeekendsFree(@NonNull final Boolean weekendsFree) {
+        this.weekendsFree = weekendsFree;
+    }
+
+    @Nullable
+    public Boolean getHolidaysFree() {
+        return holidaysFree;
+    }
+
+    @NonNull
+    public Optional<Boolean> holidaysFreeOpt() {
+        return Optional.ofNullable(holidaysFree);
+    }
+
+    public void setHolidaysFree(@NonNull final Boolean holidaysFree) {
+        this.holidaysFree = holidaysFree;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -125,6 +193,10 @@ public class Tool implements Serializable {
                 .append(this.code, rhs.code)
                 .append(this.type, rhs.type)
                 .append(this.brand, rhs.brand)
+                .append(this.dailyCharge, rhs.dailyCharge)
+                .append(this.weekdaysFree, rhs.weekdaysFree)
+                .append(this.weekendsFree, rhs.weekendsFree)
+                .append(this.holidaysFree, rhs.holidaysFree)
                 .isEquals();
     }
 
@@ -143,6 +215,11 @@ public class Tool implements Serializable {
                 .append("name", code)
                 .append("type", type)
                 .append("brand", brand)
+                .append("dailyCharge", dailyCharge)
+                .append("weekdaysFree", weekdaysFree)
+                .append("weekendsFree", weekendsFree)
+                .append("holidaysFree", holidaysFree)
                 .toString();
     }
+
 }

@@ -3,7 +3,7 @@
 #
 
 INSERT INTO user
-(id, name, photo_url, balance)
+(id, name)
 VALUES
     ('1233ba9c-8403-492e-9f4c-5b3b5464c3af', 'arielhenry'),
     ('04a7bf6a-f317-4eea-9311-fa4d711f860f', 'tiffanytimbric'),
@@ -28,19 +28,10 @@ VALUES
 ;
 
 INSERT INTO tool
-(id, code, type, brand)
+(id, code, type, brand, daily_charge, weekdays_free, weekends_free, holidays_free)
 VALUES
-    ('1233ba9c-8403-492e-9f4c-5b3b5464c3a1', 'CHNS', 'Chainsaw', 'Stihl'),
-    ('1233ba9c-8403-492e-9f4c-5b3b5464c3a2', 'LADW', 'Ladder', 'Werner'),
-    ('1233ba9c-8403-492e-9f4c-5b3b5464c3a3', 'JAKD', 'Jackhammer', 'DeWalt'),
-    ('1233ba9c-8403-492e-9f4c-5b3b5464c3a4', 'JAKR', 'Jackhammer', 'Ridgid')
-;
-
-INSERT INTO tool_brand_xref
-    (brand_name, tool_id)
-VALUES
-    ('Stihl', '1233ba9c-8403-492e-9f4c-5b3b5464c3a1'),
-    ('Werner', '1233ba9c-8403-492e-9f4c-5b3b5464c3a2'),
-    ('DeWalt', '1233ba9c-8403-492e-9f4c-5b3b5464c3a3'),
-    ('Ridgid', '1233ba9c-8403-492e-9f4c-5b3b5464c3a4')
+    ('1233ba9c-8403-492e-9f4c-5b3b5464c3a1', 'CHNS', 'Chainsaw', 'Stihl', 0.0, FALSE, FALSE, FALSE),
+    ('1233ba9c-8403-492e-9f4c-5b3b5464c3a2', 'LADW', 'Ladder', 'Werner', 0.0, FALSE, FALSE, FALSE),
+    ('1233ba9c-8403-492e-9f4c-5b3b5464c3a3', 'JAKD', 'Jackhammer', 'DeWalt', 0.0, FALSE, FALSE, FALSE),
+    ('1233ba9c-8403-492e-9f4c-5b3b5464c3a4', 'JAKR', 'Jackhammer', 'Ridgid', 0.0, FALSE, FALSE, FALSE)
 ;

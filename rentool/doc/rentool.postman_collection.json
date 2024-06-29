@@ -1114,7 +1114,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"toolId\": \"1233ba9c-8403-492e-9f4c-5b3b5464c3a1\",\n    \"renter\": \"04a7bf6a-f317-4eea-9311-fa4d711f860f\",\n    \"rentalDays\": 2,\n    \"checkoutDate\": \"2024-06-27\",\n    \"dailyRentalCharge\": \"10.15\",\n    \"discountPercent\": \"0.0\"\n}",
+									"raw": "{\n    \"toolId\": \"1233ba9c-8403-492e-9f4c-5b3b5464c3a1\",\n    \"renterId\": \"04a7bf6a-f317-4eea-9311-fa4d711f860f\",\n    \"rentalDays\": 2,\n    \"checkoutDate\": \"2024-06-27\",\n    \"dailyRentalCharge\": \"10.15\",\n    \"discountPercent\": \"0.0\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1232,7 +1232,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"id\": \"1233ba9c-8403-492e-9f4c-5b3b5464c3a1\",\n    \"toolId\": \"1233ba9c-8403-492e-9f4c-5b3b5464c3a1\",\n    \"renter\": \"04a7bf6a-f317-4eea-9311-fa4d711f860f\",\n    \"rentalDays\": 2,\n    \"checkoutDate\": \"2024-06-27\",\n    \"dailyRentalCharge\": \"10.15\",\n    \"discountPercent\": \"0.0\",\n    \"state\": \"Proposed\"\n}",
+									"raw": "{\n    \"id\": \"1233ba9c-8403-492e-9f4c-5b3b5464c3a1\",\n    \"toolId\": \"1233ba9c-8403-492e-9f4c-5b3b5464c3a1\",\n    \"renterId\": \"04a7bf6a-f317-4eea-9311-fa4d711f860f\",\n    \"rentalDays\": 2,\n    \"checkoutDate\": \"2024-06-27\",\n    \"dailyRentalCharge\": \"10.15\",\n    \"discountPercent\": \"0.0\",\n    \"state\": \"Proposed\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1266,7 +1266,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"toolId\": \"1233ba9c-8403-492e-9f4c-5b3b5464c3a1\",\n    \"renter\": \"04a7bf6a-f317-4eea-9311-fa4d711f860f\",\n    \"rentalDays\": 2,\n    \"checkoutDate\": \"2024-06-27\",\n    \"dailyRentalCharge\": \"10.15\",\n    \"discountPercent\": \"0.0\"\n}"
+									"raw": "{\n    \"toolId\": \"1233ba9c-8403-492e-9f4c-5b3b5464c3a1\",\n    \"renterId\": \"04a7bf6a-f317-4eea-9311-fa4d711f860f\",\n    \"rentalDays\": 2,\n    \"checkoutDate\": \"2024-06-27\",\n    \"dailyRentalCharge\": \"10.15\",\n    \"discountPercent\": \"0.0\"\n}"
 								},
 								"url": {
 									"raw": "http://{{host}}:{{port}}/rentalAgreement",
@@ -1343,7 +1343,7 @@
 									}
 								],
 								"url": {
-									"raw": "http://{{host}}:{{port}}/rentalAgreementAccept/1233ba9c-8403-492e-9f4c-5b3b5464c3a1/04a7bf6a-f317-4eea-9311-fa4d711f860f",
+									"raw": "http://{{host}}:{{port}}/rentalAgreementAccept/0420acad-d58f-4fa4-9c2c-b9bbaa2f9d76/04a7bf6a-f317-4eea-9311-fa4d711f860f",
 									"protocol": "http",
 									"host": [
 										"{{host}}"
@@ -1351,7 +1351,7 @@
 									"port": "{{port}}",
 									"path": [
 										"rentalAgreementAccept",
-										"1233ba9c-8403-492e-9f4c-5b3b5464c3a1",
+										"0420acad-d58f-4fa4-9c2c-b9bbaa2f9d76",
 										"04a7bf6a-f317-4eea-9311-fa4d711f860f"
 									]
 								}

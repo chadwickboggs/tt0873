@@ -24,22 +24,17 @@ CREATE TABLE IF NOT EXISTS tool_type
 
 CREATE TABLE IF NOT EXISTS tool
 (
-    id    UUID PRIMARY KEY,
-    code  VARCHAR(64) NOT NULL,
-    type  VARCHAR(64) NOT NULL,
-    brand VARCHAR(64) NOT NULL,
+    id            UUID PRIMARY KEY,
+    code          VARCHAR(64) NOT NULL,
+    type          VARCHAR(64) NOT NULL,
+    brand         VARCHAR(64) NOT NULL,
+    daily_charge  FLOAT       NOT NULL,
+    weekdays_free BOOL        NOT NULL,
+    weekends_free BOOL        NOT NULL,
+    holidays_free BOOL        NOT NULL,
     INDEX (code),
     FOREIGN KEY (type) REFERENCES tool_type (name),
     FOREIGN KEY (brand) REFERENCES brand (name)
-);
-
-CREATE TABLE IF NOT EXISTS tool_brand_xref
-(
-    brand_name VARCHAR(64) NOT NULL,
-    tool_id    UUID        NOT NULL,
-    PRIMARY KEY (brand_name, tool_id),
-    FOREIGN KEY (brand_name) REFERENCES brand (name),
-    FOREIGN KEY (tool_id) REFERENCES tool (id)
 );
 
 CREATE TABLE IF NOT EXISTS rental_agrmnt
