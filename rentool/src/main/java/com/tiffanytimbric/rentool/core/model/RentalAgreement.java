@@ -48,6 +48,8 @@ public class RentalAgreement implements Serializable, Cloneable {
     private Date checkoutDate;
 //    private LocalDate dueDate;  // TODO: Add method which calculates this value.
     private Float dailyRentalCharge;
+    @Transient
+    private String dailyRentalChargeCurrency;
 //    private Integer chargeDays;  // TODO: Add method which calculates this value.
 //    private Float preDiscountCharge;  // TODO: Add method which calculates this value.
     private Integer discountPercent;
@@ -70,7 +72,7 @@ public class RentalAgreement implements Serializable, Cloneable {
     ) {
         this(
                 id, toolId, null, null, renterId, null,
-                rentalDays, checkoutDate, dailyRentalCharge, discountPercent
+                rentalDays, checkoutDate, dailyRentalCharge, null, discountPercent
         );
     }
 
@@ -84,6 +86,7 @@ public class RentalAgreement implements Serializable, Cloneable {
             @NonNull final Integer rentalDays,
             @NonNull final Date checkoutDate,
             @NonNull final Float dailyRentalCharge,
+            @NonNull final String dailyRentalChargeCurrency,
             @NonNull final Integer discountPercent
     ) {
         this.id = id;
@@ -95,6 +98,7 @@ public class RentalAgreement implements Serializable, Cloneable {
         this.rentalDays = rentalDays;
         this.checkoutDate = checkoutDate;
         this.dailyRentalCharge = dailyRentalCharge;
+        this.dailyRentalChargeCurrency = dailyRentalChargeCurrency;
         this.discountPercent = discountPercent;
     }
 
@@ -253,69 +257,6 @@ public class RentalAgreement implements Serializable, Cloneable {
         this.dataItem = dataItem;
     }
 
-    @Override
-    public Object clone() {
-        try {
-            return super.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        RentalAgreement rhs = (RentalAgreement) obj;
-        return new EqualsBuilder()
-                .append(this.id, rhs.id)
-                .append(this.toolId, rhs.toolId)
-                .append(this.toolCode, rhs.toolCode)
-                .append(this.toolType, rhs.toolType)
-                .append(this.renterId, rhs.renterId)
-                .append(this.renterName, rhs.renterName)
-                .append(this.rentalDays, rhs.rentalDays)
-                .append(this.checkoutDate, rhs.checkoutDate)
-                .append(this.dailyRentalCharge, rhs.dailyRentalCharge)
-                .append(this.discountPercent, rhs.discountPercent)
-                .append(this.state, rhs.state)
-                .append(this.dataItem, rhs.dataItem)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder()
-                .append(id)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", id)
-                .append("toolId", toolId)
-                .append("toolCode", toolCode)
-                .append("toolType", toolType)
-                .append("renterId", renterId)
-                .append("renterName", renterName)
-                .append("rentalDays", rentalDays)
-                .append("checkoutDate", checkoutDate)
-                .append("dailyRentalCharge", dailyRentalCharge)
-                .append("discountPercent", discountPercent)
-                .append("state", state)
-                .append("dataItem", dataItem)
-                .toString();
-    }
-
     @Nullable
     public String getToolCode() {
         return toolCode;
@@ -369,4 +310,90 @@ public class RentalAgreement implements Serializable, Cloneable {
     public void setRenterName(@NonNull final String renterName) {
         this.renterName = renterName;
     }
+
+    @Nullable
+    public String getDailyRentalChargeCurrency() {
+        return dailyRentalChargeCurrency;
+    }
+
+    @NonNull
+    public Optional<String> dailyRentalChargeCurrencyOpt() {
+        if (isBlank(dailyRentalChargeCurrency)) {
+            return Optional.empty();
+        }
+
+        return Optional.of(dailyRentalChargeCurrency);
+    }
+
+    public void setDailyRentalChargeCurrency(
+            @NonNull final String dailyRentalChargeCurrency
+    ) {
+        this.dailyRentalChargeCurrency = dailyRentalChargeCurrency;
+    }
+
+    @Override
+    public Object clone() {
+        try {
+            return super.clone();
+        }
+        catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        RentalAgreement rhs = (RentalAgreement) obj;
+        return new EqualsBuilder()
+                .append(this.id, rhs.id)
+                .append(this.toolId, rhs.toolId)
+                .append(this.toolCode, rhs.toolCode)
+                .append(this.toolType, rhs.toolType)
+                .append(this.renterId, rhs.renterId)
+                .append(this.renterName, rhs.renterName)
+                .append(this.rentalDays, rhs.rentalDays)
+                .append(this.checkoutDate, rhs.checkoutDate)
+                .append(this.dailyRentalCharge, rhs.dailyRentalCharge)
+                .append(this.dailyRentalChargeCurrency, rhs.dailyRentalChargeCurrency)
+                .append(this.discountPercent, rhs.discountPercent)
+                .append(this.state, rhs.state)
+                .append(this.dataItem, rhs.dataItem)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(id)
+                .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("toolId", toolId)
+                .append("toolCode", toolCode)
+                .append("toolType", toolType)
+                .append("renterId", renterId)
+                .append("renterName", renterName)
+                .append("rentalDays", rentalDays)
+                .append("checkoutDate", checkoutDate)
+                .append("dailyRentalCharge", dailyRentalCharge)
+                .append("dailyRentalChargeCurrency", dailyRentalChargeCurrency)
+                .append("discountPercent", discountPercent)
+                .append("state", state)
+                .append("dataItem", dataItem)
+                .toString();
+    }
+
 }

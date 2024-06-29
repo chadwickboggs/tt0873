@@ -140,7 +140,8 @@ public class RentalAgreementController {
         final Optional<RentalAgreement> rentalAgreementOpt = rentalAgreementRepository.findById(id)
                 .map(rentalAgreementService::setToolCode)
                 .map(rentalAgreementService::setToolType)
-                .map(rentalAgreementService::setRenterName);
+                .map(rentalAgreementService::setRenterName)
+                .map(rentalAgreementService::setDailyRentalChargeCurrency);
 
         return ResponseEntity.of(rentalAgreementOpt);
     }
@@ -172,6 +173,7 @@ public class RentalAgreementController {
                 .map(rentalAgreementService::setToolCode)
                 .map(rentalAgreementService::setToolType)
                 .map(rentalAgreementService::setRenterName)
+                .map(rentalAgreementService::setDailyRentalChargeCurrency)
                 .collect(Collectors.toList());
 
         return ResponseEntity.of(
@@ -197,6 +199,7 @@ public class RentalAgreementController {
         rentalAgreementService.setToolCode(savedRentalAgreement);
         rentalAgreementService.setToolType(savedRentalAgreement);
         rentalAgreementService.setRenterName(savedRentalAgreement);
+        rentalAgreementService.setDailyRentalChargeCurrency(savedRentalAgreement);
 
         return ResponseEntity.of(
                 Optional.of(savedRentalAgreement)
@@ -224,6 +227,7 @@ public class RentalAgreementController {
         rentalAgreementService.setToolCode(savedRentalAgreement);
         rentalAgreementService.setToolType(savedRentalAgreement);
         rentalAgreementService.setRenterName(savedRentalAgreement);
+        rentalAgreementService.setDailyRentalChargeCurrency(savedRentalAgreement);
 
         return ResponseEntity.of(
                 Optional.of(savedRentalAgreement)

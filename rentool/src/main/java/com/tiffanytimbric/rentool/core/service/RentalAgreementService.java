@@ -8,6 +8,7 @@ import com.tiffanytimbric.rentool.core.model.User;
 import com.tiffanytimbric.rentool.core.repository.RentalAgreementRepository;
 import com.tiffanytimbric.rentool.core.repository.ToolRepository;
 import com.tiffanytimbric.rentool.core.repository.UserRepository;
+import com.tiffanytimbric.rentool.core.util.LangUtil;
 import com.tiffanytimbric.rentool.core.util.RentalAgreementUtil;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -187,6 +188,19 @@ public class RentalAgreementService {
                 .map(User::getName)
                 .findFirst()
                 .ifPresent(rentalAgreement::setRenterName);
+
+        return rentalAgreement;
+    }
+
+    @NonNull
+    public RentalAgreement setDailyRentalChargeCurrency(
+            @NonNull final RentalAgreement rentalAgreement
+    ) {
+        rentalAgreement.setDailyRentalChargeCurrency(
+                LangUtil.currency(
+                        rentalAgreement.getDailyRentalCharge()
+                )
+        );
 
         return rentalAgreement;
     }
