@@ -16,9 +16,9 @@ else
 fi
 
 input_json_data_file=$(mktemp)
-"$(dirname $0)"/collect_data_for_rental.sh "${input_json_data_file}"
+"$(dirname $0)"/rental_collect_input_data.sh "${input_json_data_file}"
 
-"$(dirname $0)"/create_rental.sh "${input_json_data_file}" > "${output_json_data_file}"
+"$(dirname $0)"/rental_create.sh "${input_json_data_file}" > "${output_json_data_file}"
 rm "${input_json_data_file}"
 
 created_rental_agreement_id=$(jq '.id' "${output_json_data_file}")
@@ -33,7 +33,7 @@ rental_days=$(jq '.rentalDays' "${output_json_data_file}")
 discount_percent=$(jq '.discountPercent' "${output_json_data_file}")
 
 echo -n "${created_rental_agreement_id}" "${renter_id}" \
-  | xargs "$(dirname $0)"/accept_rental.sh > "${output_json_data_file}"
+  | xargs "$(dirname $0)"/rental_accept.sh > "${output_json_data_file}"
 
 [[ $# -eq 0 ]] && rm "${output_json_data_file}"
 
