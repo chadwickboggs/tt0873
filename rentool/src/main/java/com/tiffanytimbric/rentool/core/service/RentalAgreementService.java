@@ -216,7 +216,7 @@ public class RentalAgreementService {
     ) {
         rentalAgreement.checkoutDateOpt().ifPresent(checkoutDate ->
                 rentalAgreement.setCheckoutDateFormatted(
-                        new SimpleDateFormat("M/d/yy").format(
+                        new SimpleDateFormat("MM/dd/yy").format(
                                 checkoutDate
                         )
                 )
