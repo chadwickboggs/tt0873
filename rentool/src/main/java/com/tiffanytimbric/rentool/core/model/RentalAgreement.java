@@ -1,9 +1,6 @@
 package com.tiffanytimbric.rentool.core.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -28,11 +25,19 @@ public class RentalAgreement implements Serializable, Cloneable {
     @Id
     private UUID id;
     @JoinColumn(
+            table = "Tool",
             name = "tool_id",
-            nullable = false,
-            referencedColumnName = "id"
+            referencedColumnName = "id",
+            nullable = false
     )
     private String toolId;
+    @JoinColumn(
+            table = "User",
+            name = "renter_id",
+            referencedColumnName = "id",
+            nullable = false
+    )
+    private String renterId;
     private Integer rentalDays;
     private Date checkoutDate;
 //    private LocalDate dueDate;  // TODO: Add method which calculates this value.
@@ -86,6 +91,24 @@ public class RentalAgreement implements Serializable, Cloneable {
 
     public void setToolId(@NonNull final String toolOneId) {
         this.toolId = toolOneId;
+    }
+
+    @Nullable
+    public String getRenterId() {
+        return renterId;
+    }
+
+    @NonNull
+    public Optional<String> renterIdOpt() {
+        if (isBlank(renterId)) {
+            return Optional.empty();
+        }
+
+        return Optional.of(renterId);
+    }
+
+    public void setRenterId(@NonNull final String renterId) {
+        this.renterId = renterId;
     }
 
     @NonNull

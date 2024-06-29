@@ -15,4 +15,7 @@ public interface ToolRepository extends ListCrudRepository<Tool, UUID> {
     @Nullable
     List<Tool> findByCode(String code);
 
+    @Nullable
+    List<Tool> findByType(String type);
+
 }

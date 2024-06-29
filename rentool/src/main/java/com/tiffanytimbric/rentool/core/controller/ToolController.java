@@ -63,17 +63,31 @@ public class ToolController {
         );
     }
 
-    @GetMapping("/toolByName/{name}")
+    @GetMapping("/toolByCode/{code}")
     @NonNull
-    public ResponseEntity<List<Tool>> readToolByName(
-            @PathVariable @Nullable final String name
+    public ResponseEntity<List<Tool>> readToolByCode(
+            @PathVariable @Nullable final String code
     ) {
-        if (isBlank(name)) {
+        if (isBlank(code)) {
             return ResponseEntity.of(Optional.empty());
         }
 
         return ResponseEntity.ofNullable(
-                toolRepository.findByCode(name)
+                toolRepository.findByCode(code)
+        );
+    }
+
+    @GetMapping("/toolsByType/{type}")
+    @NonNull
+    public ResponseEntity<List<Tool>> readToolsByType(
+            @PathVariable @Nullable final String type
+    ) {
+        if (isBlank(type)) {
+            return ResponseEntity.of(Optional.empty());
+        }
+
+        return ResponseEntity.ofNullable(
+                toolRepository.findByType(type)
         );
     }
 

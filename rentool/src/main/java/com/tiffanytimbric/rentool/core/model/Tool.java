@@ -22,16 +22,20 @@ public class Tool implements Serializable {
     @Id
     private UUID id;
     private String code;
-    @ManyToOne(
-            optional = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL
+    @JoinColumn(
+            table = "ToolType",
+            name = "type",
+            referencedColumnName = "name",
+            nullable = false
     )
-    @JoinColumn(name = "type")
-    private ToolType type;
-    @ManyToOne(
-            optional = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL
+    private String type;
+    @JoinColumn(
+            table = "Brand",
+            name = "brand",
+            referencedColumnName = "name",
+            nullable = false
     )
-    @JoinColumn(name = "brand")
-    private Brand brand;
+    private String brand;
 
     public Tool() {
     }
@@ -39,8 +43,8 @@ public class Tool implements Serializable {
     public Tool(
             @NonNull final UUID id,
             @NonNull final String code,
-            @NonNull final ToolType type,
-            @NonNull final Brand brand
+            @NonNull final String type,
+            @NonNull final String brand
     ) {
         this.id = id;
         this.code = code;
@@ -77,27 +81,31 @@ public class Tool implements Serializable {
     }
 
     @Nullable
-    public ToolType getType() {
+    public String getType() {
         return type;
     }
 
     @NonNull
-    public Optional<ToolType> typeOpt() {
+    public Optional<String> typeOpt() {
         return Optional.ofNullable(type);
     }
 
-    public void setType(@NonNull final ToolType type) {
+    public void setType(@NonNull final String type) {
         this.type = type;
     }
 
     @Nullable
-    public Brand getBrand() {
+    public String getBrand() {
         return brand;
     }
 
     @NonNull
-    public Optional<Brand> brandOpt() {
+    public Optional<String> brandOpt() {
         return Optional.ofNullable(brand);
+    }
+
+    public void setBrand(@NonNull final String brand) {
+        this.brand = brand;
     }
 
     @Override

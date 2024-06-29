@@ -1,7 +1,9 @@
 package com.tiffanytimbric.rentool.core.controller;
 
 import com.tiffanytimbric.rentool.core.model.RentalAgreement;
+import com.tiffanytimbric.rentool.core.model.User;
 import com.tiffanytimbric.rentool.core.repository.RentalAgreementRepository;
+import com.tiffanytimbric.rentool.core.repository.UserRepository;
 import com.tiffanytimbric.rentool.core.service.RentalAgreementService;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @RestController
 //@PreAuthorize("hasRole('USER')")
@@ -26,13 +30,16 @@ public class RentalAgreementController {
 
     private final RentalAgreementService rentalAgreementService;
     private final RentalAgreementRepository rentalAgreementRepository;
+    private final UserRepository userRepository;
 
     public RentalAgreementController(
             @NonNull final RentalAgreementService rentalAgreementService,
-            @NonNull final RentalAgreementRepository rentalAgreementRepository
+            @NonNull final RentalAgreementRepository rentalAgreementRepository,
+            @NonNull final UserRepository userRepository
     ) {
         this.rentalAgreementService = rentalAgreementService;
         this.rentalAgreementRepository = rentalAgreementRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/rentalAgreementExist/{id}")
@@ -131,6 +138,27 @@ public class RentalAgreementController {
 
         return ResponseEntity.of(
                 rentalAgreementRepository.findById(id)
+        );
+    }
+
+    @GetMapping("/rentalAgreementByUserName/{name}")
+    @NonNull
+    public ResponseEntity<List<RentalAgreement>> readRentalAgreementsByUserName(
+            @PathVariable @Nullable final String name
+    ) {
+        if (isBlank(name)) {
+            return ResponseEntity.of(Optional.empty());
+        }
+
+        final Optional<User> renterOpt = userRepository.findByName(name);
+        if (renterOpt.isEmpty()) {
+            return ResponseEntity.of(Optional.empty());
+        }
+
+        final String renterId = renterOpt.get().getId().toString();
+
+        return ResponseEntity.of(
+                rentalAgreementRepository.findByRenterId(renterId)
         );
     }
 

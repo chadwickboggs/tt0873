@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 USAGE="USAGE: \n\n
-  $ $0 [Tool_Name] \n
+  $ $0 [Tool_Code] \n
 "
 
 if [[ $1 = '-h' || $1 = '--help' || $1 = '-u' || $1 = '--usage' ]]; then
@@ -14,7 +14,7 @@ hostname='localhost'
 network_port='8080'
 location="${comm_protocol}://${hostname}:${network_port}/tool"
 
-[[ $# -gt 0 ]] && location=${location}/$1
+[[ $# -gt 0 ]] && location="${comm_protocol}://${hostname}:${network_port}/toolByCode/$1"
 
 curl \
   --silent \

@@ -14,7 +14,7 @@ hostname='localhost'
 network_port='8080'
 location="${comm_protocol}://${hostname}:${network_port}/user"
 
-[[ $# -gt 0 ]] && location=${location}/$1
+[[ $# -gt 0 ]] && location="${comm_protocol}://${hostname}:${network_port}/userByName/$1"
 
 curl \
   --silent \
