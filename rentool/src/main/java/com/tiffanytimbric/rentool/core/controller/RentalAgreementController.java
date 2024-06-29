@@ -15,6 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
@@ -160,8 +161,21 @@ public class RentalAgreementController {
 
         final String renterId = renterOpt.get().getId().toString();
 
+        final Optional<List<RentalAgreement>> rentalAgreementsOpt = rentalAgreementRepository.findByRenterId(
+                renterId
+        );
+        if (rentalAgreementsOpt.isEmpty()) {
+            return ResponseEntity.of(Optional.empty());
+        }
+
+        final List<RentalAgreement> rentalAgreements = rentalAgreementsOpt.get().stream()
+                .map(rentalAgreementService::setToolCode)
+                .map(rentalAgreementService::setToolType)
+                .map(rentalAgreementService::setRenterName)
+                .collect(Collectors.toList());
+
         return ResponseEntity.of(
-                rentalAgreementRepository.findByRenterId(renterId)
+                Optional.of(rentalAgreements)
         );
     }
 

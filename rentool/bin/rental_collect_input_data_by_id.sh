@@ -33,7 +33,7 @@ rental_agreement="{
   \"rentalDays\": ${rental_days},
   \"checkoutDate\": \"${checkout_date}\",
   \"dailyRentalCharge\": \"${daily_rental_charge}\",
-  \"discountPercent\": \"${discount_percent}\"
+  \"discountPercent\": ${discount_percent}
 }"
 
 if [[ $# -gt 0 ]]; then

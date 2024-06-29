@@ -50,7 +50,7 @@ public class RentalAgreement implements Serializable, Cloneable {
     private Float dailyRentalCharge;
 //    private Integer chargeDays;  // TODO: Add method which calculates this value.
 //    private Float preDiscountCharge;  // TODO: Add method which calculates this value.
-    private Float discountPercent;
+    private Integer discountPercent;
 //    private Float discountAmount;  // TODO: Add method which calculates this value.
 //    private Float finalCharge;  // TODO: Add method which calculates this value.
     private String state = "Proposed";
@@ -66,7 +66,7 @@ public class RentalAgreement implements Serializable, Cloneable {
             @NonNull final Integer rentalDays,
             @NonNull final Date checkoutDate,
             @NonNull final Float dailyRentalCharge,
-            @NonNull final Float discountPercent
+            @NonNull final Integer discountPercent
     ) {
         this(
                 id, toolId, null, null, renterId, null,
@@ -84,7 +84,7 @@ public class RentalAgreement implements Serializable, Cloneable {
             @NonNull final Integer rentalDays,
             @NonNull final Date checkoutDate,
             @NonNull final Float dailyRentalCharge,
-            @NonNull final Float discountPercent
+            @NonNull final Integer discountPercent
     ) {
         this.id = id;
         this.toolId = toolId;
@@ -198,17 +198,17 @@ public class RentalAgreement implements Serializable, Cloneable {
     }
 
     @Nullable
-    public Float getDiscountPercent() {
+    public Integer getDiscountPercent() {
         return discountPercent;
     }
 
     @NonNull
-    public Optional<Float> discountPercentOpt() {
+    public Optional<Integer> discountPercentOpt() {
         return Optional.ofNullable(discountPercent);
     }
 
     public void setDiscountPercent(
-            @Nullable final Float discountPercent
+            @Nullable final Integer discountPercent
     ) {
         this.discountPercent = discountPercent;
     }
