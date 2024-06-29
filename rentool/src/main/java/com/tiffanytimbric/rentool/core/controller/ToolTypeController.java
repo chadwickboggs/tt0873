@@ -68,8 +68,10 @@ public class ToolTypeController {
             return ResponseEntity.of(Optional.empty());
         }
 
+        final ToolType savedToolType = toolTypeRepository.save(toolType);
+
         return ResponseEntity.of(
-                Optional.of(toolTypeRepository.save(toolType))
+                Optional.of(savedToolType)
         );
     }
 
@@ -82,8 +84,10 @@ public class ToolTypeController {
             return ResponseEntity.of(Optional.empty());
         }
 
+        final ToolType savedToolType = toolTypeRepository.save(toolType);
+
         return ResponseEntity.of(
-                Optional.of(toolTypeRepository.save(toolType))
+                Optional.of(savedToolType)
         );
     }
 

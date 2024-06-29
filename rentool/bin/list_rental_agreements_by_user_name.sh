@@ -5,7 +5,7 @@ USAGE="USAGE: \n\n
 "
 
 if [[ $# -ne 1 || $1 = '-h' || $1 = '--help' || $1 = '-u' || $1 = '--usage' ]]; then
-  echo -e ${USAGE}
+  echo -e "${USAGE}"
   exit 1
 fi
 
@@ -17,5 +17,5 @@ location="${comm_protocol}://${hostname}:${network_port}/rentalAgreementByUserNa
 curl \
   --silent \
   --request GET \
-  --location ${location} \
+  --location "${location}" \
   --header 'Content-Type: application/json'

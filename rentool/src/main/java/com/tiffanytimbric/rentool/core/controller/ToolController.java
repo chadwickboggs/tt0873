@@ -104,8 +104,10 @@ public class ToolController {
             tool.setId(UUID.randomUUID());
         }
 
+        final Tool savedTool = toolRepository.save(tool);
+
         return ResponseEntity.of(
-                Optional.of(toolRepository.save(tool))
+                Optional.of(savedTool)
         );
     }
 
@@ -118,8 +120,10 @@ public class ToolController {
             return ResponseEntity.of(Optional.empty());
         }
 
+        final Tool savedTool = toolRepository.save(tool);
+
         return ResponseEntity.of(
-                Optional.of(toolRepository.save(tool))
+                Optional.of(savedTool)
         );
     }
 

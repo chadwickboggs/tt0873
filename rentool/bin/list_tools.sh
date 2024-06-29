@@ -5,7 +5,7 @@ USAGE="USAGE: \n\n
 "
 
 if [[ $1 = '-h' || $1 = '--help' || $1 = '-u' || $1 = '--usage' ]]; then
-  echo -e ${USAGE}
+  echo -e "${USAGE}"
   exit 1
 fi
 
@@ -19,5 +19,5 @@ location="${comm_protocol}://${hostname}:${network_port}/tool"
 curl \
   --silent \
   --request GET \
-  --location ${location} \
+  --location "${location}" \
   --header 'Content-Type: application/json'

@@ -5,32 +5,27 @@ USAGE="USAGE: \n\n
 "
 
 if [[ $1 = '-h' || $1 = '--help' || $1 = '-u' || $1 = '--usage' ]]; then
-  echo -e ${USAGE}
+  echo -e "${USAGE}"
   exit 1
 fi
 
-comm_protocol='http'
-hostname='localhost'
-network_port='8080'
-location="${comm_protocol}://${hostname}:${network_port}/rentalAgreement"
-
 echo -n "What is the Code of the tool you wish to rent? "
-read tool_code
+read -r tool_code
 
 echo -n "What is your User Name? "
-read user_name
+read -r user_name
 
 echo -n "For how many days do you wish to rent this tool? "
-read rental_days
+read -r rental_days
 
 echo -n "On which date to you wish to pick up this rental (yyyy-mm-dd)? "
-read checkout_date
+read -r checkout_date
 
 echo -n "What is the daily rental charge for this tool? "
-read daily_rental_charge
+read -r daily_rental_charge
 
 echo -n "What is the discount percentage for this rental? "
-read discount_percent
+read -r discount_percent
 
 rental_agreement="{
   \"toolCode\": \"${tool_code}\",
@@ -42,8 +37,8 @@ rental_agreement="{
 }"
 
 if [[ $# -gt 0 ]]; then
-  echo "${rental_agreement}" > $1
+  echo -e "${rental_agreement}" > "$1"
   exit
 fi
 
-echo "${rental_agreement}"
+echo -e "${rental_agreement}"

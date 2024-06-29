@@ -82,8 +82,10 @@ public class UserController {
             user.setId(UUID.randomUUID());
         }
 
+        final User savedUser = userRepository.save(user);
+
         return ResponseEntity.of(
-                Optional.of(userRepository.save(user))
+                Optional.of(savedUser)
         );
     }
 
@@ -96,8 +98,10 @@ public class UserController {
             return ResponseEntity.of(Optional.empty());
         }
 
+        final User savedUser = userRepository.save(user);
+
         return ResponseEntity.of(
-                Optional.of(userRepository.save(user))
+                Optional.of(savedUser)
         );
     }
 

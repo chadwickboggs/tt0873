@@ -1137,6 +1137,50 @@
 							"response": []
 						},
 						{
+							"name": "Create By Name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful POST request\", function () {",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"toolCode\": \"CHNS\",\n    \"renterName\": \"tiffanytimbric\",\n    \"rentalDays\": 2,\n    \"checkoutDate\": \"2024-06-27\",\n    \"dailyRentalCharge\": \"10.15\",\n    \"discountPercent\": \"0.0\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/rentalAgreementByName",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"rentalAgreementByName"
+									]
+								},
+								"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+							},
+							"response": []
+						},
+						{
 							"name": "Read",
 							"request": {
 								"method": "GET",
@@ -1147,7 +1191,7 @@
 									}
 								],
 								"url": {
-									"raw": "http://{{host}}:{{port}}/rentalAgreement/1233ba9c-8403-492e-9f4c-5b3b5464c3a1",
+									"raw": "http://{{host}}:{{port}}/rentalAgreement/23a7c827-3e13-4bdc-b358-4704ea0e7c9c",
 									"protocol": "http",
 									"host": [
 										"{{host}}"
@@ -1155,7 +1199,7 @@
 									"port": "{{port}}",
 									"path": [
 										"rentalAgreement",
-										"1233ba9c-8403-492e-9f4c-5b3b5464c3a1"
+										"23a7c827-3e13-4bdc-b358-4704ea0e7c9c"
 									]
 								}
 							},
@@ -1343,7 +1387,7 @@
 									}
 								],
 								"url": {
-									"raw": "http://{{host}}:{{port}}/rentalAgreementAccept/0420acad-d58f-4fa4-9c2c-b9bbaa2f9d76/04a7bf6a-f317-4eea-9311-fa4d711f860f",
+									"raw": "http://{{host}}:{{port}}/rentalAgreementAccept/8611a796-7d92-45fa-8d79-b80a482df175/04a7bf6a-f317-4eea-9311-fa4d711f860f",
 									"protocol": "http",
 									"host": [
 										"{{host}}"
@@ -1351,7 +1395,7 @@
 									"port": "{{port}}",
 									"path": [
 										"rentalAgreementAccept",
-										"0420acad-d58f-4fa4-9c2c-b9bbaa2f9d76",
+										"8611a796-7d92-45fa-8d79-b80a482df175",
 										"04a7bf6a-f317-4eea-9311-fa4d711f860f"
 									]
 								}

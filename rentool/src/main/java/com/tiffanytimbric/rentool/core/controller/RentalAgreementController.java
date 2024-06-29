@@ -3,7 +3,6 @@ package com.tiffanytimbric.rentool.core.controller;
 import com.tiffanytimbric.rentool.core.model.RentalAgreement;
 import com.tiffanytimbric.rentool.core.model.User;
 import com.tiffanytimbric.rentool.core.repository.RentalAgreementRepository;
-import com.tiffanytimbric.rentool.core.repository.ToolRepository;
 import com.tiffanytimbric.rentool.core.repository.UserRepository;
 import com.tiffanytimbric.rentool.core.service.RentalAgreementService;
 import org.springframework.http.HttpStatusCode;
@@ -178,14 +177,19 @@ public class RentalAgreementController {
             rentalAgreement.setId(UUID.randomUUID());
         }
 
+        final RentalAgreement savedRentalAgreement = rentalAgreementRepository.save(rentalAgreement);
+
+        rentalAgreementService.setToolCode(savedRentalAgreement);
+        rentalAgreementService.setRenterName(savedRentalAgreement);
+
         return ResponseEntity.of(
-                Optional.of(rentalAgreementRepository.save(rentalAgreement))
+                Optional.of(savedRentalAgreement)
         );
     }
 
     @PostMapping("/rentalAgreementByName")
     @NonNull
-    public ResponseEntity<RentalAgreement> createByNameRentalAgreement(
+    public ResponseEntity<RentalAgreement> createRentalAgreementByName(
             @RequestBody @Nullable final RentalAgreement rentalAgreement
     ) {
         if (rentalAgreement == null) {
@@ -199,8 +203,13 @@ public class RentalAgreementController {
         rentalAgreementService.setToolId(rentalAgreement);
         rentalAgreementService.setRenterId(rentalAgreement);
 
+        final RentalAgreement savedRentalAgreement = rentalAgreementRepository.save(rentalAgreement);
+
+        rentalAgreementService.setToolCode(savedRentalAgreement);
+        rentalAgreementService.setRenterName(savedRentalAgreement);
+
         return ResponseEntity.of(
-                Optional.of(rentalAgreementRepository.save(rentalAgreement))
+                Optional.of(savedRentalAgreement)
         );
     }
 
@@ -213,8 +222,10 @@ public class RentalAgreementController {
             return ResponseEntity.of(Optional.empty());
         }
 
+        final RentalAgreement savedRentalAgreement = rentalAgreementRepository.save(rentalAgreement);
+
         return ResponseEntity.of(
-                Optional.of(rentalAgreementRepository.save(rentalAgreement))
+                Optional.of(savedRentalAgreement)
         );
     }
 

@@ -68,8 +68,10 @@ public class BrandController {
             return ResponseEntity.of(Optional.empty());
         }
 
+        final Brand savedBrand = brandRepository.save(brand);
+
         return ResponseEntity.of(
-                Optional.of(brandRepository.save(brand))
+                Optional.of(savedBrand)
         );
     }
 
@@ -82,8 +84,10 @@ public class BrandController {
             return ResponseEntity.of(Optional.empty());
         }
 
+        final Brand savedBrand = brandRepository.save(brand);
+
         return ResponseEntity.of(
-                Optional.of(brandRepository.save(brand))
+                Optional.of(savedBrand)
         );
     }
 
