@@ -46,6 +46,8 @@ public class RentalAgreement implements Serializable, Cloneable {
     private String renterName;
     private Integer rentalDays;
     private Date checkoutDate;
+    @Transient
+    private String checkoutDateFormatted;
 //    private LocalDate dueDate;  // TODO: Add method which calculates this value.
     private Float dailyRentalCharge;
     @Transient
@@ -72,7 +74,8 @@ public class RentalAgreement implements Serializable, Cloneable {
     ) {
         this(
                 id, toolId, null, null, renterId, null,
-                rentalDays, checkoutDate, dailyRentalCharge, null, discountPercent
+                rentalDays, checkoutDate, null, dailyRentalCharge,
+                null, discountPercent
         );
     }
 
@@ -85,6 +88,7 @@ public class RentalAgreement implements Serializable, Cloneable {
             @NonNull final String renterName,
             @NonNull final Integer rentalDays,
             @NonNull final Date checkoutDate,
+            @NonNull final String checkoutDateFormatted,
             @NonNull final Float dailyRentalCharge,
             @NonNull final String dailyRentalChargeCurrency,
             @NonNull final Integer discountPercent
@@ -97,6 +101,7 @@ public class RentalAgreement implements Serializable, Cloneable {
         this.renterName = renterName;
         this.rentalDays = rentalDays;
         this.checkoutDate = checkoutDate;
+        this.checkoutDateFormatted = checkoutDateFormatted;
         this.dailyRentalCharge = dailyRentalCharge;
         this.dailyRentalChargeCurrency = dailyRentalChargeCurrency;
         this.discountPercent = discountPercent;
@@ -183,6 +188,26 @@ public class RentalAgreement implements Serializable, Cloneable {
             @Nullable final Date checkoutDate
     ) {
         this.checkoutDate = checkoutDate;
+    }
+
+    @Nullable
+    public String getCheckoutDateFormatted() {
+        return checkoutDateFormatted;
+    }
+
+    @NonNull
+    public Optional<String> checkoutDateFormattedOpt() {
+        if (isBlank(checkoutDateFormatted)) {
+            return Optional.empty();
+        }
+
+        return Optional.of(checkoutDateFormatted);
+    }
+
+    public void setCheckoutDateFormatted(
+            @NonNull final String checkoutDateFormatted
+    ) {
+        this.checkoutDateFormatted = checkoutDateFormatted;
     }
 
     @Nullable

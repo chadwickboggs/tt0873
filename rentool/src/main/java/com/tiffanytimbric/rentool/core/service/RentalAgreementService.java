@@ -14,6 +14,8 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -154,12 +156,13 @@ public class RentalAgreementService {
     public RentalAgreement setToolCode(
             @NonNull final RentalAgreement rentalAgreement
     ) {
-        toolRepository.findById(
-                        UUID.fromString(rentalAgreement.getToolId())
-                ).stream()
-                .map(Tool::getCode)
-                .findFirst()
-                .ifPresent(rentalAgreement::setToolCode);
+        rentalAgreement.toolIdOpt()
+                .flatMap(toolId ->
+                        toolRepository.findById(UUID.fromString(toolId)).stream()
+                                .map(Tool::getCode)
+                                .filter(Objects::nonNull)
+                                .findFirst()
+                ).ifPresent(rentalAgreement::setToolCode);
 
         return rentalAgreement;
     }
@@ -168,12 +171,13 @@ public class RentalAgreementService {
     public RentalAgreement setToolType(
             @NonNull final RentalAgreement rentalAgreement
     ) {
-        toolRepository.findById(
-                        UUID.fromString(rentalAgreement.getToolId())
-                ).stream()
-                .map(Tool::getType)
-                .findFirst()
-                .ifPresent(rentalAgreement::setToolType);
+        rentalAgreement.toolIdOpt()
+                .flatMap(toolId ->
+                        toolRepository.findById(UUID.fromString(toolId)).stream()
+                                .map(Tool::getType)
+                                .filter(Objects::nonNull)
+                                .findFirst()
+                ).ifPresent(rentalAgreement::setToolType);
 
         return rentalAgreement;
     }
@@ -182,12 +186,13 @@ public class RentalAgreementService {
     public RentalAgreement setRenterName(
             @NonNull final RentalAgreement rentalAgreement
     ) {
-        userRepository.findById(
-                        UUID.fromString(rentalAgreement.getRenterId())
-                ).stream()
-                .map(User::getName)
-                .findFirst()
-                .ifPresent(rentalAgreement::setRenterName);
+        rentalAgreement.renterIdOpt()
+                .flatMap(renterId ->
+                        userRepository.findById(UUID.fromString(renterId)).stream()
+                                .map(User::getName)
+                                .filter(Objects::nonNull)
+                                .findFirst()
+                ).ifPresent(rentalAgreement::setRenterName);
 
         return rentalAgreement;
     }
@@ -196,9 +201,24 @@ public class RentalAgreementService {
     public RentalAgreement setDailyRentalChargeCurrency(
             @NonNull final RentalAgreement rentalAgreement
     ) {
-        rentalAgreement.setDailyRentalChargeCurrency(
-                LangUtil.currency(
-                        rentalAgreement.getDailyRentalCharge()
+        rentalAgreement.dailyRentalChargeOpt().ifPresent(dailyRentalCharge ->
+                rentalAgreement.setDailyRentalChargeCurrency(
+                        LangUtil.currency(dailyRentalCharge)
+                )
+        );
+
+        return rentalAgreement;
+    }
+
+    @NonNull
+    public RentalAgreement setCheckoutDateFormatted(
+            @NonNull final RentalAgreement rentalAgreement
+    ) {
+        rentalAgreement.checkoutDateOpt().ifPresent(checkoutDate ->
+                rentalAgreement.setCheckoutDateFormatted(
+                        new SimpleDateFormat("M/d/yy").format(
+                                checkoutDate
+                        )
                 )
         );
 

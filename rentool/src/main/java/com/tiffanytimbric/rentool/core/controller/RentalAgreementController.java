@@ -141,7 +141,8 @@ public class RentalAgreementController {
                 .map(rentalAgreementService::setToolCode)
                 .map(rentalAgreementService::setToolType)
                 .map(rentalAgreementService::setRenterName)
-                .map(rentalAgreementService::setDailyRentalChargeCurrency);
+                .map(rentalAgreementService::setDailyRentalChargeCurrency)
+                .map(rentalAgreementService::setCheckoutDateFormatted);
 
         return ResponseEntity.of(rentalAgreementOpt);
     }
@@ -174,6 +175,7 @@ public class RentalAgreementController {
                 .map(rentalAgreementService::setToolType)
                 .map(rentalAgreementService::setRenterName)
                 .map(rentalAgreementService::setDailyRentalChargeCurrency)
+                .map(rentalAgreementService::setCheckoutDateFormatted)
                 .collect(Collectors.toList());
 
         return ResponseEntity.of(
@@ -200,6 +202,7 @@ public class RentalAgreementController {
         rentalAgreementService.setToolType(savedRentalAgreement);
         rentalAgreementService.setRenterName(savedRentalAgreement);
         rentalAgreementService.setDailyRentalChargeCurrency(savedRentalAgreement);
+        rentalAgreementService.setCheckoutDateFormatted(savedRentalAgreement);
 
         return ResponseEntity.of(
                 Optional.of(savedRentalAgreement)
@@ -228,6 +231,7 @@ public class RentalAgreementController {
         rentalAgreementService.setToolType(savedRentalAgreement);
         rentalAgreementService.setRenterName(savedRentalAgreement);
         rentalAgreementService.setDailyRentalChargeCurrency(savedRentalAgreement);
+        rentalAgreementService.setCheckoutDateFormatted(savedRentalAgreement);
 
         return ResponseEntity.of(
                 Optional.of(savedRentalAgreement)
