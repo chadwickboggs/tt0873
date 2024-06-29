@@ -164,6 +164,20 @@ public class RentalAgreementService {
     }
 
     @NonNull
+    public RentalAgreement setToolType(
+            @NonNull final RentalAgreement rentalAgreement
+    ) {
+        toolRepository.findById(
+                        UUID.fromString(rentalAgreement.getToolId())
+                ).stream()
+                .map(Tool::getType)
+                .findFirst()
+                .ifPresent(rentalAgreement::setToolType);
+
+        return rentalAgreement;
+    }
+
+    @NonNull
     public RentalAgreement setRenterName(
             @NonNull final RentalAgreement rentalAgreement
     ) {

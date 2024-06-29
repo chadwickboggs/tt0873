@@ -24,8 +24,8 @@ rm "${input_json_data_file}"
 created_rental_agreement_id=$(jq '.id' "${output_json_data_file}")
 tool_id=$(jq '.toolId' "${output_json_data_file}")
 tool_code=$(jq '.toolCode' "${output_json_data_file}")
+tool_type=$(jq '.toolType' "${output_json_data_file}")
 renter_id=$(jq '.renterId' "${output_json_data_file}")
-# TODO: Retrieve tool code instead of tool ID.
 # TODO: Retrieve tool type.
 # TODO: Calculate final charge.
 # TODO: Calculate discount amount.
@@ -40,7 +40,7 @@ echo -n "${created_rental_agreement_id}" "${renter_id}" \
 echo
 echo -e "Tool ID: ${tool_id}" | tr -d '"'
 echo -e "Tool code: ${tool_code}" | tr -d '"'
-echo -e "Tool type: TODO" | tr -d '"'
+echo -e "Tool type: ${tool_type}" | tr -d '"'
 echo -e "Rental days: ${rental_days}" | tr -d '"'
-echo -e "Discount percent: ${discount_percent}" | tr -d '"'
+echo -e "Discount percent: ${discount_percent}%" | tr -d '"'
 echo -e "Final charge: TODO" | tr -d '"'

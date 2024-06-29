@@ -138,6 +138,7 @@ public class RentalAgreementController {
 
         final Optional<RentalAgreement> rentalAgreementOpt = rentalAgreementRepository.findById(id)
                 .map(rentalAgreementService::setToolCode)
+                .map(rentalAgreementService::setToolType)
                 .map(rentalAgreementService::setRenterName);
 
         return ResponseEntity.of(rentalAgreementOpt);
@@ -180,6 +181,7 @@ public class RentalAgreementController {
         final RentalAgreement savedRentalAgreement = rentalAgreementRepository.save(rentalAgreement);
 
         rentalAgreementService.setToolCode(savedRentalAgreement);
+        rentalAgreementService.setToolType(savedRentalAgreement);
         rentalAgreementService.setRenterName(savedRentalAgreement);
 
         return ResponseEntity.of(
@@ -206,6 +208,7 @@ public class RentalAgreementController {
         final RentalAgreement savedRentalAgreement = rentalAgreementRepository.save(rentalAgreement);
 
         rentalAgreementService.setToolCode(savedRentalAgreement);
+        rentalAgreementService.setToolType(savedRentalAgreement);
         rentalAgreementService.setRenterName(savedRentalAgreement);
 
         return ResponseEntity.of(

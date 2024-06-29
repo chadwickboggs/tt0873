@@ -33,6 +33,8 @@ public class RentalAgreement implements Serializable, Cloneable {
     private String toolId;
     @Transient
     private String toolCode;
+    @Transient
+    private String toolType;
     @JoinColumn(
             table = "User",
             name = "renter_id",
@@ -67,7 +69,7 @@ public class RentalAgreement implements Serializable, Cloneable {
             @NonNull final Float discountPercent
     ) {
         this(
-                id, toolId, null, renterId, null,
+                id, toolId, null, null, renterId, null,
                 rentalDays, checkoutDate, dailyRentalCharge, discountPercent
         );
     }
@@ -76,6 +78,7 @@ public class RentalAgreement implements Serializable, Cloneable {
             @NonNull final UUID id,
             @NonNull final String toolId,
             @NonNull final String toolCode,
+            @NonNull final String toolType,
             @NonNull final String renterId,
             @NonNull final String renterName,
             @NonNull final Integer rentalDays,
@@ -86,6 +89,7 @@ public class RentalAgreement implements Serializable, Cloneable {
         this.id = id;
         this.toolId = toolId;
         this.toolCode = toolCode;
+        this.toolType = toolType;
         this.renterId = renterId;
         this.renterName = renterName;
         this.rentalDays = rentalDays;
@@ -275,6 +279,7 @@ public class RentalAgreement implements Serializable, Cloneable {
                 .append(this.id, rhs.id)
                 .append(this.toolId, rhs.toolId)
                 .append(this.toolCode, rhs.toolCode)
+                .append(this.toolType, rhs.toolType)
                 .append(this.renterId, rhs.renterId)
                 .append(this.renterName, rhs.renterName)
                 .append(this.rentalDays, rhs.rentalDays)
@@ -299,6 +304,7 @@ public class RentalAgreement implements Serializable, Cloneable {
                 .append("id", id)
                 .append("toolId", toolId)
                 .append("toolCode", toolCode)
+                .append("toolType", toolType)
                 .append("renterId", renterId)
                 .append("renterName", renterName)
                 .append("rentalDays", rentalDays)
@@ -326,6 +332,24 @@ public class RentalAgreement implements Serializable, Cloneable {
 
     public void setToolCode(@NonNull final String toolCode) {
         this.toolCode = toolCode;
+    }
+
+    @Nullable
+    public String getToolType() {
+        return toolType;
+    }
+
+    @NonNull
+    public Optional<String> toolTypeOpt() {
+        if (isBlank(toolType)) {
+            return Optional.empty();
+        }
+
+        return Optional.of(toolType);
+    }
+
+    public void setToolType(@NonNull final String toolType) {
+        this.toolType = toolType;
     }
 
     @Nullable
