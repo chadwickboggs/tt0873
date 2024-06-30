@@ -11,7 +11,7 @@ fi
 
 source "$(dirname $0)"/config.sh
 
-location="${comm_protocol}://${hostname}:${network_port}/toolTypes"
+location="${comm_protocol}://${hostname}:${network_port}/toolType"
 
 [[ $# -gt 0 ]] && location=${location}/$1
 

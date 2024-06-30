@@ -3,7 +3,7 @@
 #
 
 INSERT INTO user
-(id, name)
+    (id, name)
 VALUES
     ('1233ba9c-8403-492e-9f4c-5b3b5464c3af', 'arielhenry'),
     ('04a7bf6a-f317-4eea-9311-fa4d711f860f', 'tiffanytimbric'),
@@ -11,7 +11,7 @@ VALUES
 ;
 
 INSERT INTO brand
-(name)
+    (name)
 VALUES
     ('Stihl'),
     ('Werner'),
@@ -20,7 +20,7 @@ VALUES
 ;
 
 INSERT INTO tool_type
-(name)
+    (name)
 VALUES
     ('Chainsaw'),
     ('Ladder'),
@@ -28,7 +28,7 @@ VALUES
 ;
 
 INSERT INTO tool
-(id, code, type, brand, description, daily_charge, weekdays_free, weekends_free, holidays_free)
+    (id, code, type, brand, description, daily_charge, weekdays_free, weekends_free, holidays_free)
 VALUES
     (
      '1233ba9c-8403-492e-9f4c-5b3b5464c3a1', 'CHNS', 'Chainsaw', 'Stihl',
@@ -49,5 +49,17 @@ VALUES
      '1233ba9c-8403-492e-9f4c-5b3b5464c3a4', 'JAKR', 'Jackhammer', 'Ridgid',
      'R86712B - 18V Brushless 1 inch SDS-Plus Rotary Hammer',
      0.0, FALSE, FALSE, FALSE
+    )
+;
+
+INSERT INTO rental_agrmnt
+    (id, tool_id, renter_id, rental_days, checkout_date, daily_rental_charge, discount_percent, state)
+VALUES
+    (
+     '5a12bfc4-c458-4244-9e5c-831fb782e7ba',
+     '1233ba9c-8403-492e-9f4c-5b3b5464c3a1',
+     '04a7bf6a-f317-4eea-9311-fa4d711f860f',
+     2, '2025-03-15', '10.15', 0,
+     'Proposed'
     )
 ;
