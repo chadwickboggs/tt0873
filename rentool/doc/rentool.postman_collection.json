@@ -60,7 +60,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"name\": \"Milwaukee\"\n}",
+									"raw": "{\n\t\"name\": \"KA-BAR\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -305,7 +305,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"name\": \"Hammer\"\n}",
+									"raw": "{\n\t\"name\": \"Knife\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -525,7 +525,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"name\": \"tiffanytimbric\"\n}",
+									"raw": "{\n\t\"name\": \"robsmith\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -819,7 +819,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"code\": \"CHNS\",\n    \"type\": {\n        \"name\": \"Chainsaw\"\n    },\n    \"brand\": [\n        {\n            \"name\": \"Stihl\"\n        }\n    ]\n}",
+									"raw": "{\n    \"code\": \"KBBK\",\n    \"type\": \"Knife\",\n    \"brand\": \"KA-BAR\",\n    \"dailyCharge\": 0.0,\n    \"weekdaysFree\": false,\n    \"weekendsFree\": false,\n    \"holidaysFree\": false\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -962,7 +962,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"code\": \"CHNS\",\n    \"type\": {\n        \"name\": \"Chainsaw\"\n    },\n    \"brand\": [\n        {\n            \"name\": \"Stihl\"\n        }\n    ]\n}",
+									"raw": "{\n    \"id\": \"062d4c9b-7c31-4e8c-b99d-eaa186bb3403\",\n    \"code\": \"KBUK\",\n    \"type\": \"Knife\",\n    \"brand\": \"KA-BAR\",\n    \"dailyCharge\": 0.0,\n    \"weekdaysFree\": false,\n    \"weekendsFree\": false,\n    \"holidaysFree\": false\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -996,7 +996,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"code\": \"CHNS\",\n    \"type\": {\n        \"name\": \"Chainsaw\"\n    },\n    \"brand\": [\n        {\n            \"name\": \"Stihl\"\n        }\n    ]\n}"
+									"raw": "{\n    \"id\": \"062d4c9b-7c31-4e8c-b99d-eaa186bb3403\",\n    \"code\": \"KBUK\",\n    \"type\": \"Knife\",\n    \"brand\": \"KA-BAR\",\n    \"dailyCharge\": 0.0,\n    \"weekdaysFree\": false,\n    \"weekendsFree\": false,\n    \"holidaysFree\": false\n}"
 								},
 								"url": {
 									"raw": "http://{{host}}:{{port}}/tool",
@@ -1114,7 +1114,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"toolId\": \"1233ba9c-8403-492e-9f4c-5b3b5464c3a1\",\n    \"renterId\": \"04a7bf6a-f317-4eea-9311-fa4d711f860f\",\n    \"rentalDays\": 2,\n    \"checkoutDate\": \"2024-06-27\",\n    \"dailyRentalCharge\": \"10.15\",\n    \"discountPercent\": 0\n}",
+									"raw": "{\n    \"toolId\": \"1233ba9c-8403-492e-9f4c-5b3b5464c3a1\",\n    \"renterId\": \"04a7bf6a-f317-4eea-9311-fa4d711f860f\",\n    \"rentalDays\": 2,\n    \"checkoutDate\": \"03/15/25\",\n    \"dailyRentalCharge\": \"10.15\",\n    \"discountPercent\": 20\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1158,7 +1158,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"toolCode\": \"CHNS\",\n    \"renterName\": \"tiffanytimbric\",\n    \"rentalDays\": 2,\n    \"checkoutDate\": \"2024-06-27\",\n    \"dailyRentalCharge\": \"10.15\",\n    \"discountPercent\": 0\n}",
+									"raw": "{\n    \"toolCode\": \"CHNS\",\n    \"renterName\": \"tiffanytimbric\",\n    \"rentalDays\": 2,\n    \"checkoutDate\": \"03/15/25\",\n    \"dailyRentalCharge\": \"10.15\",\n    \"discountPercent\": 0\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1191,7 +1191,7 @@
 									}
 								],
 								"url": {
-									"raw": "http://{{host}}:{{port}}/rentalAgreement/23a7c827-3e13-4bdc-b358-4704ea0e7c9c",
+									"raw": "http://{{host}}:{{port}}/rentalAgreement/c96dacd0-9c73-4196-b32a-7f5c5b2679a6",
 									"protocol": "http",
 									"host": [
 										"{{host}}"
@@ -1199,7 +1199,7 @@
 									"port": "{{port}}",
 									"path": [
 										"rentalAgreement",
-										"23a7c827-3e13-4bdc-b358-4704ea0e7c9c"
+										"c96dacd0-9c73-4196-b32a-7f5c5b2679a6"
 									]
 								}
 							},
