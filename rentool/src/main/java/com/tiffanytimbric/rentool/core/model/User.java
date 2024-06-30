@@ -3,6 +3,7 @@ package com.tiffanytimbric.rentool.core.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -14,6 +15,8 @@ import java.io.Serializable;
 import java.util.Optional;
 import java.util.UUID;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 @Entity
 @Table(name = "user")
 public class User implements Serializable {
@@ -23,6 +26,7 @@ public class User implements Serializable {
 
     @Id
     private UUID id;
+    @NotBlank
     private String name;
 
     public User() {
@@ -58,6 +62,10 @@ public class User implements Serializable {
 
     @NonNull
     public Optional<String> nameOpt() {
+        if (isBlank(name)) {
+            return Optional.empty();
+        }
+
         return Optional.ofNullable(name);
     }
 

@@ -1,10 +1,13 @@
 package com.tiffanytimbric.rentool.core.controller;
 
 import com.tiffanytimbric.rentool.core.model.RentalAgreement;
+import com.tiffanytimbric.rentool.core.model.Tool;
 import com.tiffanytimbric.rentool.core.model.User;
 import com.tiffanytimbric.rentool.core.repository.RentalAgreementRepository;
+import com.tiffanytimbric.rentool.core.repository.ToolRepository;
 import com.tiffanytimbric.rentool.core.repository.UserRepository;
 import com.tiffanytimbric.rentool.core.service.RentalAgreementService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
@@ -32,15 +35,18 @@ public class RentalAgreementController {
     private final RentalAgreementService rentalAgreementService;
     private final RentalAgreementRepository rentalAgreementRepository;
     private final UserRepository userRepository;
+    private final ToolRepository toolRepository;
 
     public RentalAgreementController(
             @NonNull final RentalAgreementService rentalAgreementService,
             @NonNull final RentalAgreementRepository rentalAgreementRepository,
-            @NonNull final UserRepository userRepository
+            @NonNull final UserRepository userRepository,
+            @NonNull final ToolRepository toolRepository
     ) {
         this.rentalAgreementService = rentalAgreementService;
         this.rentalAgreementRepository = rentalAgreementRepository;
         this.userRepository = userRepository;
+        this.toolRepository = toolRepository;
     }
 
     @GetMapping("/rentalAgreementExist/{id}")
@@ -141,10 +147,44 @@ public class RentalAgreementController {
                 .map(rentalAgreementService::setToolCode)
                 .map(rentalAgreementService::setToolType)
                 .map(rentalAgreementService::setRenterName)
-                .map(rentalAgreementService::setDailyRentalChargeCurrency)
-                .map(rentalAgreementService::setCheckoutDateFormatted);
+                .map(rentalAgreementService::setDailyRentalChargeCurrency);
 
         return ResponseEntity.of(rentalAgreementOpt);
+    }
+
+    @GetMapping("/rentalAgreementByToolCode/{code}")
+    @NonNull
+    public ResponseEntity<List<RentalAgreement>> readRentalAgreementsByToolCode(
+            @PathVariable @Nullable final String code
+    ) {
+        if (isBlank(code)) {
+            return ResponseEntity.of(Optional.empty());
+        }
+
+        final Optional<Tool> toolOpt = toolRepository.findByCode(code);
+        if (toolOpt.isEmpty()) {
+            return ResponseEntity.of(Optional.empty());
+        }
+
+        final String toolId = toolOpt.get().getId().toString();
+
+        final Optional<List<RentalAgreement>> rentalAgreementsOpt = rentalAgreementRepository.findByToolId(
+                toolId
+        );
+        if (rentalAgreementsOpt.isEmpty()) {
+            return ResponseEntity.of(Optional.empty());
+        }
+
+        final List<RentalAgreement> rentalAgreements = rentalAgreementsOpt.get().stream()
+                .map(rentalAgreementService::setToolCode)
+                .map(rentalAgreementService::setToolType)
+                .map(rentalAgreementService::setRenterName)
+                .map(rentalAgreementService::setDailyRentalChargeCurrency)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.of(
+                Optional.of(rentalAgreements)
+        );
     }
 
     @GetMapping("/rentalAgreementByUserName/{name}")
@@ -175,7 +215,6 @@ public class RentalAgreementController {
                 .map(rentalAgreementService::setToolType)
                 .map(rentalAgreementService::setRenterName)
                 .map(rentalAgreementService::setDailyRentalChargeCurrency)
-                .map(rentalAgreementService::setCheckoutDateFormatted)
                 .collect(Collectors.toList());
 
         return ResponseEntity.of(
@@ -186,7 +225,7 @@ public class RentalAgreementController {
     @PostMapping("/rentalAgreement")
     @NonNull
     public ResponseEntity<RentalAgreement> createRentalAgreement(
-            @RequestBody @Nullable final RentalAgreement rentalAgreement
+            @RequestBody @Valid  @Nullable final RentalAgreement rentalAgreement
     ) {
         if (rentalAgreement == null) {
             return ResponseEntity.of(Optional.empty());
@@ -202,7 +241,6 @@ public class RentalAgreementController {
         rentalAgreementService.setToolType(savedRentalAgreement);
         rentalAgreementService.setRenterName(savedRentalAgreement);
         rentalAgreementService.setDailyRentalChargeCurrency(savedRentalAgreement);
-        rentalAgreementService.setCheckoutDateFormatted(savedRentalAgreement);
 
         return ResponseEntity.of(
                 Optional.of(savedRentalAgreement)
@@ -212,7 +250,7 @@ public class RentalAgreementController {
     @PostMapping("/rentalAgreementByName")
     @NonNull
     public ResponseEntity<RentalAgreement> createRentalAgreementByName(
-            @RequestBody @Nullable final RentalAgreement rentalAgreement
+            @RequestBody @Valid @Nullable final RentalAgreement rentalAgreement
     ) {
         if (rentalAgreement == null) {
             return ResponseEntity.of(Optional.empty());
@@ -231,7 +269,6 @@ public class RentalAgreementController {
         rentalAgreementService.setToolType(savedRentalAgreement);
         rentalAgreementService.setRenterName(savedRentalAgreement);
         rentalAgreementService.setDailyRentalChargeCurrency(savedRentalAgreement);
-        rentalAgreementService.setCheckoutDateFormatted(savedRentalAgreement);
 
         return ResponseEntity.of(
                 Optional.of(savedRentalAgreement)
@@ -241,7 +278,7 @@ public class RentalAgreementController {
     @PutMapping("/rentalAgreement")
     @NonNull
     public ResponseEntity<RentalAgreement> updateRentalAgreement(
-            @RequestBody @Nullable final RentalAgreement rentalAgreement
+            @RequestBody @Valid @Nullable final RentalAgreement rentalAgreement
     ) {
         if (rentalAgreement == null) {
             return ResponseEntity.of(Optional.empty());
@@ -257,7 +294,7 @@ public class RentalAgreementController {
     @PatchMapping("/rentalAgreement")
     @NonNull
     public ResponseEntity<RentalAgreement> patchRentalAgreement(
-            @RequestBody @Nullable final RentalAgreement rentalAgreement
+            @RequestBody @Valid @Nullable final RentalAgreement rentalAgreement
     ) {
         if (rentalAgreement == null) {
             return ResponseEntity.of(Optional.empty());

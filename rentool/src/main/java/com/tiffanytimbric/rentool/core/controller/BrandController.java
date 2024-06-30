@@ -1,6 +1,7 @@
 package com.tiffanytimbric.rentool.core.controller;
 
 import com.tiffanytimbric.rentool.core.model.Brand;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
@@ -62,7 +63,7 @@ public class BrandController {
     @PostMapping("/brand")
     @NonNull
     public ResponseEntity<Brand> createBrand(
-            @RequestBody @Nullable final Brand brand
+            @RequestBody @Valid @Nullable final Brand brand
     ) {
         if (brand == null) {
             return ResponseEntity.of(Optional.empty());
@@ -78,7 +79,7 @@ public class BrandController {
     @PutMapping("/brand")
     @NonNull
     public ResponseEntity<Brand> updateBrand(
-            @RequestBody @Nullable final Brand brand
+            @RequestBody @Valid @Nullable final Brand brand
     ) {
         if (brand == null) {
             return ResponseEntity.of(Optional.empty());
@@ -94,7 +95,7 @@ public class BrandController {
     @PatchMapping("/brand")
     @NonNull
     public ResponseEntity<Brand> patchBrand(
-            @RequestBody @Nullable final Brand brand
+            @RequestBody @Valid @Nullable final Brand brand
     ) {
         if (brand == null) {
             return ResponseEntity.of(Optional.empty());

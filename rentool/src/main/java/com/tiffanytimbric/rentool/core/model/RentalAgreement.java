@@ -1,15 +1,19 @@
 package com.tiffanytimbric.rentool.core.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Future;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -30,6 +34,7 @@ public class RentalAgreement implements Serializable, Cloneable {
             referencedColumnName = "id",
             nullable = false
     )
+//    @NotBlank
     private String toolId;
     @Transient
     private String toolCode;
@@ -41,20 +46,32 @@ public class RentalAgreement implements Serializable, Cloneable {
             referencedColumnName = "id",
             nullable = false
     )
+//    @NotBlank
     private String renterId;
     @Transient
     private String renterName;
-    private Integer rentalDays;
-    private Date checkoutDate;
-    @Transient
-    private String checkoutDateFormatted;
-//    private LocalDate dueDate;  // TODO: Add method which calculates this value.
+    @Range(
+            min = 1,
+            message = "The rental days value must be greater than 1."
+    )
+    private Integer rentalDays = 1;
+    @JsonFormat(pattern = "MM/dd/yy")
+    @DateTimeFormat(pattern = "MM/dd/yy")
+    @Future(
+            message = "The checkout date value must be in the future with format 'MM/dd/yy'."
+    )
+    private LocalDate checkoutDate;
+    //    private LocalDate dueDate;  // TODO: Add method which calculates this value.
     private Float dailyRentalCharge;
     @Transient
     private String dailyRentalChargeCurrency;
 //    private Integer chargeDays;  // TODO: Add method which calculates this value.
 //    private Float preDiscountCharge;  // TODO: Add method which calculates this value.
-    private Integer discountPercent;
+    @Range(
+            min = 0, max = 100,
+            message = "The discount percentage value must be between 0 and 100."
+    )
+    private Integer discountPercent = 0;
 //    private Float discountAmount;  // TODO: Add method which calculates this value.
 //    private Float finalCharge;  // TODO: Add method which calculates this value.
     private String state = "Proposed";
@@ -68,13 +85,13 @@ public class RentalAgreement implements Serializable, Cloneable {
             @NonNull final String toolId,
             @NonNull final String renterId,
             @NonNull final Integer rentalDays,
-            @NonNull final Date checkoutDate,
+            @NonNull final LocalDate checkoutDate,
             @NonNull final Float dailyRentalCharge,
             @NonNull final Integer discountPercent
     ) {
         this(
                 id, toolId, null, null, renterId, null,
-                rentalDays, checkoutDate, null, dailyRentalCharge,
+                rentalDays, checkoutDate, dailyRentalCharge,
                 null, discountPercent
         );
     }
@@ -87,8 +104,7 @@ public class RentalAgreement implements Serializable, Cloneable {
             @NonNull final String renterId,
             @NonNull final String renterName,
             @NonNull final Integer rentalDays,
-            @NonNull final Date checkoutDate,
-            @NonNull final String checkoutDateFormatted,
+            @NonNull final LocalDate checkoutDate,
             @NonNull final Float dailyRentalCharge,
             @NonNull final String dailyRentalChargeCurrency,
             @NonNull final Integer discountPercent
@@ -101,7 +117,6 @@ public class RentalAgreement implements Serializable, Cloneable {
         this.renterName = renterName;
         this.rentalDays = rentalDays;
         this.checkoutDate = checkoutDate;
-        this.checkoutDateFormatted = checkoutDateFormatted;
         this.dailyRentalCharge = dailyRentalCharge;
         this.dailyRentalChargeCurrency = dailyRentalChargeCurrency;
         this.discountPercent = discountPercent;
@@ -175,39 +190,19 @@ public class RentalAgreement implements Serializable, Cloneable {
     }
 
     @Nullable
-    public Date getCheckoutDate() {
+    public LocalDate getCheckoutDate() {
         return checkoutDate;
     }
 
     @NonNull
-    public Optional<Date> checkoutDateOpt() {
+    public Optional<LocalDate> checkoutDateOpt() {
         return Optional.ofNullable(checkoutDate);
     }
 
     public void setCheckoutDate(
-            @Nullable final Date checkoutDate
+            @Nullable final LocalDate checkoutDate
     ) {
         this.checkoutDate = checkoutDate;
-    }
-
-    @Nullable
-    public String getCheckoutDateFormatted() {
-        return checkoutDateFormatted;
-    }
-
-    @NonNull
-    public Optional<String> checkoutDateFormattedOpt() {
-        if (isBlank(checkoutDateFormatted)) {
-            return Optional.empty();
-        }
-
-        return Optional.of(checkoutDateFormatted);
-    }
-
-    public void setCheckoutDateFormatted(
-            @NonNull final String checkoutDateFormatted
-    ) {
-        this.checkoutDateFormatted = checkoutDateFormatted;
     }
 
     @Nullable

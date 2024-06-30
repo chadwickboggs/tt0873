@@ -9,7 +9,8 @@ USE rentool;
 CREATE TABLE IF NOT EXISTS user
 (
     id   UUID PRIMARY KEY,
-    name VARCHAR(64) NOT NULL UNIQUE
+    name VARCHAR(64) NOT NULL UNIQUE,
+    UNIQUE INDEX (name)
 );
 
 CREATE TABLE IF NOT EXISTS brand
@@ -25,14 +26,15 @@ CREATE TABLE IF NOT EXISTS tool_type
 CREATE TABLE IF NOT EXISTS tool
 (
     id            UUID PRIMARY KEY,
-    code          VARCHAR(64) NOT NULL,
+    code          VARCHAR(64) NOT NULL UNIQUE,
     type          VARCHAR(64) NOT NULL,
     brand         VARCHAR(64) NOT NULL,
+    description   TEXT        NULL,
     daily_charge  FLOAT       NOT NULL,
     weekdays_free BOOL        NOT NULL,
     weekends_free BOOL        NOT NULL,
     holidays_free BOOL        NOT NULL,
-    INDEX (code),
+    UNIQUE INDEX (code, type, brand),
     FOREIGN KEY (type) REFERENCES tool_type (name),
     FOREIGN KEY (brand) REFERENCES brand (name)
 );
@@ -48,6 +50,8 @@ CREATE TABLE IF NOT EXISTS rental_agrmnt
     discount_percent    INTEGER                        NOT NULL,
     state               VARCHAR(32) DEFAULT 'Proposed' NOT NULL,
     data_item           TEXT,
+    INDEX (tool_id, renter_id),
+    INDEX (checkout_date),
     FOREIGN KEY (tool_id) REFERENCES tool (id),
     FOREIGN KEY (renter_id) REFERENCES user (id)
 );

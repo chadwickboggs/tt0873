@@ -3,6 +3,7 @@ package com.tiffanytimbric.rentool.core.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -21,6 +22,7 @@ public class Brand implements Serializable {
     private static final long serialVersionUID = 2680991036671461939L;
 
     @Id
+    @NotBlank
     private String name;
 
     public Brand() {

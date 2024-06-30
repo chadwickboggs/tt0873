@@ -18,7 +18,7 @@ read -r user_id
 echo -n "For how many days do you wish to rent this tool? "
 read -r rental_days
 
-echo -n "On which date to you wish to pick up this rental (yyyy-mm-dd)? "
+echo -n "On which date to you wish to pick up this rental (mm/dd/yy)? "
 read -r checkout_date
 
 echo -n "What is the daily rental charge for this tool? "

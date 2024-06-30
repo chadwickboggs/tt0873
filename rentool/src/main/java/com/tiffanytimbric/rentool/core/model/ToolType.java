@@ -3,6 +3,7 @@ package com.tiffanytimbric.rentool.core.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -21,6 +22,7 @@ public class ToolType implements Serializable {
     private static final long serialVersionUID = 8360707341481352018L;
 
     @Id
+    @NotBlank
     private String name;
 
     public ToolType() {

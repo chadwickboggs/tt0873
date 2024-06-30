@@ -2,6 +2,7 @@ package com.tiffanytimbric.rentool.core.controller;
 
 import com.tiffanytimbric.rentool.core.model.User;
 import com.tiffanytimbric.rentool.core.repository.UserRepository;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
@@ -72,7 +73,7 @@ public class UserController {
     @PostMapping("/user")
     @NonNull
     public ResponseEntity<User> createUser(
-            @RequestBody @Nullable final User user
+            @RequestBody @Valid @Nullable final User user
     ) {
         if (user == null) {
             return ResponseEntity.of(Optional.empty());
@@ -92,7 +93,7 @@ public class UserController {
     @PutMapping("/user")
     @NonNull
     public ResponseEntity<User> updateUser(
-            @RequestBody @Nullable final User user
+            @RequestBody @Valid @Nullable final User user
     ) {
         if (user == null) {
             return ResponseEntity.of(Optional.empty());
@@ -108,7 +109,7 @@ public class UserController {
     @PatchMapping("/user")
     @NonNull
     public ResponseEntity<User> patchUser(
-            @RequestBody @Nullable final User user
+            @RequestBody @Valid @Nullable final User user
     ) {
         if (user == null) {
             return ResponseEntity.of(Optional.empty());

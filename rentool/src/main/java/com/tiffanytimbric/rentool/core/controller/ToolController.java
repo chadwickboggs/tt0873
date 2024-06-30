@@ -1,10 +1,12 @@
 package com.tiffanytimbric.rentool.core.controller;
 
 import com.tiffanytimbric.rentool.core.model.Tool;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -65,14 +67,14 @@ public class ToolController {
 
     @GetMapping("/toolByCode/{code}")
     @NonNull
-    public ResponseEntity<List<Tool>> readToolByCode(
+    public ResponseEntity<Tool> readToolByCode(
             @PathVariable @Nullable final String code
     ) {
         if (isBlank(code)) {
             return ResponseEntity.of(Optional.empty());
         }
 
-        return ResponseEntity.ofNullable(
+        return ResponseEntity.of(
                 toolRepository.findByCode(code)
         );
     }
@@ -91,10 +93,24 @@ public class ToolController {
         );
     }
 
+    @GetMapping("/toolsByBrand/{type}")
+    @NonNull
+    public ResponseEntity<List<Tool>> readToolsByBrand(
+            @PathVariable @Nullable final String type
+    ) {
+        if (isBlank(type)) {
+            return ResponseEntity.of(Optional.empty());
+        }
+
+        return ResponseEntity.ofNullable(
+                toolRepository.findByBrand(type)
+        );
+    }
+
     @PostMapping("/tool")
     @NonNull
     public ResponseEntity<Tool> createTool(
-            @RequestBody @Nullable final Tool tool
+            @RequestBody @Validated @Nullable final Tool tool
     ) {
         if (tool == null) {
             return ResponseEntity.of(Optional.empty());
@@ -114,7 +130,7 @@ public class ToolController {
     @PutMapping("/tool")
     @NonNull
     public ResponseEntity<Tool> updateTool(
-            @RequestBody @Nullable final Tool tool
+            @RequestBody @Valid @Nullable final Tool tool
     ) {
         if (tool == null) {
             return ResponseEntity.of(Optional.empty());
@@ -130,7 +146,7 @@ public class ToolController {
     @PatchMapping("/tool")
     @NonNull
     public ResponseEntity<Tool> patchTool(
-            @RequestBody @Nullable final Tool tool
+            @RequestBody @Valid @Nullable final Tool tool
     ) {
         if (tool == null) {
             return ResponseEntity.of(Optional.empty());

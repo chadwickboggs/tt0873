@@ -28,10 +28,26 @@ VALUES
 ;
 
 INSERT INTO tool
-(id, code, type, brand, daily_charge, weekdays_free, weekends_free, holidays_free)
+(id, code, type, brand, description, daily_charge, weekdays_free, weekends_free, holidays_free)
 VALUES
-    ('1233ba9c-8403-492e-9f4c-5b3b5464c3a1', 'CHNS', 'Chainsaw', 'Stihl', 0.0, FALSE, FALSE, FALSE),
-    ('1233ba9c-8403-492e-9f4c-5b3b5464c3a2', 'LADW', 'Ladder', 'Werner', 0.0, FALSE, FALSE, FALSE),
-    ('1233ba9c-8403-492e-9f4c-5b3b5464c3a3', 'JAKD', 'Jackhammer', 'DeWalt', 0.0, FALSE, FALSE, FALSE),
-    ('1233ba9c-8403-492e-9f4c-5b3b5464c3a4', 'JAKR', 'Jackhammer', 'Ridgid', 0.0, FALSE, FALSE, FALSE)
+    (
+     '1233ba9c-8403-492e-9f4c-5b3b5464c3a1', 'CHNS', 'Chainsaw', 'Stihl',
+     'MSA 220 - The lightweight and powerful MSA 220 C-B features up to 40 minutes of run time when paired with the AP 300 S Battery.',
+     0.0, FALSE, FALSE, FALSE
+    ),
+    (
+     '1233ba9c-8403-492e-9f4c-5b3b5464c3a2', 'LADW', 'Ladder', 'Werner',
+     '6206 - With a duty rating of 300 lbs, it features a LOCKTOP® which provides maximum storage capacity for the most frequently used tools and components.',
+     0.0, FALSE, FALSE, FALSE
+    ),
+    (
+     '1233ba9c-8403-492e-9f4c-5b3b5464c3a3', 'JAKD', 'Jackhammer', 'DeWalt',
+     'D25980 - 68 lb 1-1/8 inch Hex Pavement Breaker with Active Vibration Control.',
+     0.0, FALSE, FALSE, FALSE
+    ),
+    (
+     '1233ba9c-8403-492e-9f4c-5b3b5464c3a4', 'JAKR', 'Jackhammer', 'Ridgid',
+     'R86712B - 18V Brushless 1 inch SDS-Plus Rotary Hammer',
+     0.0, FALSE, FALSE, FALSE
+    )
 ;

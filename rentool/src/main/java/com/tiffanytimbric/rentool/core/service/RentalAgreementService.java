@@ -14,7 +14,6 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
@@ -210,21 +209,6 @@ public class RentalAgreementService {
         return rentalAgreement;
     }
 
-    @NonNull
-    public RentalAgreement setCheckoutDateFormatted(
-            @NonNull final RentalAgreement rentalAgreement
-    ) {
-        rentalAgreement.checkoutDateOpt().ifPresent(checkoutDate ->
-                rentalAgreement.setCheckoutDateFormatted(
-                        new SimpleDateFormat("MM/dd/yy").format(
-                                checkoutDate
-                        )
-                )
-        );
-
-        return rentalAgreement;
-    }
-
     public void setRenterId(
             @Nullable final RentalAgreement rentalAgreement
     ) {
@@ -252,7 +236,7 @@ public class RentalAgreementService {
 
         rentalAgreement.toolCodeOpt()
                 .flatMap(toolCode ->
-                        toolRepository.findByCode(toolCode).stream().findFirst()
+                        toolRepository.findByCode(toolCode)
                 )
                 .ifPresent(tool ->
                         rentalAgreement.setToolId(

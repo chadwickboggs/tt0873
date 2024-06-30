@@ -1,6 +1,7 @@
 package com.tiffanytimbric.rentool.core.controller;
 
 import com.tiffanytimbric.rentool.core.model.ToolType;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
@@ -62,7 +63,7 @@ public class ToolTypeController {
     @PostMapping("/toolType")
     @NonNull
     public ResponseEntity<ToolType> createToolType(
-            @RequestBody @Nullable final ToolType toolType
+            @RequestBody @Valid @Nullable final ToolType toolType
     ) {
         if (toolType == null) {
             return ResponseEntity.of(Optional.empty());
@@ -78,7 +79,7 @@ public class ToolTypeController {
     @PutMapping("/toolType")
     @NonNull
     public ResponseEntity<ToolType> updateToolType(
-            @RequestBody @Nullable final ToolType toolType
+            @RequestBody @Valid @Nullable final ToolType toolType
     ) {
         if (toolType == null) {
             return ResponseEntity.of(Optional.empty());
@@ -94,7 +95,7 @@ public class ToolTypeController {
     @PatchMapping("/toolType")
     @NonNull
     public ResponseEntity<ToolType> patchToolType(
-            @RequestBody @Nullable final ToolType toolType
+            @RequestBody @Valid @Nullable final ToolType toolType
     ) {
         if (toolType == null) {
             return ResponseEntity.of(Optional.empty());

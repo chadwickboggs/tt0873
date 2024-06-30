@@ -1,6 +1,10 @@
 package com.tiffanytimbric.rentool.core.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -12,6 +16,8 @@ import java.io.Serializable;
 import java.util.Optional;
 import java.util.UUID;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 @Entity
 @Table(name = "tool")
 public class Tool implements Serializable {
@@ -21,6 +27,7 @@ public class Tool implements Serializable {
 
     @Id
     private UUID id;
+    @NotBlank
     private String code;
     @JoinColumn(
             table = "ToolType",
@@ -28,6 +35,7 @@ public class Tool implements Serializable {
             referencedColumnName = "name",
             nullable = false
     )
+    @NotBlank
     private String type;
     @JoinColumn(
             table = "Brand",
@@ -35,11 +43,13 @@ public class Tool implements Serializable {
             referencedColumnName = "name",
             nullable = false
     )
+    @NotBlank
     private String brand;
-    private Float dailyCharge;
-    private Boolean weekdaysFree;
-    private Boolean weekendsFree;
-    private Boolean holidaysFree;
+    private String description;
+    private Float dailyCharge = 0f;
+    private Boolean weekdaysFree = false;
+    private Boolean weekendsFree = false;
+    private Boolean holidaysFree = false;
 
     public Tool() {
     }
@@ -49,6 +59,7 @@ public class Tool implements Serializable {
             @NonNull final String code,
             @NonNull final String type,
             @NonNull final String brand,
+            @Nullable final String description,
             @NonNull final Float dailyCharge,
             @NonNull final Boolean weekdaysFree,
             @NonNull final Boolean weekendsFree,
@@ -58,6 +69,7 @@ public class Tool implements Serializable {
         this.code = code;
         this.type = type;
         this.brand = brand;
+        this.description = description;
         this.dailyCharge = dailyCharge;
         this.weekdaysFree = weekdaysFree;
         this.weekendsFree = weekendsFree;
@@ -85,6 +97,10 @@ public class Tool implements Serializable {
 
     @NonNull
     public Optional<String> codeOpt() {
+        if (isBlank(code)) {
+            return Optional.empty();
+        }
+
         return Optional.ofNullable(code);
     }
 
@@ -99,6 +115,10 @@ public class Tool implements Serializable {
 
     @NonNull
     public Optional<String> typeOpt() {
+        if (isBlank(type)) {
+            return Optional.empty();
+        }
+
         return Optional.ofNullable(type);
     }
 
@@ -113,11 +133,33 @@ public class Tool implements Serializable {
 
     @NonNull
     public Optional<String> brandOpt() {
+        if (isBlank(brand)) {
+            return Optional.empty();
+        }
+
         return Optional.ofNullable(brand);
     }
 
     public void setBrand(@NonNull final String brand) {
         this.brand = brand;
+    }
+
+    @Nullable
+    public String getDescription() {
+        return description;
+    }
+
+    @NonNull
+    public Optional<String> descriptionOpt() {
+        if (isBlank(description)) {
+            return Optional.empty();
+        }
+
+        return Optional.of(description);
+    }
+
+    public void setDescription(@NonNull final String description) {
+        this.description = description;
     }
 
     @Nullable
@@ -193,6 +235,7 @@ public class Tool implements Serializable {
                 .append(this.code, rhs.code)
                 .append(this.type, rhs.type)
                 .append(this.brand, rhs.brand)
+                .append(this.description, rhs.description)
                 .append(this.dailyCharge, rhs.dailyCharge)
                 .append(this.weekdaysFree, rhs.weekdaysFree)
                 .append(this.weekendsFree, rhs.weekendsFree)
@@ -215,11 +258,11 @@ public class Tool implements Serializable {
                 .append("name", code)
                 .append("type", type)
                 .append("brand", brand)
+                .append("description", description)
                 .append("dailyCharge", dailyCharge)
                 .append("weekdaysFree", weekdaysFree)
                 .append("weekendsFree", weekendsFree)
                 .append("holidaysFree", holidaysFree)
                 .toString();
     }
-
 }
