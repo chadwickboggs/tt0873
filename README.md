@@ -22,7 +22,7 @@ The Maven build system was used.
 ## Setup
 ### Create the Database
 #### Install MariaDB / MySql
-> Find and install the most recent version of MariaDB on your platform.
+1. Find and install the most recent version of MariaDB on your platform.
 
 #### Create the `rentool` Database
 1. Set the MariaDB password for its `root` user to `password`.
