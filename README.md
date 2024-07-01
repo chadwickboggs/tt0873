@@ -21,8 +21,6 @@ The Maven build system was used.
 
 ## Setup
 ### Create the Database
-> TODO: Implement
-
 #### Install MariaDB / MySql
 > Find and install the most recent version of MariaDB on your platform.
 
