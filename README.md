@@ -1,4 +1,5 @@
-## Introduction
+# Rentool
+
 Rentool enables tool rental through REST Web Services and CLI Bash shell
 scripts.  It persists its data in a MariaDB / MySql DB named "rentool".
 
@@ -8,16 +9,13 @@ used to enforce them.  See `doc/rental_agreement-finite_state_machine.md`.
 **Basic Success Flow:**
     Proposed -> Accepted -> PickedUp -> Returned
 
-The hostname and network port number to access the Web Services may be
-configured in the file named `bin/config.sh`. 
-
-Its Web Services were implemented using Spring Boot version 3.3.1.
-
-The Java version required is 21.  Some prior versions may work.
-
-A Postmand collection may be found in `doc/rentool.postman_collection.json`.
-
-The Maven build system was used.
+## Notes
+- The hostname and network port number to access the Web Services may be
+configured in the file named `bin/config.sh`.
+- Its Web Services were implemented using Spring Boot version 3.3.1.
+- The Java version required is 21.  Some prior versions may work.
+- A Postmand collection may be found in `doc/rentool.postman_collection.json`.
+- The Maven build system was used.
 
 ## Setup
 ### Create the Database
@@ -31,7 +29,22 @@ The Maven build system was used.
    1. `conf/refdata_db-0.0.1-SNAPSHOT.sql`
    1. `src/test/resources/testdata_db-0.0.1-SNAPSHOT.sql`
 
-### Compile and Start the Web Services
+### Compile and Start the Application
+#### Compile and Install the Required Library Dependencies
+Rentool use a SNAPSHOT Finite State Machine library.  It declares said Maven
+dependency as `com.tiffanytimbric:fsm` version `1.0.0-SNAPSHOT`.  Before
+building Rentool you must locally `mvn -e -U install` said FSM dependency.
+
+    $ git clone https://github.com/chadwickboggs/fsm.git
+    $ cd fsm
+    $ git checkout -b develop
+    $ mvn -e -U install
+
+#### Compile and Start the Web Services
+    $ git clone https://github.com/chadwickboggs/tt0873.git
+    $ cd tt0873
+    $ git checkout -b develop
+    $ cd rentool
     $ mvn -e -U install
     $ mvn org.springframework.boot:spring-boot-maven-plugin:3.3.1:start
 
