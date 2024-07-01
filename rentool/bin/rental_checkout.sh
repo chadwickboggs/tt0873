@@ -26,11 +26,12 @@ tool_id=$(jq '.toolId' "${output_json_data_file}")
 tool_code=$(jq '.toolCode' "${output_json_data_file}")
 tool_type=$(jq '.toolType' "${output_json_data_file}")
 renter_id=$(jq '.renterId' "${output_json_data_file}")
-# TODO: Calculate final charge.
 rental_days=$(jq '.rentalDays' "${output_json_data_file}")
 pickup_date=$(jq '.checkoutDate' "${output_json_data_file}")
 daily_rental_charge=$(jq '.dailyRentalChargeCurrency' "${output_json_data_file}")
+pre_discount_charge=$(jq '.preDiscountChargeCurrency' "${output_json_data_file}")
 discount_percent=$(jq '.discountPercent' "${output_json_data_file}")
+final_charge=$(jq '.totalChargeCurrency' "${output_json_data_file}")
 
 echo -n "${created_rental_agreement_id}" "${renter_id}" \
   | xargs "$(dirname $0)"/rental_accept.sh > "${output_json_data_file}"
@@ -44,5 +45,6 @@ echo -e "Tool type: ${tool_type}" | tr -d '"'
 echo -e "Rental days: ${rental_days}" | tr -d '"'
 echo -e "Pickup date: ${pickup_date}" | tr -d '"'
 echo -e "Daily rental charge: ${daily_rental_charge}" | tr -d '"'
+echo -e "Pre-discount charge: ${pre_discount_charge}" | tr -d '"'
 echo -e "Discount percent: ${discount_percent}%" | tr -d '"'
-echo -e "Final charge: TODO" | tr -d '"'
+echo -e "Final charge: ${final_charge}" | tr -d '"'

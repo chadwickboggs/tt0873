@@ -1,59 +1,47 @@
 package com.tiffanytimbric.rentool.core.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Optional;
-import java.util.UUID;
-
-import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @Entity
-@Table(name = "user")
-public class User implements Serializable {
+@Table(name = "holiday")
+public class Holiday implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = 1686949015034332965L;
+    private static final long serialVersionUID = 3773838143746346242L;
 
     @Id
-    private UUID id;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dayDate;
 
     @NotBlank
     private String name;
 
-    public User() {
+    public Holiday() {
     }
 
-    public User(
-            @NonNull final UUID id,
-            @NonNull final String name,
-            final int balance
+    public Holiday(
+            @NonNull final LocalDate dayDate,
+            @NonNull final String name
     ) {
-        this.id = id;
+        this.dayDate = dayDate;
         this.name = name;
-    }
-
-    @Nullable
-    public UUID getId() {
-        return id;
-    }
-
-    @NonNull
-    public Optional<UUID> idOpt() {
-        return Optional.ofNullable(id);
-    }
-
-    public void setId(@NonNull final UUID id) {
-        this.id = id;
     }
 
     @Nullable
@@ -63,15 +51,29 @@ public class User implements Serializable {
 
     @NonNull
     public Optional<String> nameOpt() {
-        if (isBlank(name)) {
+        if (StringUtils.isBlank(name)) {
             return Optional.empty();
         }
 
-        return Optional.ofNullable(name);
+        return Optional.of(name);
     }
 
     public void setName(@NonNull final String name) {
         this.name = name;
+    }
+
+    @Nullable
+    public LocalDate getDayDate() {
+        return dayDate;
+    }
+
+    @NonNull
+    public Optional<LocalDate> dayDateOpt() {
+        return Optional.ofNullable(dayDate);
+    }
+
+    public void setDayDate(@NonNull final LocalDate dayDate) {
+        this.dayDate = dayDate;
     }
 
     @Override
@@ -85,9 +87,9 @@ public class User implements Serializable {
         if (obj.getClass() != getClass()) {
             return false;
         }
-        User rhs = (User) obj;
+        Holiday rhs = (Holiday) obj;
         return new EqualsBuilder()
-                .append(this.id, rhs.id)
+                .append(this.dayDate, rhs.dayDate)
                 .append(this.name, rhs.name)
                 .isEquals();
     }
@@ -95,7 +97,7 @@ public class User implements Serializable {
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
-                .append(id)
+                .append(dayDate)
                 .toHashCode();
     }
 
@@ -103,7 +105,7 @@ public class User implements Serializable {
     @NonNull
     public String toString() {
         return new ToStringBuilder(this)
-                .append("id", id)
+                .append("dayDate", dayDate)
                 .append("name", name)
                 .toString();
     }

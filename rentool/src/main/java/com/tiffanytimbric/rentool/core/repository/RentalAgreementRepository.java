@@ -6,7 +6,6 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -14,9 +13,9 @@ import java.util.UUID;
 public interface RentalAgreementRepository extends ListCrudRepository<RentalAgreement, UUID> {
 
     @NonNull
-    Optional<List<RentalAgreement>> findByToolId(String toolId);
+    List<RentalAgreement> findByToolId(String toolId);
 
     @NonNull
-    Optional<List<RentalAgreement>> findByRenterId(String renterId);
+    List<RentalAgreement> findByRenterId(String renterId);
 
 }

@@ -27,8 +27,10 @@ public class Tool implements Serializable {
 
     @Id
     private UUID id;
+
     @NotBlank
     private String code;
+
     @JoinColumn(
             table = "ToolType",
             name = "type",
@@ -37,6 +39,7 @@ public class Tool implements Serializable {
     )
     @NotBlank
     private String type;
+
     @JoinColumn(
             table = "Brand",
             name = "brand",
@@ -45,6 +48,7 @@ public class Tool implements Serializable {
     )
     @NotBlank
     private String brand;
+
     private String description;
     private Float dailyCharge = 0f;
     private Boolean weekdaysFree = false;

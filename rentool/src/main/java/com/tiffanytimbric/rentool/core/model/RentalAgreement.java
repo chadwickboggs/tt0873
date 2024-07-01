@@ -2,7 +2,6 @@ package com.tiffanytimbric.rentool.core.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Future;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -36,10 +35,13 @@ public class RentalAgreement implements Serializable, Cloneable {
     )
 //    @NotBlank
     private String toolId;
+
     @Transient
     private String toolCode;
+
     @Transient
     private String toolType;
+
     @JoinColumn(
             table = "User",
             name = "renter_id",
@@ -48,32 +50,43 @@ public class RentalAgreement implements Serializable, Cloneable {
     )
 //    @NotBlank
     private String renterId;
+
     @Transient
     private String renterName;
+
     @Range(
             min = 1,
             message = "The rental days value must be greater than 1."
     )
     private Integer rentalDays = 1;
+
     @JsonFormat(pattern = "MM/dd/yy")
     @DateTimeFormat(pattern = "MM/dd/yy")
-    @Future(
-            message = "The checkout date value must be in the future with format 'MM/dd/yy'."
-    )
     private LocalDate checkoutDate;
-    //    private LocalDate dueDate;  // TODO: Add method which calculates this value.
+
     private Float dailyRentalCharge;
+
     @Transient
     private String dailyRentalChargeCurrency;
+
 //    private Integer chargeDays;  // TODO: Add method which calculates this value.
-//    private Float preDiscountCharge;  // TODO: Add method which calculates this value.
+
+    @Transient
+    private Float preDiscountCharge;
+    @Transient
+    private String preDiscountChargeCurrency;
+
+    @Transient
+    private Float totalCharge;
+    @Transient
+    private String totalChargeCurrency;
+
     @Range(
             min = 0, max = 100,
             message = "The discount percentage value must be between 0 and 100."
     )
     private Integer discountPercent = 0;
-//    private Float discountAmount;  // TODO: Add method which calculates this value.
-//    private Float finalCharge;  // TODO: Add method which calculates this value.
+
     private String state = "Proposed";
     private String dataItem;
 
@@ -92,7 +105,7 @@ public class RentalAgreement implements Serializable, Cloneable {
         this(
                 id, toolId, null, null, renterId, null,
                 rentalDays, checkoutDate, dailyRentalCharge,
-                null, discountPercent
+                null, null, null, null, null, discountPercent
         );
     }
 
@@ -107,6 +120,10 @@ public class RentalAgreement implements Serializable, Cloneable {
             @NonNull final LocalDate checkoutDate,
             @NonNull final Float dailyRentalCharge,
             @NonNull final String dailyRentalChargeCurrency,
+            @NonNull final Float preDiscountCharge,
+            @NonNull final String preDiscountChargeCurrency,
+            @NonNull final Float totalCharge,
+            @NonNull final String totalChargeCurrency,
             @NonNull final Integer discountPercent
     ) {
         this.id = id;
@@ -119,6 +136,10 @@ public class RentalAgreement implements Serializable, Cloneable {
         this.checkoutDate = checkoutDate;
         this.dailyRentalCharge = dailyRentalCharge;
         this.dailyRentalChargeCurrency = dailyRentalChargeCurrency;
+        this.preDiscountCharge = preDiscountCharge;
+        this.preDiscountChargeCurrency = preDiscountChargeCurrency;
+        this.totalCharge = totalCharge;
+        this.totalChargeCurrency = totalChargeCurrency;
         this.discountPercent = discountPercent;
     }
 
@@ -351,6 +372,74 @@ public class RentalAgreement implements Serializable, Cloneable {
         this.dailyRentalChargeCurrency = dailyRentalChargeCurrency;
     }
 
+    @Nullable
+    public Float getPreDiscountCharge() {
+        return preDiscountCharge;
+    }
+
+    @NonNull
+    public Optional<Float> preDiscountChargeOpt() {
+        return Optional.ofNullable(preDiscountCharge);
+    }
+
+    public void setPreDiscountCharge(@NonNull final Float preDiscountCharge) {
+        this.preDiscountCharge = preDiscountCharge;
+    }
+
+    @Nullable
+    public Float getTotalCharge() {
+        return totalCharge;
+    }
+
+    @NonNull
+    public Optional<Float> totalChargeOpt() {
+        return Optional.ofNullable(totalCharge);
+    }
+
+    public void setTotalCharge(@NonNull final Float totalCharge) {
+        this.totalCharge = totalCharge;
+    }
+
+    @Nullable
+    public String getPreDiscountChargeCurrency() {
+        return preDiscountChargeCurrency;
+    }
+
+    @NonNull
+    public Optional<String> preDiscountChargeCurrencyOpt() {
+        if (isBlank(preDiscountChargeCurrency)) {
+            return Optional.empty();
+        }
+
+        return Optional.of(preDiscountChargeCurrency);
+    }
+
+    public void setPreDiscountChargeCurrency(
+            @NonNull final String preDiscountChargeCurrency
+    ) {
+        this.preDiscountChargeCurrency = preDiscountChargeCurrency;
+    }
+
+    @Nullable
+    public String getTotalChargeCurrency() {
+        return totalChargeCurrency;
+    }
+
+    @NonNull
+    public Optional<String> totalChargeCurrencyOpt() {
+        if (isBlank(totalChargeCurrency)) {
+            return Optional.empty();
+        }
+
+        return Optional.of(totalChargeCurrency);
+    }
+
+    public void setTotalChargeCurrency(
+            @NonNull final String totalChargeCurrency
+    ) {
+        this.totalChargeCurrency = totalChargeCurrency;
+    }
+
     @Override
     public Object clone() {
         try {
@@ -385,6 +474,7 @@ public class RentalAgreement implements Serializable, Cloneable {
                 .append(this.dailyRentalCharge, rhs.dailyRentalCharge)
                 .append(this.dailyRentalChargeCurrency, rhs.dailyRentalChargeCurrency)
                 .append(this.discountPercent, rhs.discountPercent)
+                .append(this.preDiscountCharge, rhs.preDiscountCharge)
                 .append(this.state, rhs.state)
                 .append(this.dataItem, rhs.dataItem)
                 .isEquals();
@@ -411,9 +501,9 @@ public class RentalAgreement implements Serializable, Cloneable {
                 .append("dailyRentalCharge", dailyRentalCharge)
                 .append("dailyRentalChargeCurrency", dailyRentalChargeCurrency)
                 .append("discountPercent", discountPercent)
+                .append("preDiscountCharge", preDiscountCharge)
                 .append("state", state)
                 .append("dataItem", dataItem)
                 .toString();
     }
-
 }

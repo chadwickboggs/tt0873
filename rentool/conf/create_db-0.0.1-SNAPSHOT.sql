@@ -39,6 +39,13 @@ CREATE TABLE IF NOT EXISTS tool
     FOREIGN KEY (brand) REFERENCES brand (name)
 );
 
+CREATE TABLE holiday
+(
+    day_date DATE PRIMARY KEY,
+    name     VARCHAR(64) NOT NULL,
+    UNIQUE INDEX (day_date, name)
+);
+
 CREATE TABLE IF NOT EXISTS rental_agrmnt
 (
     id                  UUID PRIMARY KEY,

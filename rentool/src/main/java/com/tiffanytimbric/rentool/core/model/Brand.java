@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -41,7 +42,11 @@ public class Brand implements Serializable {
 
     @NonNull
     public Optional<String> nameOpt() {
-        return Optional.ofNullable(name);
+        if (StringUtils.isBlank(name)) {
+            return Optional.empty();
+        }
+
+        return Optional.of(name);
     }
 
     public void setName(@NonNull final String name) {

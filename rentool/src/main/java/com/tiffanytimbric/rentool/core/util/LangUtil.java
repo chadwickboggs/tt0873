@@ -4,6 +4,9 @@ import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
 import java.text.NumberFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.ChronoField;
 import java.util.Locale;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
@@ -11,6 +14,34 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 public final class LangUtil {
 
     private LangUtil() {
+    }
+
+    public static boolean isWeekday(
+            @Nonnull final LocalDate date
+    ) {
+        if (date == null) {
+            throw new IllegalArgumentException(
+                    "Parameter `date` must be non-null."
+            );
+        }
+
+        return !isWeekend(date);
+    }
+
+    public static boolean isWeekend(
+            @Nonnull final LocalDate date
+    ) {
+        if (date == null) {
+            throw new IllegalArgumentException(
+                    "Parameter `date` must be non-null."
+            );
+        }
+
+        final DayOfWeek day = DayOfWeek.of(
+                date.get(ChronoField.DAY_OF_WEEK)
+        );
+
+        return day == DayOfWeek.SUNDAY || day == DayOfWeek.SATURDAY;
     }
 
     @Nonnull

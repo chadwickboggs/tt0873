@@ -14,10 +14,13 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.tiffanytimbric.rentool.core.util.LangUtil.isWeekday;
+import static com.tiffanytimbric.rentool.core.util.LangUtil.isWeekend;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @Service
@@ -203,6 +206,106 @@ public class RentalAgreementService {
         rentalAgreement.dailyRentalChargeOpt().ifPresent(dailyRentalCharge ->
                 rentalAgreement.setDailyRentalChargeCurrency(
                         LangUtil.currency(dailyRentalCharge)
+                )
+        );
+
+        return rentalAgreement;
+    }
+
+    @NonNull
+    public RentalAgreement setPreDiscountCharge(
+            @NonNull final RentalAgreement rentalAgreement
+    ) {
+        rentalAgreement.toolIdOpt().ifPresent(toolId ->
+                rentalAgreement.checkoutDateOpt().ifPresent(checkoutDate ->
+                        rentalAgreement.rentalDaysOpt().ifPresent(rentalDays ->
+                                rentalAgreement.dailyRentalChargeOpt().ifPresent(dailyRentalCharge ->
+                                        rentalAgreement.setPreDiscountCharge(
+                                                calculatePreDiscountCharge(
+                                                        toolId, checkoutDate, rentalDays, dailyRentalCharge
+                                                )
+                                        )
+                                )
+                        )
+                )
+        );
+
+        return rentalAgreement;
+    }
+
+    public float calculatePreDiscountCharge(
+            @NonNull final String toolId,
+            @NonNull final LocalDate checkoutDate,
+            int rentalDays,
+            float dailyRentalCharge) {
+        final Optional<Tool> toolOpt = toolRepository.findById(UUID.fromString(toolId));
+        if (toolOpt.isEmpty()) {
+            return rentalDays * dailyRentalCharge;
+        }
+
+        final Tool tool = toolOpt.get();
+
+        return checkoutDate.datesUntil(checkoutDate.plusDays(rentalDays))
+                .map(date -> {
+                    if (isWeekday(date)) {
+                        return tool.getWeekdaysFree() ? 0f : dailyRentalCharge;
+                    }
+                    else if (isWeekend(date)) {
+                        return tool.getWeekendsFree() ? 0f : dailyRentalCharge;
+                    }
+                    else if (isHoliday(date)) {
+                        return tool.getHolidaysFree() ? 0f : dailyRentalCharge;
+                    }
+
+                    return dailyRentalCharge;
+                })
+                .reduce(Float::sum)
+                .orElse(
+                        rentalDays * dailyRentalCharge
+                );
+    }
+
+    private boolean isHoliday(@NonNull final LocalDate date) {
+        // TODO: Implement.
+
+        return false;
+    }
+
+    @NonNull
+    public RentalAgreement setPreDiscountChargeCurrency(
+            @NonNull final RentalAgreement rentalAgreement
+    ) {
+        rentalAgreement.preDiscountChargeOpt().ifPresent(preDiscountCharge ->
+                rentalAgreement.setPreDiscountChargeCurrency(
+                        LangUtil.currency(preDiscountCharge)
+                )
+        );
+
+        return rentalAgreement;
+    }
+
+    @NonNull
+    public RentalAgreement setTotalCharge(
+            @NonNull final RentalAgreement rentalAgreement
+    ) {
+        rentalAgreement.preDiscountChargeOpt().ifPresent(preDiscountCharge ->
+                rentalAgreement.discountPercentOpt().ifPresent(discountPercent ->
+                        rentalAgreement.setTotalCharge(
+                                preDiscountCharge * (1f - discountPercent / 100f)
+                        )
+                )
+        );
+
+        return rentalAgreement;
+    }
+
+    @NonNull
+    public RentalAgreement setTotalChargeCurrency(
+            @NonNull final RentalAgreement rentalAgreement
+    ) {
+        rentalAgreement.totalChargeOpt().ifPresent(totalCharge ->
+                rentalAgreement.setTotalChargeCurrency(
+                        LangUtil.currency(totalCharge)
                 )
         );
 
