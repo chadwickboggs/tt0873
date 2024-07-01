@@ -1332,7 +1332,7 @@
 			]
 		},
 		{
-			"name": "RentalAgreement",
+			"name": "Rental Agreement",
 			"item": [
 				{
 					"name": "CRUD",
@@ -1461,7 +1461,7 @@
 									}
 								],
 								"url": {
-									"raw": "http://{{host}}:{{port}}/rentalAgreement/5a12bfc4-c458-4244-9e5c-831fb782e7ba",
+									"raw": "http://{{host}}:{{port}}/rentalAgreement/2f415bfd-ad4f-4889-86d9-570af7e68067",
 									"protocol": "http",
 									"host": [
 										"{{host}}"
@@ -1469,7 +1469,7 @@
 									"port": "{{port}}",
 									"path": [
 										"rentalAgreement",
-										"5a12bfc4-c458-4244-9e5c-831fb782e7ba"
+										"2f415bfd-ad4f-4889-86d9-570af7e68067"
 									]
 								}
 							},
