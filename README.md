@@ -136,6 +136,34 @@ The Maven build system was used.
         }
     ]
 
+    $ bin/list_holidays.sh | jq
+    [
+        {
+            "dayDate": "2024-07-04",
+            "name": "Independence Day"
+        },
+        {
+            "dayDate": "2024-09-02",
+            "name": "Labor Day"
+        },
+        {
+            "dayDate": "2025-07-04",
+            "name": "Independency Day"
+        },
+        {
+            "dayDate": "2025-09-01",
+            "name": "Labor Day"
+        },
+        {
+            "dayDate": "2026-07-03",
+            "name": "Independency Day"
+        },
+        {
+            "dayDate": "2026-09-07",
+            "name": "Labor Day"
+        }
+    ]
+
     $ bin/list_rental_agreements.sh | jq
     [
         {
