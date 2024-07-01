@@ -150,8 +150,80 @@ building Rentool you must locally `mvn -e -U install` said FSM dependency.
     $ bin/list_holidays.sh | jq
     [
         {
+            "dayDate": "2015-07-03",
+            "name": "Independency Day"
+        },
+        {
+            "dayDate": "2015-09-07",
+            "name": "Labor Day"
+        },
+        {
+            "dayDate": "2016-07-04",
+            "name": "Independency Day"
+        },
+        {
+            "dayDate": "2016-09-08",
+            "name": "Labor Day"
+        },
+        {
+            "dayDate": "2017-07-04",
+            "name": "Independency Day"
+        },
+        {
+            "dayDate": "2017-09-04",
+            "name": "Labor Day"
+        },
+        {
+            "dayDate": "2018-07-04",
+            "name": "Independency Day"
+        },
+        {
+            "dayDate": "2018-09-03",
+            "name": "Labor Day"
+        },
+        {
+            "dayDate": "2019-07-04",
+            "name": "Independency Day"
+        },
+        {
+            "dayDate": "2019-09-02",
+            "name": "Labor Day"
+        },
+        {
+            "dayDate": "2020-07-03",
+            "name": "Independency Day"
+        },
+        {
+            "dayDate": "2020-09-07",
+            "name": "Labor Day"
+        },
+        {
+            "dayDate": "2021-07-05",
+            "name": "Independency Day"
+        },
+        {
+            "dayDate": "2021-09-06",
+            "name": "Labor Day"
+        },
+        {
+            "dayDate": "2022-07-04",
+            "name": "Independency Day"
+        },
+        {
+            "dayDate": "2022-09-05",
+            "name": "Labor Day"
+        },
+        {
+            "dayDate": "2023-07-04",
+            "name": "Independency Day"
+        },
+        {
+            "dayDate": "2023-09-04",
+            "name": "Labor Day"
+        },
+        {
             "dayDate": "2024-07-04",
-            "name": "Independence Day"
+            "name": "Independency Day"
         },
         {
             "dayDate": "2024-09-02",
@@ -214,11 +286,18 @@ building Rentool you must locally `mvn -e -U install` said FSM dependency.
     Discount percent: 10%
     Final charge: $27.49
 
-    $ bin/rental_accept.sh '2f415bfd-ad4f-4889-86d9-570af7e68067' '04a7bf6a-f317-4eea-9311-fa4d711f860f' | jq
+    $ # Now, find the Rental Agreement ID which just got created.
+
+    $ bin/list_rental_agreements_by_user_name.sh arielhenry | jq '.[].id'
+    "cb224261-99a1-4a8a-99f5-054f7b30d0a7"
+
+    $ # Now, use the above Rental Agreement ID for the rental "actions" commands below.
+
+    $ bin/rental_accept.sh 'cb224261-99a1-4a8a-99f5-054f7b30d0a7' '04a7bf6a-f317-4eea-9311-fa4d711f860f' | jq
     {
-        "id": "2f415bfd-ad4f-4889-86d9-570af7e68067",
+        "id": "cb224261-99a1-4a8a-99f5-054f7b30d0a7",
         "toolId": "1233ba9c-8403-492e-9f4c-5b3b5464c3a2",
-        "renterId": "04a7bf6a-f317-4eea-9311-fa4d711f860f",
+        "renterId": "1233ba9c-8403-492e-9f4c-5b3b5464c3af",
         "rentalDays": 2,
         "checkoutDate": "08/01/24",
         "dailyRentalCharge": 15.27,
@@ -227,7 +306,7 @@ building Rentool you must locally `mvn -e -U install` said FSM dependency.
         "dataItem": null,
         "toolCode": "LADW",
         "toolType": "Ladder",
-        "renterName": "tiffanytimbric",
+        "renterName": "arielhenry",
         "dueDate": "08/03/24",
         "dailyRentalChargeCurrency": "$15.27",
         "chargeDays": 2,
@@ -237,11 +316,11 @@ building Rentool you must locally `mvn -e -U install` said FSM dependency.
         "finalChargeCurrency": "$27.49"
     }
 
-    $ bin/rental_pickup.sh '2f415bfd-ad4f-4889-86d9-570af7e68067' '04a7bf6a-f317-4eea-9311-fa4d711f860f' | jq
+    $ bin/rental_pickup.sh 'cb224261-99a1-4a8a-99f5-054f7b30d0a7' '04a7bf6a-f317-4eea-9311-fa4d711f860f' | jq
     {
-        "id": "2f415bfd-ad4f-4889-86d9-570af7e68067",
+        "id": "cb224261-99a1-4a8a-99f5-054f7b30d0a7",
         "toolId": "1233ba9c-8403-492e-9f4c-5b3b5464c3a2",
-        "renterId": "04a7bf6a-f317-4eea-9311-fa4d711f860f",
+        "renterId": "1233ba9c-8403-492e-9f4c-5b3b5464c3af",
         "rentalDays": 2,
         "checkoutDate": "08/01/24",
         "dailyRentalCharge": 15.27,
@@ -250,7 +329,7 @@ building Rentool you must locally `mvn -e -U install` said FSM dependency.
         "dataItem": null,
         "toolCode": "LADW",
         "toolType": "Ladder",
-        "renterName": "tiffanytimbric",
+        "renterName": "arielhenry",
         "dueDate": "08/03/24",
         "dailyRentalChargeCurrency": "$15.27",
         "chargeDays": 2,
@@ -260,11 +339,11 @@ building Rentool you must locally `mvn -e -U install` said FSM dependency.
         "finalChargeCurrency": "$27.49"
     }
 
-    $ bin/rental_return.sh '2f415bfd-ad4f-4889-86d9-570af7e68067' '04a7bf6a-f317-4eea-9311-fa4d711f860f' | jq
+    $ bin/rental_return.sh 'cb224261-99a1-4a8a-99f5-054f7b30d0a7' '04a7bf6a-f317-4eea-9311-fa4d711f860f' | jq
     {
-        "id": "2f415bfd-ad4f-4889-86d9-570af7e68067",
+        "id": "cb224261-99a1-4a8a-99f5-054f7b30d0a7",
         "toolId": "1233ba9c-8403-492e-9f4c-5b3b5464c3a2",
-        "renterId": "04a7bf6a-f317-4eea-9311-fa4d711f860f",
+        "renterId": "1233ba9c-8403-492e-9f4c-5b3b5464c3af",
         "rentalDays": 2,
         "checkoutDate": "08/01/24",
         "dailyRentalCharge": 15.27,
@@ -273,7 +352,7 @@ building Rentool you must locally `mvn -e -U install` said FSM dependency.
         "dataItem": null,
         "toolCode": "LADW",
         "toolType": "Ladder",
-        "renterName": "tiffanytimbric",
+        "renterName": "arielhenry",
         "dueDate": "08/03/24",
         "dailyRentalChargeCurrency": "$15.27",
         "chargeDays": 2,
