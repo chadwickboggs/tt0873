@@ -5,6 +5,7 @@ import com.tiffanytimbric.fsm.State;
 import com.tiffanytimbric.rentool.core.model.RentalAgreement;
 import com.tiffanytimbric.rentool.core.model.Tool;
 import com.tiffanytimbric.rentool.core.model.User;
+import com.tiffanytimbric.rentool.core.repository.HolidayRepository;
 import com.tiffanytimbric.rentool.core.repository.RentalAgreementRepository;
 import com.tiffanytimbric.rentool.core.repository.ToolRepository;
 import com.tiffanytimbric.rentool.core.repository.UserRepository;
@@ -30,15 +31,18 @@ public class RentalAgreementService {
     private RentalAgreementRepository rentalAgreementRepository;
     private UserRepository userRepository;
     private ToolRepository toolRepository;
+    private HolidayRepository holidayRepository;
 
     public RentalAgreementService(
             @NonNull final RentalAgreementRepository rentalAgreementRepository,
             @NonNull final UserRepository userRepository,
-            @NonNull final ToolRepository toolRepository
+            @NonNull final ToolRepository toolRepository,
+            @NonNull final HolidayRepository holidayRepository
     ) {
         this.rentalAgreementRepository = rentalAgreementRepository;
         this.userRepository = userRepository;
         this.toolRepository = toolRepository;
+        this.holidayRepository = holidayRepository;
     }
 
     @Nullable
@@ -298,14 +302,12 @@ public class RentalAgreementService {
 
         return checkoutDate.datesUntil(checkoutDate.plusDays(rentalDays))
                 .map(date -> {
-                    if (isWeekday(date)) {
-                        return tool.getWeekdaysFree() ? 0f : dailyRentalCharge;
-                    }
-                    else if (isWeekend(date)) {
-                        return tool.getWeekendsFree() ? 0f : dailyRentalCharge;
-                    }
-                    else if (isHoliday(date)) {
-                        return tool.getHolidaysFree() ? 0f : dailyRentalCharge;
+                    if (
+                            tool.getWeekdaysFree() && isWeekday(date)
+                                    || tool.getWeekendsFree() && isWeekend(date)
+                                    || tool.getHolidaysFree() && isHoliday(date)
+                    ) {
+                        return 0f;
                     }
 
                     return dailyRentalCharge;
@@ -317,9 +319,7 @@ public class RentalAgreementService {
     }
 
     private boolean isHoliday(@NonNull final LocalDate date) {
-        // TODO: Implement.
-
-        return false;
+        return holidayRepository.existsById(date);
     }
 
     @NonNull
