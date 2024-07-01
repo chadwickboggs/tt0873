@@ -10,6 +10,7 @@ if [[ $# -ne 1 || $1 = '-h' || $1 = '--help' || $1 = '-u' || $1 = '--usage' ]]; 
 fi
 
 source "$(dirname $0)"/config.sh
+source "$(dirname $0)"/util.sh
 
 post_data="$(cat $1)"
 tool_id=$(jq '.toolId' $1)
@@ -26,3 +27,5 @@ curl \
   --location ${location} \
   --header 'Content-Type: application/json' \
   --data "${post_data}"
+
+exitIfError

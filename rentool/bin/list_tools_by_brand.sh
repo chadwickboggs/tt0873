@@ -10,6 +10,7 @@ if [[ $# -ne 1 || $1 = '-h' || $1 = '--help' || $1 = '-u' || $1 = '--usage' ]]; 
 fi
 
 source "$(dirname $0)"/config.sh
+source "$(dirname $0)"/util.sh
 
 location="${comm_protocol}://${hostname}:${network_port}/toolByBrand/$1"
 
@@ -18,3 +19,5 @@ curl \
   --request GET \
   --location "${location}" \
   --header 'Content-Type: application/json'
+
+exitIfError
