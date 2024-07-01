@@ -69,7 +69,9 @@ public class RentalAgreementController {
     ) {
         final Optional<RentalAgreement> rentalAgreementOpt = rentalAgreementService.handleRentalAgreementEvent(
                 ACTION_ACCEPT, rentalAgreementId, userId
-        );
+        ).stream()
+                .map(rentalAgreementService::setTransientFields)
+                .findFirst();
 
         return ResponseEntity.of(rentalAgreementOpt);
     }
@@ -82,7 +84,9 @@ public class RentalAgreementController {
     ) {
         final Optional<RentalAgreement> rentalAgreementOpt = rentalAgreementService.handleRentalAgreementEvent(
                 ACTION_CANCEL, rentalAgreementId, userId
-        );
+        ).stream()
+                .map(rentalAgreementService::setTransientFields)
+                .findFirst();
 
         return ResponseEntity.of(rentalAgreementOpt);
     }
@@ -95,7 +99,9 @@ public class RentalAgreementController {
     ) {
         final Optional<RentalAgreement> rentalAgreementOpt = rentalAgreementService.handleRentalAgreementEvent(
                 ACTION_PICK_UP, rentalAgreementId, userId
-        );
+        ).stream()
+                .map(rentalAgreementService::setTransientFields)
+                .findFirst();
 
         return ResponseEntity.of(rentalAgreementOpt);
     }
@@ -108,7 +114,9 @@ public class RentalAgreementController {
     ) {
         final Optional<RentalAgreement> rentalAgreementOpt = rentalAgreementService.handleRentalAgreementEvent(
                 ACTION_FAIL, rentalAgreementId, userId
-        );
+        ).stream()
+                .map(rentalAgreementService::setTransientFields)
+                .findFirst();
 
         return ResponseEntity.of(rentalAgreementOpt);
     }
@@ -121,7 +129,9 @@ public class RentalAgreementController {
     ) {
         final Optional<RentalAgreement> rentalAgreementOpt = rentalAgreementService.handleRentalAgreementEvent(
                 ACTION_RETURN, rentalAgreementId, userId
-        );
+        ).stream()
+                .map(rentalAgreementService::setTransientFields)
+                .findFirst();
 
         return ResponseEntity.of(rentalAgreementOpt);
     }
@@ -130,7 +140,9 @@ public class RentalAgreementController {
     @NonNull
     public ResponseEntity<List<RentalAgreement>> readAllRentalAgreements() {
         return ResponseEntity.ofNullable(
-                rentalAgreementRepository.findAll()
+                rentalAgreementRepository.findAll().stream()
+                        .map(rentalAgreementService::setTransientFields)
+                        .collect(Collectors.toList())
         );
     }
 
@@ -144,15 +156,7 @@ public class RentalAgreementController {
         }
 
         final Optional<RentalAgreement> rentalAgreementOpt = rentalAgreementRepository.findById(id)
-                .map(rentalAgreementService::setToolCode)
-                .map(rentalAgreementService::setToolType)
-                .map(rentalAgreementService::setRenterName)
-                .map(rentalAgreementService::setDailyRentalChargeCurrency)
-                .map(rentalAgreementService::setPreDiscountCharge)
-                .map(rentalAgreementService::setPreDiscountChargeCurrency)
-                .map(rentalAgreementService::setChargeDays)
-                .map(rentalAgreementService::setFinalCharge)
-                .map(rentalAgreementService::setFinalChargeCurrency);
+                .map(rentalAgreementService::setTransientFields);
 
         return ResponseEntity.of(rentalAgreementOpt);
     }
@@ -268,6 +272,8 @@ public class RentalAgreementController {
         }
 
         final RentalAgreement savedRentalAgreement = rentalAgreementRepository.save(rentalAgreement);
+
+        rentalAgreementService.setTransientFields(savedRentalAgreement);
 
         return ResponseEntity.of(
                 Optional.of(savedRentalAgreement)

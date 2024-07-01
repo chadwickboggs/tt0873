@@ -195,57 +195,77 @@ The Maven build system was used.
     Tool type: Ladder
     Rental days: 2
     Pickup date: 08/01/24
+    Return date: 08/03/24
     Daily rental charge: $15.27
+    Pre-discount charge: $30.54
     Discount percent: 10%
-    Final charge: TODO
+    Final charge: $27.49
 
-    $ bin/rental_accept.sh '5a12bfc4-c458-4244-9e5c-831fb782e7ba' '04a7bf6a-f317-4eea-9311-fa4d711f860f' | jq
+    $ bin/rental_accept.sh '2f415bfd-ad4f-4889-86d9-570af7e68067' '04a7bf6a-f317-4eea-9311-fa4d711f860f' | jq
     {
-        "id": "5a12bfc4-c458-4244-9e5c-831fb782e7ba",
-        "toolId": "1233ba9c-8403-492e-9f4c-5b3b5464c3a1",
-        "toolCode": null,
-        "toolType": null,
+        "id": "2f415bfd-ad4f-4889-86d9-570af7e68067",
+        "toolId": "1233ba9c-8403-492e-9f4c-5b3b5464c3a2",
         "renterId": "04a7bf6a-f317-4eea-9311-fa4d711f860f",
-        "renterName": null,
         "rentalDays": 2,
-        "checkoutDate": "03/15/25",
-        "dailyRentalCharge": 10.15,
-        "dailyRentalChargeCurrency": null,
-        "discountPercent": 0,
+        "checkoutDate": "08/01/24",
+        "dailyRentalCharge": 15.27,
+        "discountPercent": 10,
         "state": "Accepted",
-        "dataItem": null
+        "dataItem": null,
+        "toolCode": "LADW",
+        "toolType": "Ladder",
+        "renterName": "tiffanytimbric",
+        "dueDate": "08/03/24",
+        "dailyRentalChargeCurrency": "$15.27",
+        "chargeDays": 2,
+        "preDiscountCharge": 30.54,
+        "preDiscountChargeCurrency": "$30.54",
+        "finalCharge": 27.486,
+        "finalChargeCurrency": "$27.49"
     }
 
-    $ bin/rental_pickup.sh '5a12bfc4-c458-4244-9e5c-831fb782e7ba' '04a7bf6a-f317-4eea-9311-fa4d711f860f' | jq
+    $ bin/rental_pickup.sh '2f415bfd-ad4f-4889-86d9-570af7e68067' '04a7bf6a-f317-4eea-9311-fa4d711f860f' | jq
     {
-        "id": "5a12bfc4-c458-4244-9e5c-831fb782e7ba",
-        "toolId": "1233ba9c-8403-492e-9f4c-5b3b5464c3a1",
-        "toolCode": null,
-        "toolType": null,
+        "id": "2f415bfd-ad4f-4889-86d9-570af7e68067",
+        "toolId": "1233ba9c-8403-492e-9f4c-5b3b5464c3a2",
         "renterId": "04a7bf6a-f317-4eea-9311-fa4d711f860f",
-        "renterName": null,
         "rentalDays": 2,
-        "checkoutDate": "03/15/25",
-        "dailyRentalCharge": 10.15,
-        "dailyRentalChargeCurrency": null,
-        "discountPercent": 0,
+        "checkoutDate": "08/01/24",
+        "dailyRentalCharge": 15.27,
+        "discountPercent": 10,
         "state": "PickedUp",
-        "dataItem": null
+        "dataItem": null,
+        "toolCode": "LADW",
+        "toolType": "Ladder",
+        "renterName": "tiffanytimbric",
+        "dueDate": "08/03/24",
+        "dailyRentalChargeCurrency": "$15.27",
+        "chargeDays": 2,
+        "preDiscountCharge": 30.54,
+        "preDiscountChargeCurrency": "$30.54",
+        "finalCharge": 27.486,
+        "finalChargeCurrency": "$27.49"
     }
 
-    $ bin/rental_return.sh '5a12bfc4-c458-4244-9e5c-831fb782e7ba' '04a7bf6a-f317-4eea-9311-fa4d711f860f' | jq
+    $ bin/rental_return.sh '2f415bfd-ad4f-4889-86d9-570af7e68067' '04a7bf6a-f317-4eea-9311-fa4d711f860f' | jq
     {
-        "id": "5a12bfc4-c458-4244-9e5c-831fb782e7ba",
-        "toolId": "1233ba9c-8403-492e-9f4c-5b3b5464c3a1",
-        "toolCode": null,
-        "toolType": null,
+        "id": "2f415bfd-ad4f-4889-86d9-570af7e68067",
+        "toolId": "1233ba9c-8403-492e-9f4c-5b3b5464c3a2",
         "renterId": "04a7bf6a-f317-4eea-9311-fa4d711f860f",
-        "renterName": null,
         "rentalDays": 2,
-        "checkoutDate": "03/15/25",
-        "dailyRentalCharge": 10.15,
-        "dailyRentalChargeCurrency": null,
-        "discountPercent": 0,
+        "checkoutDate": "08/01/24",
+        "dailyRentalCharge": 15.27,
+        "discountPercent": 10,
         "state": "Returned",
-        "dataItem": null
+        "dataItem": null,
+        "toolCode": "LADW",
+        "toolType": "Ladder",
+        "renterName": "tiffanytimbric",
+        "dueDate": "08/03/24",
+        "dailyRentalChargeCurrency": "$15.27",
+        "chargeDays": 2,
+        "preDiscountCharge": 30.54,
+        "preDiscountChargeCurrency": "$30.54",
+        "finalCharge": 27.486,
+        "finalChargeCurrency": "$27.49"
     }
