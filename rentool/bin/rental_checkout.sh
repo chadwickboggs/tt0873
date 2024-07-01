@@ -28,10 +28,11 @@ tool_type=$(jq '.toolType' "${output_json_data_file}")
 renter_id=$(jq '.renterId' "${output_json_data_file}")
 rental_days=$(jq '.rentalDays' "${output_json_data_file}")
 pickup_date=$(jq '.checkoutDate' "${output_json_data_file}")
+due_date=$(jq '.dueDate' "${output_json_data_file}")
 daily_rental_charge=$(jq '.dailyRentalChargeCurrency' "${output_json_data_file}")
 pre_discount_charge=$(jq '.preDiscountChargeCurrency' "${output_json_data_file}")
 discount_percent=$(jq '.discountPercent' "${output_json_data_file}")
-final_charge=$(jq '.totalChargeCurrency' "${output_json_data_file}")
+final_charge=$(jq '.finalChargeCurrency' "${output_json_data_file}")
 
 echo -n "${created_rental_agreement_id}" "${renter_id}" \
   | xargs "$(dirname $0)"/rental_accept.sh > "${output_json_data_file}"
@@ -44,6 +45,7 @@ echo -e "Tool code: ${tool_code}" | tr -d '"'
 echo -e "Tool type: ${tool_type}" | tr -d '"'
 echo -e "Rental days: ${rental_days}" | tr -d '"'
 echo -e "Pickup date: ${pickup_date}" | tr -d '"'
+echo -e "Return date: ${due_date}" | tr -d '"'
 echo -e "Daily rental charge: ${daily_rental_charge}" | tr -d '"'
 echo -e "Pre-discount charge: ${pre_discount_charge}" | tr -d '"'
 echo -e "Discount percent: ${discount_percent}%" | tr -d '"'

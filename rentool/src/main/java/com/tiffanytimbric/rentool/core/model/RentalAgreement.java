@@ -36,12 +36,6 @@ public class RentalAgreement implements Serializable, Cloneable {
 //    @NotBlank
     private String toolId;
 
-    @Transient
-    private String toolCode;
-
-    @Transient
-    private String toolType;
-
     @JoinColumn(
             table = "User",
             name = "renter_id",
@@ -50,9 +44,6 @@ public class RentalAgreement implements Serializable, Cloneable {
     )
 //    @NotBlank
     private String renterId;
-
-    @Transient
-    private String renterName;
 
     @Range(
             min = 1,
@@ -66,21 +57,6 @@ public class RentalAgreement implements Serializable, Cloneable {
 
     private Float dailyRentalCharge;
 
-    @Transient
-    private String dailyRentalChargeCurrency;
-
-//    private Integer chargeDays;  // TODO: Add method which calculates this value.
-
-    @Transient
-    private Float preDiscountCharge;
-    @Transient
-    private String preDiscountChargeCurrency;
-
-    @Transient
-    private Float totalCharge;
-    @Transient
-    private String totalChargeCurrency;
-
     @Range(
             min = 0, max = 100,
             message = "The discount percentage value must be between 0 and 100."
@@ -89,6 +65,21 @@ public class RentalAgreement implements Serializable, Cloneable {
 
     private String state = "Proposed";
     private String dataItem;
+
+    @Transient private String toolCode;
+    @Transient private String toolType;
+    @Transient private String renterName;
+
+    @JsonFormat(pattern = "MM/dd/yy")
+    @DateTimeFormat(pattern = "MM/dd/yy")
+    @Transient private LocalDate dueDate;
+
+    @Transient private String dailyRentalChargeCurrency;
+    @Transient private Integer chargeDays;
+    @Transient private Float preDiscountCharge;
+    @Transient private String preDiscountChargeCurrency;
+    @Transient private Float finalCharge;
+    @Transient private String finalChargeCurrency;
 
     public RentalAgreement() {
     }
@@ -103,28 +94,29 @@ public class RentalAgreement implements Serializable, Cloneable {
             @NonNull final Integer discountPercent
     ) {
         this(
-                id, toolId, null, null, renterId, null,
-                rentalDays, checkoutDate, dailyRentalCharge,
-                null, null, null, null, null, discountPercent
+                id, toolId, renterId, rentalDays, checkoutDate, dailyRentalCharge, discountPercent,
+                null, null, null, null, null, null, null, null, null, null
         );
     }
 
     public RentalAgreement(
             @NonNull final UUID id,
             @NonNull final String toolId,
-            @NonNull final String toolCode,
-            @NonNull final String toolType,
             @NonNull final String renterId,
-            @NonNull final String renterName,
             @NonNull final Integer rentalDays,
             @NonNull final LocalDate checkoutDate,
             @NonNull final Float dailyRentalCharge,
-            @NonNull final String dailyRentalChargeCurrency,
-            @NonNull final Float preDiscountCharge,
-            @NonNull final String preDiscountChargeCurrency,
-            @NonNull final Float totalCharge,
-            @NonNull final String totalChargeCurrency,
-            @NonNull final Integer discountPercent
+            @NonNull final Integer discountPercent,
+            @Nullable final String toolCode,
+            @Nullable final String toolType,
+            @Nullable final String renterName,
+            @Nullable final LocalDate dueDate,
+            @Nullable final String dailyRentalChargeCurrency,
+            @Nullable final Integer chargeDays,
+            @Nullable final Float preDiscountCharge,
+            @Nullable final String preDiscountChargeCurrency,
+            @Nullable final Float finalCharge,
+            @Nullable final String finalChargeCurrency
     ) {
         this.id = id;
         this.toolId = toolId;
@@ -135,11 +127,13 @@ public class RentalAgreement implements Serializable, Cloneable {
         this.rentalDays = rentalDays;
         this.checkoutDate = checkoutDate;
         this.dailyRentalCharge = dailyRentalCharge;
+        this.dueDate = dueDate;
         this.dailyRentalChargeCurrency = dailyRentalChargeCurrency;
+        this.chargeDays = chargeDays;
         this.preDiscountCharge = preDiscountCharge;
         this.preDiscountChargeCurrency = preDiscountChargeCurrency;
-        this.totalCharge = totalCharge;
-        this.totalChargeCurrency = totalChargeCurrency;
+        this.finalCharge = finalCharge;
+        this.finalChargeCurrency = finalChargeCurrency;
         this.discountPercent = discountPercent;
     }
 
@@ -387,20 +381,6 @@ public class RentalAgreement implements Serializable, Cloneable {
     }
 
     @Nullable
-    public Float getTotalCharge() {
-        return totalCharge;
-    }
-
-    @NonNull
-    public Optional<Float> totalChargeOpt() {
-        return Optional.ofNullable(totalCharge);
-    }
-
-    public void setTotalCharge(@NonNull final Float totalCharge) {
-        this.totalCharge = totalCharge;
-    }
-
-    @Nullable
     public String getPreDiscountChargeCurrency() {
         return preDiscountChargeCurrency;
     }
@@ -421,23 +401,65 @@ public class RentalAgreement implements Serializable, Cloneable {
     }
 
     @Nullable
-    public String getTotalChargeCurrency() {
-        return totalChargeCurrency;
+    public Float getFinalCharge() {
+        return finalCharge;
     }
 
     @NonNull
-    public Optional<String> totalChargeCurrencyOpt() {
-        if (isBlank(totalChargeCurrency)) {
+    public Optional<Float> finalChargeOpt() {
+        return Optional.ofNullable(finalCharge);
+    }
+
+    public void setFinalCharge(@NonNull final Float finalCharge) {
+        this.finalCharge = finalCharge;
+    }
+
+    @Nullable
+    public String getFinalChargeCurrency() {
+        return finalChargeCurrency;
+    }
+
+    @NonNull
+    public Optional<String> finalChargeCurrencyOpt() {
+        if (isBlank(finalChargeCurrency)) {
             return Optional.empty();
         }
 
-        return Optional.of(totalChargeCurrency);
+        return Optional.of(finalChargeCurrency);
     }
 
-    public void setTotalChargeCurrency(
-            @NonNull final String totalChargeCurrency
+    public void setFinalChargeCurrency(
+            @NonNull final String finalChargeCurrency
     ) {
-        this.totalChargeCurrency = totalChargeCurrency;
+        this.finalChargeCurrency = finalChargeCurrency;
+    }
+
+    @Nullable
+    public Integer getChargeDays() {
+        return chargeDays;
+    }
+
+    @NonNull
+    public Optional<Integer> chargeDaysOpt() {
+        return Optional.ofNullable(chargeDays);
+    }
+
+    public void setChargeDays(@NonNull final Integer chargeDays) {
+        this.chargeDays = chargeDays;
+    }
+
+    @Nullable
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    @NonNull
+    public Optional<LocalDate> dueDateOpt() {
+        return Optional.ofNullable(dueDate);
+    }
+
+    public void setDueDate(@NonNull final LocalDate dueDate) {
+        this.dueDate = dueDate;
     }
 
     @Override
@@ -475,6 +497,7 @@ public class RentalAgreement implements Serializable, Cloneable {
                 .append(this.dailyRentalChargeCurrency, rhs.dailyRentalChargeCurrency)
                 .append(this.discountPercent, rhs.discountPercent)
                 .append(this.preDiscountCharge, rhs.preDiscountCharge)
+                .append(this.chargeDays, rhs.chargeDays)
                 .append(this.state, rhs.state)
                 .append(this.dataItem, rhs.dataItem)
                 .isEquals();
@@ -502,6 +525,7 @@ public class RentalAgreement implements Serializable, Cloneable {
                 .append("dailyRentalChargeCurrency", dailyRentalChargeCurrency)
                 .append("discountPercent", discountPercent)
                 .append("preDiscountCharge", preDiscountCharge)
+                .append("chargeDays", chargeDays)
                 .append("state", state)
                 .append("dataItem", dataItem)
                 .toString();

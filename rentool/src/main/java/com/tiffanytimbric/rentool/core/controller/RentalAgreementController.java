@@ -150,8 +150,9 @@ public class RentalAgreementController {
                 .map(rentalAgreementService::setDailyRentalChargeCurrency)
                 .map(rentalAgreementService::setPreDiscountCharge)
                 .map(rentalAgreementService::setPreDiscountChargeCurrency)
-                .map(rentalAgreementService::setTotalCharge)
-                .map(rentalAgreementService::setTotalChargeCurrency);
+                .map(rentalAgreementService::setChargeDays)
+                .map(rentalAgreementService::setFinalCharge)
+                .map(rentalAgreementService::setFinalChargeCurrency);
 
         return ResponseEntity.of(rentalAgreementOpt);
     }
@@ -175,14 +176,7 @@ public class RentalAgreementController {
         final List<RentalAgreement> rentalAgreements = rentalAgreementRepository.findByToolId(
                 toolId
         ).stream()
-                .map(rentalAgreementService::setToolCode)
-                .map(rentalAgreementService::setToolType)
-                .map(rentalAgreementService::setRenterName)
-                .map(rentalAgreementService::setDailyRentalChargeCurrency)
-                .map(rentalAgreementService::setPreDiscountCharge)
-                .map(rentalAgreementService::setPreDiscountChargeCurrency)
-                .map(rentalAgreementService::setTotalCharge)
-                .map(rentalAgreementService::setTotalChargeCurrency)
+                .map(rentalAgreementService::setTransientFields)
                 .collect(Collectors.toList());
 
         return ResponseEntity.of(
@@ -209,14 +203,7 @@ public class RentalAgreementController {
         final List<RentalAgreement> rentalAgreements = rentalAgreementRepository.findByRenterId(
                 renterId
         ).stream()
-                .map(rentalAgreementService::setToolCode)
-                .map(rentalAgreementService::setToolType)
-                .map(rentalAgreementService::setRenterName)
-                .map(rentalAgreementService::setDailyRentalChargeCurrency)
-                .map(rentalAgreementService::setPreDiscountCharge)
-                .map(rentalAgreementService::setPreDiscountChargeCurrency)
-                .map(rentalAgreementService::setTotalCharge)
-                .map(rentalAgreementService::setTotalChargeCurrency)
+                .map(rentalAgreementService::setTransientFields)
                 .collect(Collectors.toList());
 
         return ResponseEntity.of(
@@ -239,14 +226,7 @@ public class RentalAgreementController {
 
         final RentalAgreement savedRentalAgreement = rentalAgreementRepository.save(rentalAgreement);
 
-        rentalAgreementService.setToolCode(savedRentalAgreement);
-        rentalAgreementService.setToolType(savedRentalAgreement);
-        rentalAgreementService.setRenterName(savedRentalAgreement);
-        rentalAgreementService.setDailyRentalChargeCurrency(savedRentalAgreement);
-        rentalAgreementService.setPreDiscountCharge(savedRentalAgreement);
-        rentalAgreementService.setPreDiscountChargeCurrency(savedRentalAgreement);
-        rentalAgreementService.setTotalCharge(savedRentalAgreement);
-        rentalAgreementService.setTotalChargeCurrency(savedRentalAgreement);
+        rentalAgreementService.setTransientFields(savedRentalAgreement);
 
         return ResponseEntity.of(
                 Optional.of(savedRentalAgreement)
@@ -271,14 +251,7 @@ public class RentalAgreementController {
 
         final RentalAgreement savedRentalAgreement = rentalAgreementRepository.save(rentalAgreement);
 
-        rentalAgreementService.setToolCode(savedRentalAgreement);
-        rentalAgreementService.setToolType(savedRentalAgreement);
-        rentalAgreementService.setRenterName(savedRentalAgreement);
-        rentalAgreementService.setDailyRentalChargeCurrency(savedRentalAgreement);
-        rentalAgreementService.setPreDiscountCharge(savedRentalAgreement);
-        rentalAgreementService.setPreDiscountChargeCurrency(savedRentalAgreement);
-        rentalAgreementService.setTotalCharge(savedRentalAgreement);
-        rentalAgreementService.setTotalChargeCurrency(savedRentalAgreement);
+        rentalAgreementService.setTransientFields(savedRentalAgreement);
 
         return ResponseEntity.of(
                 Optional.of(savedRentalAgreement)

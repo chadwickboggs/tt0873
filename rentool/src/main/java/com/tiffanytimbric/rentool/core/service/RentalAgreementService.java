@@ -155,6 +155,24 @@ public class RentalAgreementService {
     }
 
     @NonNull
+    public RentalAgreement setTransientFields(
+            @NonNull final RentalAgreement rentalAgreement
+    ) {
+        setToolCode(rentalAgreement);
+        setToolType(rentalAgreement);
+        setRenterName(rentalAgreement);
+        setDailyRentalChargeCurrency(rentalAgreement);
+        setPreDiscountCharge(rentalAgreement);
+        setPreDiscountChargeCurrency(rentalAgreement);
+        setChargeDays(rentalAgreement);
+        setDueDate(rentalAgreement);
+        setFinalCharge(rentalAgreement);
+        setFinalChargeCurrency(rentalAgreement);
+
+        return rentalAgreement;
+    }
+
+    @NonNull
     public RentalAgreement setToolCode(
             @NonNull final RentalAgreement rentalAgreement
     ) {
@@ -233,6 +251,39 @@ public class RentalAgreementService {
         return rentalAgreement;
     }
 
+    @NonNull
+    public RentalAgreement setChargeDays(
+            @NonNull final RentalAgreement rentalAgreement
+    ) {
+        if (rentalAgreement.preDiscountChargeOpt().isEmpty()) {
+            setPreDiscountCharge(rentalAgreement);
+        }
+        float preDiscountCharge = rentalAgreement.getPreDiscountCharge();
+        float dailyRentalCharge = rentalAgreement.getDailyRentalCharge();
+
+        rentalAgreement.setChargeDays(
+                Float.valueOf(preDiscountCharge / dailyRentalCharge).intValue()
+        );
+
+        return rentalAgreement;
+    }
+
+    @NonNull
+    public RentalAgreement setDueDate(
+            @NonNull final RentalAgreement rentalAgreement
+    ) {
+        // TODO: Implement.
+
+        final LocalDate checkoutDate = rentalAgreement.getCheckoutDate();
+        int rentalDays = rentalAgreement.getRentalDays();
+
+        rentalAgreement.setDueDate(
+                checkoutDate.plusDays(rentalDays)
+        );
+
+        return rentalAgreement;
+    }
+
     public float calculatePreDiscountCharge(
             @NonNull final String toolId,
             @NonNull final LocalDate checkoutDate,
@@ -285,12 +336,12 @@ public class RentalAgreementService {
     }
 
     @NonNull
-    public RentalAgreement setTotalCharge(
+    public RentalAgreement setFinalCharge(
             @NonNull final RentalAgreement rentalAgreement
     ) {
         rentalAgreement.preDiscountChargeOpt().ifPresent(preDiscountCharge ->
                 rentalAgreement.discountPercentOpt().ifPresent(discountPercent ->
-                        rentalAgreement.setTotalCharge(
+                        rentalAgreement.setFinalCharge(
                                 preDiscountCharge * (1f - discountPercent / 100f)
                         )
                 )
@@ -300,12 +351,12 @@ public class RentalAgreementService {
     }
 
     @NonNull
-    public RentalAgreement setTotalChargeCurrency(
+    public RentalAgreement setFinalChargeCurrency(
             @NonNull final RentalAgreement rentalAgreement
     ) {
-        rentalAgreement.totalChargeOpt().ifPresent(totalCharge ->
-                rentalAgreement.setTotalChargeCurrency(
-                        LangUtil.currency(totalCharge)
+        rentalAgreement.finalChargeOpt().ifPresent(finalCharge ->
+                rentalAgreement.setFinalChargeCurrency(
+                        LangUtil.currency(finalCharge)
                 )
         );
 
