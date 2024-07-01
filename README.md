@@ -24,13 +24,22 @@ The Maven build system was used.
 > TODO: Implement
 
 #### Install MariaDB / MySql
-> TODO: Implement
+> Find and install the most recent version of MariaDB on your platform.
 
 #### Create the `rentool` Database
-> TODO: Implement
+1. Set the MariaDB password for its `root` user to `password`.
+1. Run the following SQL files:
+   1. `conf/create_db-0.0.1-SNAPSHOT.sql`
+   1. `conf/refdata_db-0.0.1-SNAPSHOT.sql`
+   1. `src/test/resources/testdata_db-0.0.1-SNAPSHOT.sql`
 
 ### Compile and Start the Web Services
-> TODO: Implement
+    $ mvn -e -U install
+    $ mvn org.springframework.boot:spring-boot-maven-plugin:3.3.1:start
+
+### Stop the Web Services
+    $ mvn -e -U install
+    $ mvn org.springframework.boot:spring-boot-maven-plugin:3.3.1:stop
 
 ## Usage Examples
 ### List Database Contents
