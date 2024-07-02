@@ -3,11 +3,13 @@ package com.tiffanytimbric.rentool.core.controller;
 import com.tiffanytimbric.rentool.core.model.RentalAgreement;
 import com.tiffanytimbric.rentool.core.model.Tool;
 import com.tiffanytimbric.rentool.core.model.User;
+import com.tiffanytimbric.rentool.core.model.ValidationResult;
 import com.tiffanytimbric.rentool.core.repository.RentalAgreementRepository;
 import com.tiffanytimbric.rentool.core.repository.ToolRepository;
 import com.tiffanytimbric.rentool.core.repository.UserRepository;
 import com.tiffanytimbric.rentool.core.service.RentalAgreementService;
 import jakarta.validation.Valid;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
@@ -213,6 +215,28 @@ public class RentalAgreementController {
         return ResponseEntity.of(
                 Optional.of(rentalAgreements)
         );
+    }
+
+    @PostMapping("/validateRentalAgreement")
+    @NonNull
+    public ResponseEntity<String> validateRentalAgreement(
+            @RequestBody @Valid  @Nullable final RentalAgreement rentalAgreement
+    ) {
+        if (rentalAgreement == null) {
+            return ResponseEntity.of(Optional.empty());
+        }
+
+        final ValidationResult validationResult = rentalAgreementService.validate(
+                rentalAgreement
+        );
+
+        if (!validationResult.isValid()) {
+            return ResponseEntity.badRequest().body(
+                    validationResult.getMessage()
+            );
+        }
+
+        return ResponseEntity.of(Optional.of(Strings.EMPTY));
     }
 
     @PostMapping("/rentalAgreement")

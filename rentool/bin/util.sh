@@ -5,6 +5,7 @@ function exitIfError () {
     errorMessage='Your operation was unable to be completed successfully.'
     [[ $# -gt 0 ]] && errorMessage=$1
 
+    >&2 echo
     >&2 echo "${errorMessage}"
 
     exit 1

@@ -16,6 +16,7 @@ location="${comm_protocol}://${hostname}:${network_port}/toolByBrand/$1"
 
 curl \
   --silent \
+  --fail \
   --request GET \
   --location "${location}" \
   --header 'Content-Type: application/json'

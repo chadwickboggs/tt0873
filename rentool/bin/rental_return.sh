@@ -18,6 +18,7 @@ location="${comm_protocol}://${hostname}:${network_port}/rentalAgreementReturn/$
 
 curl \
   --silent \
+  --fail \
   --request GET \
   --location "${location}" \
   --header 'Content-Type: application/json'

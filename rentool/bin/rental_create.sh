@@ -15,6 +15,16 @@ source "$(dirname $0)"/util.sh
 post_data="$(cat $1)"
 tool_id=$(jq '.toolId' $1)
 
+curl \
+  --silent \
+  --fail-with-body \
+  --request POST \
+  --location "${comm_protocol}://${hostname}:${network_port}/validateRentalAgreement" \
+  --header 'Content-Type: application/json' \
+  --data "${post_data}"
+
+exitIfError
+
 if [[ -n ${tool_id} || ${tool_id} -eq "" ]]; then
   location="${comm_protocol}://${hostname}:${network_port}/rentalAgreementByName"
 else
@@ -23,6 +33,7 @@ fi
 
 curl \
   --silent \
+  --fail \
   --request POST \
   --location ${location} \
   --header 'Content-Type: application/json' \

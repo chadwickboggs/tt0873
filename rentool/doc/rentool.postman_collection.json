@@ -1407,6 +1407,50 @@
 							"response": []
 						},
 						{
+							"name": "Validate",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Successful POST request\", function () {",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"toolId\": \"1233ba9c-8403-492e-9f4c-5b3b5464c3a1\",\n    \"renterId\": \"04a7bf6a-f317-4eea-9311-fa4d711f860f\",\n    \"rentalDays\": 2,\n    \"checkoutDate\": \"03/15/25\",\n    \"dailyRentalCharge\": \"10.15\",\n    \"discountPercent\": 20\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/validateRentalAgreement",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"validateRentalAgreement"
+									]
+								},
+								"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+							},
+							"response": []
+						},
+						{
 							"name": "Create By Name",
 							"event": [
 								{

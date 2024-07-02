@@ -5,6 +5,7 @@ import com.tiffanytimbric.fsm.State;
 import com.tiffanytimbric.rentool.core.model.RentalAgreement;
 import com.tiffanytimbric.rentool.core.model.Tool;
 import com.tiffanytimbric.rentool.core.model.User;
+import com.tiffanytimbric.rentool.core.model.ValidationResult;
 import com.tiffanytimbric.rentool.core.repository.HolidayRepository;
 import com.tiffanytimbric.rentool.core.repository.RentalAgreementRepository;
 import com.tiffanytimbric.rentool.core.repository.ToolRepository;
@@ -16,9 +17,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static com.tiffanytimbric.rentool.core.util.LangUtil.isWeekday;
 import static com.tiffanytimbric.rentool.core.util.LangUtil.isWeekend;
@@ -397,5 +396,54 @@ public class RentalAgreementService {
                                 tool.getId().toString()
                         )
                 );
+    }
+
+    @NonNull
+    public ValidationResult validate(
+            @Nullable final RentalAgreement rentalAgreement
+    ) {
+        boolean valid = true;
+        final List<String> messages = new ArrayList<>();
+
+        if (
+                rentalAgreement.toolIdOpt().isEmpty()
+                        && rentalAgreement.toolCodeOpt().isEmpty()
+        ) {
+            valid = false;
+            messages.add("At least of one either `toolId` or `toolCode` must have a value.");
+        }
+
+        if (
+                rentalAgreement.renterIdOpt().isEmpty()
+                        && rentalAgreement.renterNameOpt().isEmpty()
+        ) {
+            valid = false;
+            messages.add("At least of one either `renterId` or `renterName` must have a value.");
+        }
+
+        if (rentalAgreement.rentalDaysOpt().isEmpty()) {
+            valid = false;
+            messages.add("Field `renterDays` must have a value.");
+        }
+
+        if (rentalAgreement.checkoutDateOpt().isEmpty()) {
+            valid = false;
+            messages.add("Field `checkoutDate` must have a value.");
+        }
+
+        if (rentalAgreement.dailyRentalChargeOpt().isEmpty()) {
+            valid = false;
+            messages.add("Field `dailyRentalCharge` must have a value.");
+        }
+
+        if (rentalAgreement.discountPercentOpt().isEmpty()) {
+            valid = false;
+            messages.add("Field `discountPercent` must have a value.");
+        }
+
+        return new ValidationResult(
+                valid,
+                String.join("  ", messages)
+        );
     }
 }
