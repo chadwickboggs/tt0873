@@ -23,7 +23,7 @@ input_json_data_file=$(mktemp)
 exitIfError
 
 "$(dirname $0)"/rental_create.sh "${input_json_data_file}" > "${output_json_data_file}"
-rm "${input_json_data_file}"
+#rm "${input_json_data_file}"
 
 exitIfError
 

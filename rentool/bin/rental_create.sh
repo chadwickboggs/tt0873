@@ -43,6 +43,6 @@ curl \
   --request POST \
   --location ${location} \
   --header 'Content-Type: application/json' \
-  --data "${post_data}" &> ${curl_stdall_file}
+  --data "${post_data}"
 
 exitIfError
