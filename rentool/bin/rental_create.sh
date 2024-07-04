@@ -15,13 +15,19 @@ source "$(dirname $0)"/util.sh
 post_data="$(cat $1)"
 tool_id=$(jq '.toolId' $1)
 
+#
+# Make `curl` output its error messages to stderr and its success messages to stdout.
+#
+curl_stdall_file=$(mktemp)
 curl \
   --silent \
   --fail-with-body \
   --request POST \
   --location "${comm_protocol}://${hostname}:${network_port}/validateRentalAgreement" \
   --header 'Content-Type: application/json' \
-  --data "${post_data}"
+  --data "${post_data}" &> "${curl_stdall_file}"
+curl_exit_code=$?
+"$(dirname $0)"/error_to_stderr.sh ${curl_exit_code} "${curl_stdall_file}"
 
 exitIfError
 
@@ -37,6 +43,6 @@ curl \
   --request POST \
   --location ${location} \
   --header 'Content-Type: application/json' \
-  --data "${post_data}"
+  --data "${post_data}" &> ${curl_stdall_file}
 
 exitIfError
