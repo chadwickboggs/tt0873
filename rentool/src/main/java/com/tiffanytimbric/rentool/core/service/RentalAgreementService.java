@@ -19,8 +19,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.*;
 
-import static com.tiffanytimbric.rentool.core.util.LangUtil.isWeekday;
-import static com.tiffanytimbric.rentool.core.util.LangUtil.isWeekend;
+import static com.tiffanytimbric.rentool.core.util.LangUtil.*;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @Service
@@ -49,11 +48,6 @@ public class RentalAgreementService {
         return rentalAgreementRepository;
     }
 
-    @NonNull
-    public Optional<RentalAgreementRepository> rentalAgreementRepositoryOpt() {
-        return Optional.ofNullable(rentalAgreementRepository);
-    }
-
     public void setRentalAgreementRepository(
             @Nullable final RentalAgreementRepository rentalAgreementRepository
     ) {
@@ -65,11 +59,6 @@ public class RentalAgreementService {
         return userRepository;
     }
 
-    @NonNull
-    public Optional<UserRepository> userRepositoryOpt() {
-        return Optional.ofNullable(userRepository);
-    }
-
     public void setUserRepository(@NonNull final UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -77,11 +66,6 @@ public class RentalAgreementService {
     @Nullable
     public ToolRepository getToolRepository() {
         return toolRepository;
-    }
-
-    @NonNull
-    public Optional<ToolRepository> toolRepositoryOpt() {
-        return Optional.ofNullable(toolRepository);
     }
 
     public void setToolRepository(@NonNull final ToolRepository toolRepository) {
@@ -179,7 +163,7 @@ public class RentalAgreementService {
     public RentalAgreement setToolCode(
             @NonNull final RentalAgreement rentalAgreement
     ) {
-        rentalAgreement.toolIdOpt()
+        opt(rentalAgreement.getToolId())
                 .flatMap(toolId ->
                         toolRepository.findById(UUID.fromString(toolId)).stream()
                                 .map(Tool::getCode)
@@ -194,7 +178,7 @@ public class RentalAgreementService {
     public RentalAgreement setToolType(
             @NonNull final RentalAgreement rentalAgreement
     ) {
-        rentalAgreement.toolIdOpt()
+        opt(rentalAgreement.getToolId())
                 .flatMap(toolId ->
                         toolRepository.findById(UUID.fromString(toolId)).stream()
                                 .map(Tool::getType)
@@ -209,7 +193,7 @@ public class RentalAgreementService {
     public RentalAgreement setRenterName(
             @NonNull final RentalAgreement rentalAgreement
     ) {
-        rentalAgreement.renterIdOpt()
+        opt(rentalAgreement.getRenterId())
                 .flatMap(renterId ->
                         userRepository.findById(UUID.fromString(renterId)).stream()
                                 .map(User::getName)
@@ -224,7 +208,7 @@ public class RentalAgreementService {
     public RentalAgreement setDailyRentalChargeCurrency(
             @NonNull final RentalAgreement rentalAgreement
     ) {
-        rentalAgreement.dailyRentalChargeOpt().ifPresent(dailyRentalCharge ->
+        opt(rentalAgreement.getDailyRentalCharge()).ifPresent(dailyRentalCharge ->
                 rentalAgreement.setDailyRentalChargeCurrency(
                         LangUtil.currency(dailyRentalCharge)
                 )
@@ -237,10 +221,10 @@ public class RentalAgreementService {
     public RentalAgreement setPreDiscountCharge(
             @NonNull final RentalAgreement rentalAgreement
     ) {
-        rentalAgreement.toolIdOpt().ifPresent(toolId ->
-                rentalAgreement.checkoutDateOpt().ifPresent(checkoutDate ->
-                        rentalAgreement.rentalDaysOpt().ifPresent(rentalDays ->
-                                rentalAgreement.dailyRentalChargeOpt().ifPresent(dailyRentalCharge ->
+        opt(rentalAgreement.getToolId()).ifPresent(toolId ->
+                opt(rentalAgreement.getCheckoutDate()).ifPresent(checkoutDate ->
+                        opt(rentalAgreement.getRentalDays()).ifPresent(rentalDays ->
+                                opt(rentalAgreement.getDailyRentalCharge()).ifPresent(dailyRentalCharge ->
                                         rentalAgreement.setPreDiscountCharge(
                                                 calculatePreDiscountCharge(
                                                         toolId, checkoutDate, rentalDays, dailyRentalCharge
@@ -258,7 +242,7 @@ public class RentalAgreementService {
     public RentalAgreement setChargeDays(
             @NonNull final RentalAgreement rentalAgreement
     ) {
-        if (rentalAgreement.preDiscountChargeOpt().isEmpty()) {
+        if (opt(rentalAgreement.getPreDiscountCharge()).isEmpty()) {
             setPreDiscountCharge(rentalAgreement);
         }
         float preDiscountCharge = rentalAgreement.getPreDiscountCharge();
@@ -325,7 +309,7 @@ public class RentalAgreementService {
     public RentalAgreement setPreDiscountChargeCurrency(
             @NonNull final RentalAgreement rentalAgreement
     ) {
-        rentalAgreement.preDiscountChargeOpt().ifPresent(preDiscountCharge ->
+        opt(rentalAgreement.getPreDiscountCharge()).ifPresent(preDiscountCharge ->
                 rentalAgreement.setPreDiscountChargeCurrency(
                         LangUtil.currency(preDiscountCharge)
                 )
@@ -338,8 +322,8 @@ public class RentalAgreementService {
     public RentalAgreement setFinalCharge(
             @NonNull final RentalAgreement rentalAgreement
     ) {
-        rentalAgreement.preDiscountChargeOpt().ifPresent(preDiscountCharge ->
-                rentalAgreement.discountPercentOpt().ifPresent(discountPercent ->
+        opt(rentalAgreement.getPreDiscountCharge()).ifPresent(preDiscountCharge ->
+                opt(rentalAgreement.getDiscountPercent()).ifPresent(discountPercent ->
                         rentalAgreement.setFinalCharge(
                                 preDiscountCharge * (1f - discountPercent / 100f)
                         )
@@ -353,7 +337,7 @@ public class RentalAgreementService {
     public RentalAgreement setFinalChargeCurrency(
             @NonNull final RentalAgreement rentalAgreement
     ) {
-        rentalAgreement.finalChargeOpt().ifPresent(finalCharge ->
+        opt(rentalAgreement.getFinalCharge()).ifPresent(finalCharge ->
                 rentalAgreement.setFinalChargeCurrency(
                         LangUtil.currency(finalCharge)
                 )
@@ -369,7 +353,7 @@ public class RentalAgreementService {
             return;
         }
 
-        rentalAgreement.renterNameOpt()
+        opt(rentalAgreement.getRenterName())
                 .flatMap(renterName ->
                         userRepository.findByName(renterName).stream().findFirst()
                 )
@@ -387,7 +371,7 @@ public class RentalAgreementService {
             return;
         }
 
-        rentalAgreement.toolCodeOpt()
+        opt(rentalAgreement.getToolCode())
                 .flatMap(toolCode ->
                         toolRepository.findByCode(toolCode)
                 )
@@ -406,37 +390,37 @@ public class RentalAgreementService {
         final List<String> messages = new ArrayList<>();
 
         if (
-                rentalAgreement.toolIdOpt().isEmpty()
-                        && rentalAgreement.toolCodeOpt().isEmpty()
+                opt(rentalAgreement.getToolId()).isEmpty()
+                        && opt(rentalAgreement.getToolCode()).isEmpty()
         ) {
             valid = false;
             messages.add("At least of one either `toolId` or `toolCode` must have a value.");
         }
 
         if (
-                rentalAgreement.renterIdOpt().isEmpty()
-                        && rentalAgreement.renterNameOpt().isEmpty()
+                opt(rentalAgreement.getRenterId()).isEmpty()
+                        && opt(rentalAgreement.getRenterName()).isEmpty()
         ) {
             valid = false;
             messages.add("At least of one either `renterId` or `renterName` must have a value.");
         }
 
-        if (rentalAgreement.rentalDaysOpt().isEmpty()) {
+        if (opt(rentalAgreement.getRentalDays()).isEmpty()) {
             valid = false;
             messages.add("Field `renterDays` must have a value.");
         }
 
-        if (rentalAgreement.checkoutDateOpt().isEmpty()) {
+        if (opt(rentalAgreement.getCheckoutDate()).isEmpty()) {
             valid = false;
             messages.add("Field `checkoutDate` must have a value.");
         }
 
-        if (rentalAgreement.dailyRentalChargeOpt().isEmpty()) {
+        if (opt(rentalAgreement.getDailyRentalCharge()).isEmpty()) {
             valid = false;
             messages.add("Field `dailyRentalCharge` must have a value.");
         }
 
-        if (rentalAgreement.discountPercentOpt().isEmpty()) {
+        if (opt(rentalAgreement.getDiscountPercent()).isEmpty()) {
             valid = false;
             messages.add("Field `discountPercent` must have a value.");
         }

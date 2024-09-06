@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.tiffanytimbric.rentool.core.util.LangUtil.opt;
+
 @RestController
 //@PreAuthorize("hasRole('USER')")
 public class UserController {
@@ -79,7 +81,7 @@ public class UserController {
             return ResponseEntity.of(Optional.empty());
         }
 
-        if (user.idOpt().isEmpty()) {
+        if (opt(user.getId()).isEmpty()) {
             user.setId(UUID.randomUUID());
         }
 

@@ -13,10 +13,7 @@ import org.springframework.lang.Nullable;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Optional;
 import java.util.UUID;
-
-import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @Entity
 @Table(name = "tool")
@@ -85,11 +82,6 @@ public class Tool implements Serializable {
         return id;
     }
 
-    @NonNull
-    public Optional<UUID> idOpt() {
-        return Optional.ofNullable(id);
-    }
-
     public void setId(@NonNull final UUID id) {
         this.id = id;
     }
@@ -97,15 +89,6 @@ public class Tool implements Serializable {
     @Nullable
     public String getCode() {
         return code;
-    }
-
-    @NonNull
-    public Optional<String> codeOpt() {
-        if (isBlank(code)) {
-            return Optional.empty();
-        }
-
-        return Optional.ofNullable(code);
     }
 
     public void setCode(@NonNull final String name) {
@@ -117,15 +100,6 @@ public class Tool implements Serializable {
         return type;
     }
 
-    @NonNull
-    public Optional<String> typeOpt() {
-        if (isBlank(type)) {
-            return Optional.empty();
-        }
-
-        return Optional.ofNullable(type);
-    }
-
     public void setType(@NonNull final String type) {
         this.type = type;
     }
@@ -133,15 +107,6 @@ public class Tool implements Serializable {
     @Nullable
     public String getBrand() {
         return brand;
-    }
-
-    @NonNull
-    public Optional<String> brandOpt() {
-        if (isBlank(brand)) {
-            return Optional.empty();
-        }
-
-        return Optional.ofNullable(brand);
     }
 
     public void setBrand(@NonNull final String brand) {
@@ -153,15 +118,6 @@ public class Tool implements Serializable {
         return description;
     }
 
-    @NonNull
-    public Optional<String> descriptionOpt() {
-        if (isBlank(description)) {
-            return Optional.empty();
-        }
-
-        return Optional.of(description);
-    }
-
     public void setDescription(@NonNull final String description) {
         this.description = description;
     }
@@ -169,11 +125,6 @@ public class Tool implements Serializable {
     @Nullable
     public Float getDailyCharge() {
         return dailyCharge;
-    }
-
-    @NonNull
-    public Optional<Float> dailyChargeOpt() {
-        return Optional.ofNullable(dailyCharge);
     }
 
     public void setDailyCharge(@NonNull final Float dailyCharge) {
@@ -185,11 +136,6 @@ public class Tool implements Serializable {
         return weekdaysFree;
     }
 
-    @NonNull
-    public Optional<Boolean> weekdaysFreeOpt() {
-        return Optional.ofNullable(weekdaysFree);
-    }
-
     public void setWeekdaysFree(@NonNull final Boolean weekdayssFree) {
         this.weekdaysFree = weekdayssFree;
     }
@@ -199,11 +145,6 @@ public class Tool implements Serializable {
         return weekendsFree;
     }
 
-    @NonNull
-    public Optional<Boolean> weekendsFreeOpt() {
-        return Optional.ofNullable(weekendsFree);
-    }
-
     public void setWeekendsFree(@NonNull final Boolean weekendsFree) {
         this.weekendsFree = weekendsFree;
     }
@@ -211,11 +152,6 @@ public class Tool implements Serializable {
     @Nullable
     public Boolean getHolidaysFree() {
         return holidaysFree;
-    }
-
-    @NonNull
-    public Optional<Boolean> holidaysFreeOpt() {
-        return Optional.ofNullable(holidaysFree);
     }
 
     public void setHolidaysFree(@NonNull final Boolean holidaysFree) {

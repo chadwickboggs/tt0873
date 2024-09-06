@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.tiffanytimbric.rentool.core.util.LangUtil.opt;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @RestController
@@ -116,7 +117,7 @@ public class ToolController {
             return ResponseEntity.of(Optional.empty());
         }
 
-        if (tool.idOpt().isEmpty()) {
+        if (opt(tool.getId()).isEmpty()) {
             tool.setId(UUID.randomUUID());
         }
 

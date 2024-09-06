@@ -22,6 +22,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static com.tiffanytimbric.rentool.core.util.LangUtil.opt;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @RestController
@@ -248,7 +249,7 @@ public class RentalAgreementController {
             return ResponseEntity.of(Optional.empty());
         }
 
-        if (rentalAgreement.idOpt().isEmpty()) {
+        if (opt(rentalAgreement.getId()).isEmpty()) {
             rentalAgreement.setId(UUID.randomUUID());
         }
 
@@ -270,7 +271,7 @@ public class RentalAgreementController {
             return ResponseEntity.of(Optional.empty());
         }
 
-        if (rentalAgreement.idOpt().isEmpty()) {
+        if (opt(rentalAgreement.getId()).isEmpty()) {
             rentalAgreement.setId(UUID.randomUUID());
         }
 

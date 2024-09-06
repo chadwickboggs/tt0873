@@ -13,10 +13,7 @@ import org.springframework.lang.Nullable;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Optional;
 import java.util.UUID;
-
-import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @Entity
 @Table(name = "rental_agrmnt")
@@ -142,19 +139,9 @@ public class RentalAgreement implements Serializable, Cloneable {
         return id;
     }
 
-    @NonNull
-    public Optional<UUID> idOpt() {
-        return Optional.ofNullable(id);
-    }
-
     @Nullable
     public String getToolId() {
         return toolId;
-    }
-
-    @NonNull
-    public Optional<String> toolIdOpt() {
-        return Optional.ofNullable(toolId);
     }
 
     public void setToolId(@NonNull final String toolOneId) {
@@ -166,22 +153,8 @@ public class RentalAgreement implements Serializable, Cloneable {
         return renterId;
     }
 
-    @NonNull
-    public Optional<String> renterIdOpt() {
-        if (isBlank(renterId)) {
-            return Optional.empty();
-        }
-
-        return Optional.of(renterId);
-    }
-
     public void setRenterId(@NonNull final String renterId) {
         this.renterId = renterId;
-    }
-
-    @NonNull
-    public Optional<UUID> nameOpt() {
-        return Optional.ofNullable(id);
     }
 
     public void setId(@NonNull final UUID name) {
@@ -191,11 +164,6 @@ public class RentalAgreement implements Serializable, Cloneable {
     @Nullable
     public Integer getRentalDays() {
         return rentalDays;
-    }
-
-    @NonNull
-    public Optional<Integer> rentalDaysOpt() {
-        return Optional.ofNullable(rentalDays);
     }
 
     public void setRentalDays(
@@ -209,11 +177,6 @@ public class RentalAgreement implements Serializable, Cloneable {
         return checkoutDate;
     }
 
-    @NonNull
-    public Optional<LocalDate> checkoutDateOpt() {
-        return Optional.ofNullable(checkoutDate);
-    }
-
     public void setCheckoutDate(
             @Nullable final LocalDate checkoutDate
     ) {
@@ -223,11 +186,6 @@ public class RentalAgreement implements Serializable, Cloneable {
     @Nullable
     public Float getDailyRentalCharge() {
         return dailyRentalCharge;
-    }
-
-    @NonNull
-    public Optional<Float> dailyRentalChargeOpt() {
-        return Optional.ofNullable(dailyRentalCharge);
     }
 
     public void setDailyRentalCharge(
@@ -241,11 +199,6 @@ public class RentalAgreement implements Serializable, Cloneable {
         return discountPercent;
     }
 
-    @NonNull
-    public Optional<Integer> discountPercentOpt() {
-        return Optional.ofNullable(discountPercent);
-    }
-
     public void setDiscountPercent(
             @Nullable final Integer discountPercent
     ) {
@@ -255,15 +208,6 @@ public class RentalAgreement implements Serializable, Cloneable {
     @NonNull
     public String getState() {
         return state;
-    }
-
-    @NonNull
-    public Optional<String> stateOpt() {
-        if (isBlank(state)) {
-            return Optional.empty();
-        }
-
-        return Optional.of(state);
     }
 
     public void setState(
@@ -277,15 +221,6 @@ public class RentalAgreement implements Serializable, Cloneable {
         return dataItem;
     }
 
-    @NonNull
-    public Optional<String> dataItemOpt() {
-        if (isBlank(dataItem)) {
-            return Optional.empty();
-        }
-
-        return Optional.of(dataItem);
-    }
-
     public void setDataItem(
             @Nullable final String dataItem
     ) {
@@ -297,15 +232,6 @@ public class RentalAgreement implements Serializable, Cloneable {
         return toolCode;
     }
 
-    @NonNull
-    public Optional<String> toolCodeOpt() {
-        if (isBlank(toolCode)) {
-            return Optional.empty();
-        }
-
-        return Optional.of(toolCode);
-    }
-
     public void setToolCode(@NonNull final String toolCode) {
         this.toolCode = toolCode;
     }
@@ -313,15 +239,6 @@ public class RentalAgreement implements Serializable, Cloneable {
     @Nullable
     public String getToolType() {
         return toolType;
-    }
-
-    @NonNull
-    public Optional<String> toolTypeOpt() {
-        if (isBlank(toolType)) {
-            return Optional.empty();
-        }
-
-        return Optional.of(toolType);
     }
 
     public void setToolType(@NonNull final String toolType) {
@@ -333,15 +250,6 @@ public class RentalAgreement implements Serializable, Cloneable {
         return renterName;
     }
 
-    @NonNull
-    public Optional<String> renterNameOpt() {
-        if (isBlank(renterName)) {
-            return Optional.empty();
-        }
-
-        return Optional.of(renterName);
-    }
-
     public void setRenterName(@NonNull final String renterName) {
         this.renterName = renterName;
     }
@@ -349,15 +257,6 @@ public class RentalAgreement implements Serializable, Cloneable {
     @Nullable
     public String getDailyRentalChargeCurrency() {
         return dailyRentalChargeCurrency;
-    }
-
-    @NonNull
-    public Optional<String> dailyRentalChargeCurrencyOpt() {
-        if (isBlank(dailyRentalChargeCurrency)) {
-            return Optional.empty();
-        }
-
-        return Optional.of(dailyRentalChargeCurrency);
     }
 
     public void setDailyRentalChargeCurrency(
@@ -371,11 +270,6 @@ public class RentalAgreement implements Serializable, Cloneable {
         return preDiscountCharge;
     }
 
-    @NonNull
-    public Optional<Float> preDiscountChargeOpt() {
-        return Optional.ofNullable(preDiscountCharge);
-    }
-
     public void setPreDiscountCharge(@NonNull final Float preDiscountCharge) {
         this.preDiscountCharge = preDiscountCharge;
     }
@@ -383,15 +277,6 @@ public class RentalAgreement implements Serializable, Cloneable {
     @Nullable
     public String getPreDiscountChargeCurrency() {
         return preDiscountChargeCurrency;
-    }
-
-    @NonNull
-    public Optional<String> preDiscountChargeCurrencyOpt() {
-        if (isBlank(preDiscountChargeCurrency)) {
-            return Optional.empty();
-        }
-
-        return Optional.of(preDiscountChargeCurrency);
     }
 
     public void setPreDiscountChargeCurrency(
@@ -405,11 +290,6 @@ public class RentalAgreement implements Serializable, Cloneable {
         return finalCharge;
     }
 
-    @NonNull
-    public Optional<Float> finalChargeOpt() {
-        return Optional.ofNullable(finalCharge);
-    }
-
     public void setFinalCharge(@NonNull final Float finalCharge) {
         this.finalCharge = finalCharge;
     }
@@ -417,15 +297,6 @@ public class RentalAgreement implements Serializable, Cloneable {
     @Nullable
     public String getFinalChargeCurrency() {
         return finalChargeCurrency;
-    }
-
-    @NonNull
-    public Optional<String> finalChargeCurrencyOpt() {
-        if (isBlank(finalChargeCurrency)) {
-            return Optional.empty();
-        }
-
-        return Optional.of(finalChargeCurrency);
     }
 
     public void setFinalChargeCurrency(
@@ -439,11 +310,6 @@ public class RentalAgreement implements Serializable, Cloneable {
         return chargeDays;
     }
 
-    @NonNull
-    public Optional<Integer> chargeDaysOpt() {
-        return Optional.ofNullable(chargeDays);
-    }
-
     public void setChargeDays(@NonNull final Integer chargeDays) {
         this.chargeDays = chargeDays;
     }
@@ -451,11 +317,6 @@ public class RentalAgreement implements Serializable, Cloneable {
     @Nullable
     public LocalDate getDueDate() {
         return dueDate;
-    }
-
-    @NonNull
-    public Optional<LocalDate> dueDateOpt() {
-        return Optional.ofNullable(dueDate);
     }
 
     public void setDueDate(@NonNull final LocalDate dueDate) {

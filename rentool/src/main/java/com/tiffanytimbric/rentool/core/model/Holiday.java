@@ -5,7 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -16,7 +15,6 @@ import org.springframework.lang.Nullable;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Optional;
 
 @Entity
 @Table(name = "holiday")
@@ -49,15 +47,6 @@ public class Holiday implements Serializable {
         return name;
     }
 
-    @NonNull
-    public Optional<String> nameOpt() {
-        if (StringUtils.isBlank(name)) {
-            return Optional.empty();
-        }
-
-        return Optional.of(name);
-    }
-
     public void setName(@NonNull final String name) {
         this.name = name;
     }
@@ -65,11 +54,6 @@ public class Holiday implements Serializable {
     @Nullable
     public LocalDate getDayDate() {
         return dayDate;
-    }
-
-    @NonNull
-    public Optional<LocalDate> dayDateOpt() {
-        return Optional.ofNullable(dayDate);
     }
 
     public void setDayDate(@NonNull final LocalDate dayDate) {

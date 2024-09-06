@@ -8,12 +8,20 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 import java.util.Locale;
+import java.util.Optional;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 public final class LangUtil {
 
     private LangUtil() {
+    }
+
+    @javax.annotation.Nonnull
+    public static <T> Optional<T> opt(
+            @javax.annotation.Nullable final T value
+    ) {
+        return Optional.ofNullable(value);
     }
 
     public static boolean isWeekday(

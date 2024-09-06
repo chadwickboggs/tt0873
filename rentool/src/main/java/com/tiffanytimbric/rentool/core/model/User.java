@@ -12,10 +12,7 @@ import org.springframework.lang.Nullable;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Optional;
 import java.util.UUID;
-
-import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @Entity
 @Table(name = "user")
@@ -47,11 +44,6 @@ public class User implements Serializable {
         return id;
     }
 
-    @NonNull
-    public Optional<UUID> idOpt() {
-        return Optional.ofNullable(id);
-    }
-
     public void setId(@NonNull final UUID id) {
         this.id = id;
     }
@@ -59,15 +51,6 @@ public class User implements Serializable {
     @Nullable
     public String getName() {
         return name;
-    }
-
-    @NonNull
-    public Optional<String> nameOpt() {
-        if (isBlank(name)) {
-            return Optional.empty();
-        }
-
-        return Optional.ofNullable(name);
     }
 
     public void setName(@NonNull final String name) {
