@@ -17,9 +17,9 @@ public final class LangUtil {
     private LangUtil() {
     }
 
-    @javax.annotation.Nonnull
+    @Nonnull
     public static <T> Optional<T> opt(
-            @javax.annotation.Nullable final T value
+            @Nullable final T value
     ) {
         return Optional.ofNullable(value);
     }
